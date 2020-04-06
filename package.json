@@ -21,9 +21,14 @@
     "lib": "lib",
     "test": "test"
   },
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -w --mode=development"
+    "start": "webpack -w --mode=development",
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
@@ -35,5 +40,6 @@
   "bugs": {
     "url": "https://github.com/cjchoi97/chillify/issues"
   },
-  "homepage": "https://github.com/cjchoi97/chillify#readme"
+  "homepage": "https://github.com/cjchoi97/chillify#readme",
+  "devDependencies": {}
 }
