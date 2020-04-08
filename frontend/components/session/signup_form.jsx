@@ -104,7 +104,7 @@ export default class SignupForm extends React.Component {
             <span className="or">or</span>
           </div>
 
-          <div className="signup-prompt">Sign up with your email address</div>
+          <div className="signup-message">Sign up with your email address</div>
           <div className="session-error-messages">{this.renderErrors()}</div>
 
           <input
@@ -139,8 +139,8 @@ export default class SignupForm extends React.Component {
             onChange={this.update('preferredName')}
           />
 
-          <div className="date-of-birth-header">Date of Birth</div>
-          <div className="date-of-birth">
+          <div className="birth-date-text">Date of Birth</div>
+          <div className="birth-date">
             <select className="month" placeholder="Month">
               <option disabled>Month</option>
               <option value="01">January</option>
@@ -201,7 +201,9 @@ export default class SignupForm extends React.Component {
             />
             <span className="radio-text">Non-binary</span>
           </div>
-          <input className="session-submit" type="submit" value={this.props.formType} />
+          <button></button>
+          <button className="session-submit">{this.props.formType}</button>
+          {/* <input className="session-submit" type="submit" value={this.props.formType} /> */}
         </form>
 
         <div className="login-instead">Already have an account? {this.props.navLink}</div>
