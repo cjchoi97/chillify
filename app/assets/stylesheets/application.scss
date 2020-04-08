@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+@import "./initial/reset.scss";
+
+@import "./components/login-form.scss";

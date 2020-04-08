@@ -15,6 +15,21 @@ export default class SignupForm extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.demoLogin = this.demoLogin.bind(this);
+  }
+
+  demoLogin(e) {
+    e.preventDefault();
+    const demoUser = {
+      email: 'a',
+      password: 'password'
+    };
+
+    this.props.login(demoUser);
+  }
+
+  componentWillUnmount() {
+    this.props.clearErrors();
   }
 
   handleSubmit(e) {
@@ -78,6 +93,16 @@ export default class SignupForm extends React.Component {
         {/* some sort of logo header thing*/}
 
         <form className="signup-form" onSubmit={this.handleSubmit}>
+
+          <button
+            className="demo-button"
+            onClick={this.demoLogin}>
+            Log In As A Demo User
+          </button>
+
+          <div className="line">
+            <span className="or">or</span>
+          </div>
 
           <div className="signup-prompt">Sign up with your email address</div>
           <div className="session-error-messages">{this.renderErrors()}</div>

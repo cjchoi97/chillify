@@ -8,6 +8,20 @@ class LoginForm extends React.Component {
       password: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.demoLogin = this.demoLogin.bind(this);
+  }
+
+  demoLogin(e) {
+    e.preventDefault();
+    const demoUser = {
+      email: 'a',
+      password: 'password'
+    };
+    this.props.processForm(demoUser);
+  }
+  
+  componentWillUnmount() {
+    this.props.clearErrors();
   }
 
   update(field) {
@@ -38,7 +52,16 @@ class LoginForm extends React.Component {
         {/* some sort of logo header thing*/}
         <form className="login-form" onSubmit={this.handleSubmit}>
           <div className="login-message">To continue, log in to Chillify.</div>
-          {/* demo log in button */}
+          <button
+            className="demo-button"
+            onClick={this.demoLogin}>
+            Log In As A Demo User
+          </button>
+
+          <div className="line">
+            <span className="or">or</span>
+          </div>
+
           <input
             className="input email"
             type="text"
@@ -46,7 +69,6 @@ class LoginForm extends React.Component {
             value={this.state.email}
             onChange={this.update('email')}
           />
-          <br/>
           <input
             className="input password"
             type="password"
@@ -54,8 +76,18 @@ class LoginForm extends React.Component {
             value={this.state.password}
             onChange={this.update('password')}
           />
-          <br/>
-          <input className="session-submit" type="submit" value={this.props.formType}/>
+
+          <div className="login-remember">
+            <div className="remember">
+              <input type="checkbox" />
+              <span className="remember-message">Remember me</span>
+            </div>
+            <button className="session-submit">{this.props.formType}</button>
+          </div>
+
+          <div className="line"></div>
+          <div className="login-message">Don't have an account?</div>
+          {this.props.navLink}
         </form>
       </div>
     );
