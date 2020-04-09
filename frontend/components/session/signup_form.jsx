@@ -21,7 +21,7 @@ export default class SignupForm extends React.Component {
   demoLogin(e) {
     e.preventDefault();
     const demoUser = {
-      email: 'a',
+      email: 'demo@gmail.com',
       password: 'password'
     };
 

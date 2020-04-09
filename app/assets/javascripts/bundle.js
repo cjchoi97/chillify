@@ -687,7 +687,7 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
     value: function demoLogin(e) {
       e.preventDefault();
       var demoUser = {
-        email: 'a',
+        email: 'demo@gmail.com',
         password: 'password'
       };
       this.props.login(demoUser);

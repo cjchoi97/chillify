@@ -9,9 +9,16 @@
 
 User.destroy_all
 
-demo = User.create!(email: 'chanu@gmail.com', 
+chanu = User.create!(email: 'chanu@gmail.com', 
                   password: 'chanuchoi', 
                   username: 'chanu',
                   preferred_name: 'Chanu Choi',
+                  birth_date: '19971007',
+                  gender: 'male')
+
+demo = User.create!(email: 'demo@gmail.com', 
+                  password: 'password', 
+                  username: 'demo user',
+                  preferred_name: 'demo user',
                   birth_date: '19971007',
                   gender: 'male')
