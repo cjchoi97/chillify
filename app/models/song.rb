@@ -15,9 +15,9 @@ class Song < ApplicationRecord
     through: :album,
     source: :artist
 
-  has_many :playlists_songs, dependent: :destroy
+  has_many :playlist_songs, dependent: :destroy
 
-  has_many :playlists
+  has_many :playlists,
     through: :playlists_songs,
     source: :playlist
   

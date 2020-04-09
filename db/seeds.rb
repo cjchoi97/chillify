@@ -8,6 +8,10 @@
 
 
 User.destroy_all
+Album.destroy_all
+Playlist.destroy_all
+Song.destroy_all
+Artist.destroy_all
 
 chanu = User.create!(email: 'chanu@gmail.com', 
                   password: 'chanuchoi', 
@@ -22,3 +26,14 @@ demo = User.create!(email: 'demo@gmail.com',
                   preferred_name: 'demo user',
                   birth_date: '19971007',
                   gender: 'male')
+
+artist1 = Artist.create!(name: "Maverick City")
+
+album1 = Album.create!(title: "Mav City", year: 2020, artist_id: artist1.id)
+
+song1 = Song.create!(title: "Promises", album_id: album1.id)
+song2 = Song.create!(title: "Most Beautiful", album_id: album1.id)
+song3 = Song.create!(title: "Communion", album_id: album1.id)
+
+
+
