@@ -17,7 +17,7 @@ class User < ApplicationRecord
             :birth_date, presence: true
   validates :username, :email, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
-  validates :gender, :inclusion => { :in => %w(female male neutral) }
+  validates :gender, :inclusion => { :in => %w(female male nonbinary) }
   after_initialize :ensure_session_token
   attr_reader :password
 
