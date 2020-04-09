@@ -477,7 +477,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     value: function demoLogin(e) {
       e.preventDefault();
       var demoUser = {
-        email: 'a',
+        email: 'demo@gmail.com',
         password: 'password'
       };
       this.props.processForm(demoUser);
@@ -977,7 +977,7 @@ var Splash = function Splash(_ref) {
 
   var sessionLinks = function sessionLinks() {
     var demoUser = {
-      email: 'testing1@gmail.com',
+      email: 'demo@gmail.com',
       password: 'password'
     };
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
