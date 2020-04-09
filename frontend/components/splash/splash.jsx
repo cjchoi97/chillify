@@ -5,7 +5,7 @@ import { login } from '../../actions/session_actions';
 
 const Splash = ({ currentUser, logout, demoLogin }) => {
   const sessionLinks = () => {
-    const demoUser = { email: 'testing1@gmail.com', password: 'password' };
+    const demoUser = { email: 'demo@gmail.com', password: 'password' };
 
     return (
       <div className="home">

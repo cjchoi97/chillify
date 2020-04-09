@@ -14,7 +14,7 @@ class LoginForm extends React.Component {
   demoLogin(e) {
     e.preventDefault();
     const demoUser = {
-      email: 'a',
+      email: 'demo@gmail.com',
       password: 'password'
     };
     this.props.processForm(demoUser);
