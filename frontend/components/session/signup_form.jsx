@@ -39,7 +39,7 @@ export default class SignupForm extends React.Component {
       password: this.state.password,
       gender: this.state.gender,
       preferred_name: this.state.preferredName,
-      username: "testing",
+      username: this.state.preferredName,
       birth_date: "19971007"
     });
   }

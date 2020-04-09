@@ -1,0 +1,59 @@
+.home {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-header { 
+  position: sticky;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.7);
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  height: 80px;
+  // height: 20vh;
+  color: white;
+  transition-duration: 0.3s;
+  align-items: center;
+}
+
+.main-nav-link {
+  margin: 0px 20px;
+  line-height: 80px;
+  transition-duration: 0.3s;
+}
+
+.main-nav-link:hover {
+  color: #1db954;
+  transition-duration: 0.3s;
+}
+
+.home-text {
+  font-size: 80px;
+  font-weight: bolder;
+  margin-top: 30vh;
+  text-align: center;
+}
+
+.home-sub-text {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 9px;
+  margin-bottom: 18px;
+}
+
+.logout-prompt {
+  text-align: center;
+}
+
+.logout-prompt > button {
+  margin: 0 auto;
+  color: black;
+  border: 1px solid black;
+}
