@@ -9,8 +9,8 @@ Rails.application.routes.draw do
 
     resources :playlists, only: [:index, :show, :create, :update, :destroy] do
       member do
-        post :add_song, to: 'playlists#add_song', as: 'add'
-        delete :remove_song, to: 'playlists#remove_song', as: 'remove'
+        post :add_song, to: 'playlists#add_song', as: 'add_song'
+        delete :remove_song, to: 'playlists#remove_song', as: 'remove_sgon'
       end
     end
 

@@ -6,6 +6,12 @@ import Root from './components/root';
 
 import configureStore from './store/store';
 
+import {fetchAlbum, fetchAlbums} from './util/album_api_util';
+import {fetchArtist, fetchArtists} from './util/artist_api_util';
+import {fetchPlaylist, fetchPlaylists, addSong, removeSong} from './util/playlist_api_util';
+import {fetchSongs} from './util/song_api_util';
+import {fetchUser} from './util/user_api_util';
+
 document.addEventListener('DOMContentLoaded', () => {
 
   let store;
@@ -23,9 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //////////////// TEST ////////////////////////
-  window.login = login;
-  window.logout = logout;
-  window.signup = signup;
+  // window.login = login;
+  // window.logout = logout;
+  // window.signup = signup;
+
+  window.fetchAlbum = fetchAlbum
+  window.fetchAlbums = fetchAlbums
+
+  window.fetchArtist = fetchArtist
+  window.fetchArtists = fetchArtists
+
+  window.fetchPlaylist = fetchPlaylist
+  window.fetchPlaylists = fetchPlaylists
+  window.addSong = addSong
+  window.removeSong = removeSong
+
+  window.fetchSongs = fetchSongs
+  window.fetchUser = fetchUser
+  
   window.getState = store.getState;
   window.dispatch = store.dispatch;
   //////////////////////////////////////////////
