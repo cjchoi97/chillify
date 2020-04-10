@@ -35,7 +35,7 @@ class Api::PlaylistsController < ApplicationController
     playlist = Playlist.find(params[:id])
     if playlist
       playlist.destroy
-      render 'api/playlists/index'
+      index
     else
       render json: ["Playlist doesn't exist"], status: 404
     end
@@ -43,15 +43,15 @@ class Api::PlaylistsController < ApplicationController
 
   def add_song
     playlist_song = PlaylistSong.new(playlist_id: params[:id], song_id: params[:song_id])
-    render 'api/playlists/show'
+    show
   end
 
   def remove_song
-    playlist = Playlist.find(params[:id])
+    # @playlist = Playlist.find(params[:id])
     song = Song.find(params[:song_id])
     playlist_song = PlaylistSong.find_by(playlist_id: params[:id], song_id: params[:song_id])
     playlist_song.destroy
-    render 'api/playlists/show'
+    show
   end
 
   private

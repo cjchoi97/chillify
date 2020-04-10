@@ -8,7 +8,14 @@ import configureStore from './store/store';
 
 import {fetchAlbum, fetchAlbums} from './util/album_api_util';
 import {fetchArtist, fetchArtists} from './util/artist_api_util';
-import {fetchPlaylist, fetchPlaylists, addSong, removeSong} from './util/playlist_api_util';
+import {
+  fetchPlaylist, 
+  fetchPlaylists, 
+  addSong, 
+  removeSong,
+  createPlaylist,
+  deletePlaylist
+} from './util/playlist_api_util';
 import {fetchSongs} from './util/song_api_util';
 import {fetchUser} from './util/user_api_util';
 
@@ -41,12 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.fetchPlaylist = fetchPlaylist
   window.fetchPlaylists = fetchPlaylists
+  window.deletePlaylist = deletePlaylist
+  window.createPlaylist = createPlaylist
   window.addSong = addSong
   window.removeSong = removeSong
 
   window.fetchSongs = fetchSongs
   window.fetchUser = fetchUser
-  
+
   window.getState = store.getState;
   window.dispatch = store.dispatch;
   //////////////////////////////////////////////

@@ -231,6 +231,8 @@ document.addEventListener('DOMContentLoaded', function () {
   window.fetchArtists = _util_artist_api_util__WEBPACK_IMPORTED_MODULE_6__["fetchArtists"];
   window.fetchPlaylist = _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_7__["fetchPlaylist"];
   window.fetchPlaylists = _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_7__["fetchPlaylists"];
+  window.deletePlaylist = _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_7__["deletePlaylist"];
+  window.createPlaylist = _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_7__["createPlaylist"];
   window.addSong = _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_7__["addSong"];
   window.removeSong = _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_7__["removeSong"];
   window.fetchSongs = _util_song_api_util__WEBPACK_IMPORTED_MODULE_8__["fetchSongs"];
