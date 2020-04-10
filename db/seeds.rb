@@ -28,12 +28,23 @@ demo = User.create!(email: 'demo@gmail.com',
                   gender: 'male')
 
 artist1 = Artist.create!(name: "Maverick City")
+artist2 = Artist.create!(name: "Elevation Worship")
 
-album1 = Album.create!(title: "Mav City", year: 2020, artist_id: artist1.id)
+album1 = Album.create!(title: "Mav City 3", year: "2020", artist_id: artist1.id)
+album2 = Album.create!(title: "Hallelujah Here Below", year: "2018", artist_id: artist2.id)
 
 song1 = Song.create!(title: "Promises", album_id: album1.id)
 song2 = Song.create!(title: "Most Beautiful", album_id: album1.id)
 song3 = Song.create!(title: "Communion", album_id: album1.id)
+song4 = Song.create!(title: "Wont' Stop Now", album_id: album2.id)
+song5 = Song.create!(title: "Mighty God", album_id: album2.id)
+song6 = Song.create!(title: "Worthy", album_id: album2.id)
+
+playlist1 = Playlist.create!(title: "chill at church", user_id: "")
+
+
+
+PlaylistSong.create!(playlist_id: , song_id: )
 
 
 

@@ -7,7 +7,12 @@ Rails.application.routes.draw do
 
     resources :albums, only: [:index, :show]
 
-    resources :playlists, only: [:index, :show, :create, :update, :destroy]
+    resources :playlists, only: [:index, :show, :create, :update, :destroy] do
+      member do
+        post :add_song, to: 'playlists#add_song', as: 'add'
+        delete :remove_song, to: 'playlists#remove_song', as: 'remove'
+      end
+    end
 
     resources :artists, only: [:index, :show]
 
