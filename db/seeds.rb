@@ -40,11 +40,16 @@ song4 = Song.create!(title: "Wont' Stop Now", album_id: album2.id)
 song5 = Song.create!(title: "Mighty God", album_id: album2.id)
 song6 = Song.create!(title: "Worthy", album_id: album2.id)
 
-playlist1 = Playlist.create!(title: "chill at church", user_id: "")
+playlist1 = Playlist.create!(title: "chill", user_id: chanu.id, private: true)
+playlist2 = Playlist.create!(title: "cry at church", user_id: demo.id, private: true)
 
+PlaylistSong.create!(playlist_id: playlist1.id, song_id: song4.id)
+PlaylistSong.create!(playlist_id: playlist1.id, song_id: song5.id)
+PlaylistSong.create!(playlist_id: playlist1.id, song_id: song6.id)
 
-
-PlaylistSong.create!(playlist_id: , song_id: )
+PlaylistSong.create!(playlist_id: playlist2.id, song_id: song1.id)
+PlaylistSong.create!(playlist_id: playlist2.id, song_id: song2.id)
+PlaylistSong.create!(playlist_id: playlist2.id, song_id: song3.id)
 
 
 
