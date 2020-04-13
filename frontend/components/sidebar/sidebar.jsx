@@ -10,7 +10,8 @@ class Sidebar extends React.Component {
         <div className="sidebar-nav-links">
           <Link to="/explore">Home</Link>
           <Link to="/search">Search</Link>
-          <Link to="/collection/playlists">Library</Link>
+          <Link to="/collection/albums">Library</Link>
+          {/* change above to be playlists later! */}
         </div>
 
         <div className="create-playlist">

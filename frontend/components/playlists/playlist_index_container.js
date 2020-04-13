@@ -3,7 +3,7 @@ import CollectionIndex from '../library/collection_index';
 
 const msp = state => {
   return ({
-    message: "This is the playlist collection"
+    items: "This is the playlist collection"
   });
 }
 

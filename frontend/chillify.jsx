@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { login, logout, signup } from './actions/session_actions';
+// import { login, logout, signup } from './actions/session_actions';
 
 import Root from './components/root';
 
 import configureStore from './store/store';
 
-import {fetchAlbum, fetchAlbums} from './util/album_api_util';
+import {fetchAlbum, fetchAlbums} from './actions/album_actions';
 import {fetchArtist, fetchArtists} from './util/artist_api_util';
 import {
   fetchPlaylist, 
@@ -16,7 +16,7 @@ import {
   createPlaylist,
   deletePlaylist
 } from './util/playlist_api_util';
-import {fetchSongs} from './util/song_api_util';
+import {fetchSongs} from './actions/song_actions';
 import {fetchUser} from './util/user_api_util';
 
 document.addEventListener('DOMContentLoaded', () => {
