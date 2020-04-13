@@ -31,7 +31,16 @@ artist1 = Artist.create!(name: "Maverick City")
 artist2 = Artist.create!(name: "Elevation Worship")
 
 album1 = Album.create!(title: "Mav City 3", year: "2020", artist_id: artist1.id)
+album1.cover.attach(
+  io: File.open("/Users/chanuchoi/Desktop/chillifyassets/photos/MavCity.png"),
+  filename: "MavCity.png"
+)
+
 album2 = Album.create!(title: "Hallelujah Here Below", year: "2018", artist_id: artist2.id)
+album2.cover.attach(
+  io: File.open("/Users/chanuchoi/Desktop/chillifyassets/photos/hhb.png"),
+  filename: "hhb.png"
+)
 
 song1 = Song.create!(title: "Promises", album_id: album1.id)
 song2 = Song.create!(title: "Most Beautiful", album_id: album1.id)

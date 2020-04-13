@@ -5,11 +5,10 @@
 #  id      :bigint           not null, primary key
 #  user_id :integer          not null
 #  title   :string           not null
-#  private :boolean          default(FALSE), not null
+#  private :boolean          default(FALSE)
 #
 class Playlist < ApplicationRecord
   validates :title, presence: true
-  validates :private, presence: true
   validates :private, inclusion: { in: [true, false] }
 
   belongs_to :user
