@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/session_actions';
+import Main from '../main/Main';
 
 const Splash = ({ currentUser, logout, demoLogin }) => {
   const sessionLinks = () => {
@@ -36,13 +37,13 @@ const Splash = ({ currentUser, logout, demoLogin }) => {
   const welcomeMessage = () => {
     return (
       // <Redirect to="/explore" />
-      <div className='logout-prompt'>
-        <h1>Welcome {currentUser.username}</h1>
-        <button onClick={logout}>Logout</button>
-      </div>
+      <Main />
+      // <div className='logout-prompt'>
+      //   <h1>Welcome {currentUser.username}</h1>
+      //   <button onClick={logout}>Logout</button>
+      // </div>
     )
   };
-
   return currentUser ? welcomeMessage() : sessionLinks();
 };
 
