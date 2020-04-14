@@ -17,18 +17,8 @@ const receivePlaylist = playlist => ({
   playlist
 });
 
-const removePlaylist = playlistId => ({
+const removePlaylist = () => ({
   type: REMOVE_PLAYLIST,
-  playlistId
-});
-
-const add = song => ({
-  type: ADD_SONG,
-  song
-});
-
-const remove = () => ({
-  type: REMOVE_SONG
 });
 
 export const fetchPlaylists = () => dispatch => (
@@ -38,7 +28,7 @@ export const fetchPlaylists = () => dispatch => (
 );
 
 export const fetchPlaylist = id => dispatch => (
-  PlaylistAPIUtil.fetchPlaylists(id).then(playlist => (
+  PlaylistAPIUtil.fetchPlaylist(id).then(playlist => (
     dispatch(receivePlaylist(playlist))
   ))
 );
@@ -49,6 +39,12 @@ export const deletePlaylist = id => dispatch => (
   ))
 );
 
+export const createPlaylist = playlist => dispatch => (
+  PlaylistAPIUtil.createPlaylist(playlist).then(playlist => (
+    dispatch(receivePlaylist(playlist))
+  ))
+);
+
 export const updatePlaylist = id => dispatch => (
   PlaylistAPIUtil.updatePlaylist(id).then(playlist => (
     dispatch(receivePlaylist(playlist))
@@ -56,14 +52,14 @@ export const updatePlaylist = id => dispatch => (
 );
 
 export const addSong = (playlistId, songId) => dispatch => (
-  PlaylistAPIUtil.addSong(playlistId, songId).then(song => (
-    dispatch(add(song))
+  PlaylistAPIUtil.addSong(playlistId, songId).then(playlist => (
+    dispatch(receivePlaylist(playlist))
   ))
 );
 
 export const removeSong = (playlistId, songId) => dispatch => (
-  PlaylistAPIUtil.removeSong(playlistId, songId).then(id => (
-    dispatch(remove(id))
+  PlaylistAPIUtil.removeSong(playlistId, songId).then(playlist => (
+    dispatch(receivePlaylist(playlist))
   ))
 );
 

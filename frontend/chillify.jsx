@@ -15,7 +15,7 @@ import {
   removeSong,
   createPlaylist,
   deletePlaylist
-} from './util/playlist_api_util';
+} from './actions/playlist_actions';
 import {fetchSongs} from './actions/song_actions';
 import {fetchUser} from './util/user_api_util';
 

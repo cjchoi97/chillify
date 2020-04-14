@@ -14,10 +14,10 @@ const Main = (props) => {
   const { logout } = props;
   return (
     <div>
-      <p>You're on the main page</p>
+      {/* <p>You're on the main page</p>
       <div className='logout-prompt'>
         <button onClick={logout}>Logout</button>
-      </div>
+      </div> */}
 
       <Sidebar />
       <Navbar />
@@ -27,7 +27,7 @@ const Main = (props) => {
           <Route path="/explore" component={Explore} />
           <Route path="/search" component={Search} />
           {/* <Route path="/explore" component={Radio} /> */}
-          {/* <Route path="/collection/playlists" component={PlaylistIndex} /> */}
+          <Route path="/collection/playlists" component={PlaylistIndex} />
           <Route path="/collection/albums" component={AlbumIndex} />
           {/* <Route path="/collection/artists" component={ArtistIndex} /> */}
         </Switch>
