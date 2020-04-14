@@ -20,11 +20,11 @@ export const createPlaylist = playlist => (
   })
 );
 
-export const updatePlaylist = playlist => (
+export const updatePlaylist = id => (
   $.ajax({
     method: 'PATCH',
-    url: `/api/playlists/${playlist.id}`,
-    data: {playlist_id: playlist}
+    url: `/api/playlists/${id}`,
+    data: {playlist_id: }
   })
 );
 export const deletePlaylist = id => (
@@ -34,18 +34,18 @@ export const deletePlaylist = id => (
   })
 );
 
-export const addSong = (playlist, song) => (
+export const addSong = (playlistId, songId) => (
   $.ajax({
     method: 'POST',
-    url: `/api/playlists/${playlist.id}/add_song`,
-    data: {song_id: song.id}
+    url: `/api/playlists/${playlistId}/add_song`,
+    data: {song_id: songId}
   })
 );
 
-export const removeSong = (playlist, song) => (
+export const removeSong = (playlistId, songId) => (
   $.ajax({
     method: 'DELETE',
-    url: `/api/playlists/${playlist.id}/remove_song`,
-    data: {song_id: song.id}
+    url: `/api/playlists/${playlistId}/remove_song`,
+    data: {song_id: songId}
   })
 );

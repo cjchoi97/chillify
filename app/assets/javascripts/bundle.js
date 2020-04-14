@@ -166,15 +166,7 @@ var receiveCurrentUser = function receiveCurrentUser(currentUser) {
     type: RECEIVE_CURRENT_USER,
     currentUser: currentUser
   };
-}; // export const receiveCurrentUser = currentUser => {
-//   return (
-//     {
-//       type: RECEIVE_CURRENT_USER,
-//       currentUser
-//     }
-//   );
-// }
-
+};
 var logoutCurrentUser = function logoutCurrentUser() {
   return {
     type: LOGOUT_CURRENT_USER
@@ -2031,71 +2023,9 @@ var fetchArtist = function fetchArtist(id) {
   !*** ./frontend/util/playlist_api_util.js ***!
   \********************************************/
 /*! exports provided: fetchPlaylists, fetchPlaylist, createPlaylist, updatePlaylist, deletePlaylist, addSong, removeSong */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPlaylists", function() { return fetchPlaylists; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPlaylist", function() { return fetchPlaylist; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPlaylist", function() { return createPlaylist; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePlaylist", function() { return updatePlaylist; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deletePlaylist", function() { return deletePlaylist; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSong", function() { return addSong; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeSong", function() { return removeSong; });
-var fetchPlaylists = function fetchPlaylists() {
-  return $.ajax({
-    method: 'GET',
-    url: '/api/playlists'
-  });
-};
-var fetchPlaylist = function fetchPlaylist(id) {
-  return $.ajax({
-    method: 'GET',
-    url: "/api/playlists/".concat(id)
-  });
-};
-var createPlaylist = function createPlaylist(playlist) {
-  return $.ajax({
-    method: 'POST',
-    url: '/api/playlists',
-    data: {
-      playlist: playlist
-    }
-  });
-};
-var updatePlaylist = function updatePlaylist(playlist) {
-  return $.ajax({
-    method: 'PATCH',
-    url: "/api/playlists/".concat(playlist.id),
-    data: {
-      playlist_id: playlist
-    }
-  });
-};
-var deletePlaylist = function deletePlaylist(id) {
-  return $.ajax({
-    method: 'DELETE',
-    url: "/api/playlists/".concat(id)
-  });
-};
-var addSong = function addSong(playlist, song) {
-  return $.ajax({
-    method: 'POST',
-    url: "/api/playlists/".concat(playlist.id, "/add_song"),
-    data: {
-      song_id: song.id
-    }
-  });
-};
-var removeSong = function removeSong(playlist, song) {
-  return $.ajax({
-    method: 'DELETE',
-    url: "/api/playlists/".concat(playlist.id, "/remove_song"),
-    data: {
-      song_id: song.id
-    }
-  });
-};
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/frontend/util/playlist_api_util.js: Unexpected token (27:24)\n\n\u001b[0m \u001b[90m 25 | \u001b[39m    method\u001b[33m:\u001b[39m \u001b[32m'PATCH'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 26 | \u001b[39m    url\u001b[33m:\u001b[39m \u001b[32m`/api/playlists/${id}`\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 | \u001b[39m    data\u001b[33m:\u001b[39m {playlist_id\u001b[33m:\u001b[39m }\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 | \u001b[39m  })\u001b[0m\n\u001b[0m \u001b[90m 29 | \u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 30 | \u001b[39m\u001b[36mexport\u001b[39m \u001b[36mconst\u001b[39m deletePlaylist \u001b[33m=\u001b[39m id \u001b[33m=>\u001b[39m (\u001b[0m\n    at Object._raise (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:742:17)\n    at Object.raiseWithData (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:735:17)\n    at Object.raise (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:729:17)\n    at Object.unexpected (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:8757:16)\n    at Object.parseExprAtom (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10052:20)\n    at Object.parseExprAtom (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:4614:20)\n    at Object.parseExprSubscripts (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9602:23)\n    at Object.parseMaybeUnary (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9582:21)\n    at Object.parseExprOps (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9452:23)\n    at Object.parseMaybeConditional (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9425:23)\n    at Object.parseMaybeAssign (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9380:21)\n    at Object.parseObjectProperty (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10512:101)\n    at Object.parseObjPropValue (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10537:101)\n    at Object.parseObjectMember (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10461:10)\n    at Object.parseObj (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10374:25)\n    at Object.parseExprAtom (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9995:28)\n    at Object.parseExprAtom (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:4614:20)\n    at Object.parseExprSubscripts (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9602:23)\n    at Object.parseMaybeUnary (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9582:21)\n    at Object.parseExprOps (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9452:23)\n    at Object.parseMaybeConditional (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9425:23)\n    at Object.parseMaybeAssign (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9380:21)\n    at Object.parseObjectProperty (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10512:101)\n    at Object.parseObjPropValue (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10537:101)\n    at Object.parseObjectMember (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10461:10)\n    at Object.parseObj (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:10374:25)\n    at Object.parseExprAtom (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9995:28)\n    at Object.parseExprAtom (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:4614:20)\n    at Object.parseExprSubscripts (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9602:23)\n    at Object.parseMaybeUnary (/Users/chanuchoi/Desktop/app academy/Fullstack Project/chillify/node_modules/@babel/parser/lib/index.js:9582:21)");
 
 /***/ }),
 
