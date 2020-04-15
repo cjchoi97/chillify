@@ -11,6 +11,8 @@ class Playlist < ApplicationRecord
   validates :title, presence: true
   validates :private, inclusion: { in: [true, false] }
 
+  has_one_attached :photo
+
   belongs_to :user
 
   has_many :playlist_songs, dependent: :destroy

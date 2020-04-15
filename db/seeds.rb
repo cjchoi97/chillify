@@ -8,6 +8,7 @@
 
 require 'open-uri'
 
+
 User.destroy_all
 Album.destroy_all
 Playlist.destroy_all
@@ -32,14 +33,16 @@ artist1 = Artist.create!(name: "Maverick City")
 artist2 = Artist.create!(name: "Elevation Worship")
 
 album1 = Album.create!(title: "Mav City 3", year: "2020", artist_id: artist1.id)
-album1.cover.attach(
-  io: File.open("/Users/chanuchoi/Desktop/chillifyassets/photos/MavCity.png"),
+album1_photo = open('https://chillify-aa-dev.s3.amazonaws.com/MavCity.png')
+album1.photo.attach(
+  io: album1_photo,
   filename: "MavCity.png"
 )
 
 album2 = Album.create!(title: "Hallelujah Here Below", year: "2018", artist_id: artist2.id)
-album2.cover.attach(
-  io: File.open("/Users/chanuchoi/Desktop/chillifyassets/photos/hhb.png"),
+album2_photo = open("https://chillify-aa-dev.s3.amazonaws.com/hhb.png")
+album2.photo.attach(
+  io: album2_photo,
   filename: "hhb.png"
 )
 
@@ -51,7 +54,13 @@ song5 = Song.create!(title: "Mighty God", album_id: album2.id)
 song6 = Song.create!(title: "Worthy", album_id: album2.id)
 
 playlist1 = Playlist.create!(title: "chill", user_id: chanu.id, private: true)
-playlist2 = Playlist.create!(title: "cry at church", user_id: demo.id, private: true)
+playlist1_photo = open('https://chillify-aa-dev.s3.amazonaws.com/defaultphoto.png')
+playlist1.photo.attach(io: playlist1_photo, filename:'defaultphoto.png')
+
+playlist2 = Playlist.create!(title: "chill in the morning", user_id: demo.id, private: true)
+playlist2_photo = open('https://chillify-aa-dev.s3.amazonaws.com/defaultphoto.png')
+playlist2.photo.attach(io: playlist2_photo, filename:'defaultphoto.png')
+
 
 PlaylistSong.create!(playlist_id: playlist1.id, song_id: song4.id)
 PlaylistSong.create!(playlist_id: playlist1.id, song_id: song5.id)

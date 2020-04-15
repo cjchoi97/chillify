@@ -14,13 +14,13 @@ class Album < ApplicationRecord
 
   has_many :songs, dependent: :destroy
   
-  has_one_attached :cover
+  has_one_attached :photo
 
-  before_destroy :delete_album_cover
+  before_destroy :delete_album_photo
 
 
-  def delete_album_cover
-    self.cover.purge
+  def delete_album_photo
+    self.photo.purge
   end
 
 end
