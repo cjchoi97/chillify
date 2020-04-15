@@ -1,0 +1,42 @@
+.navbar-click {
+  padding-top: 20px;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+}
+.navbar-click {
+  margin-right: 20px;
+  // background-color: black;
+  width: 76px;
+  height: 17px;
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-dropdown-click {
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: black;
+  border-radius: 50px;
+  padding: 7px 10px;
+  position: relative;
+  font-size: 13px;
+}
+
+.navbar-dropdown-click > h3 {
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+.navbar-dropdown-click:hover {
+  background-color: #282828;
+}
+
+.navbar-menu {
+  position: absolute;
+}

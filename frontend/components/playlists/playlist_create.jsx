@@ -13,7 +13,7 @@ class PlaylistCreate extends React.Component {
 
   update(field) {
     return (e) => {
-      this.setState( { [field]: e.currentTarget.value } )
+      this.setState( { [field]: e.target.value } )
       // this might be e.target
     }
   }
@@ -35,17 +35,17 @@ class PlaylistCreate extends React.Component {
     return(
       <div className="create-playlist">
         <i className="fas fa-times" onClick={() => this.props.closeModal()}></i>
-        <h1 className="new-playlist-title">Create new playlist</h1>
+        <h1 className="create-prompt">Create new playlist</h1>
         <div className="new-playlist-input-container">
           <form onSubmit={this.handleSubmit}>
             <div className="new-playlist-input">
-              <h3 className="new-playlist-input-title">Create New Playlist</h3>
+              <h3 className="new-playlist-input-title">Playlist Name</h3>
               <input
                 type="text"
                 value={this.state.title}
                 onChange={this.update("title")}
                 placeholder="New Playlist"
-                className="new-playlist-input-box"
+                className="new-playlist-input-name"
               />
             </div>
             <div className="cancel-create-buttons">

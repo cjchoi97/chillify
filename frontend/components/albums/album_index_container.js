@@ -3,8 +3,12 @@ import CollectionIndex from '../library/collection_index';
 import { fetchAlbums } from '../../actions/album_actions';
 
 const msp = state => {
+  const currentId = state.session.id;
+  const currentUser = state.entities.users[currentId];
   return ({
-    items: Object.values(state.entities.albums)
+    items: Object.values(state.entities.albums),
+    itemType: 'Albums',
+    currentUser: currentUser
   });
 }
 

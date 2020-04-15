@@ -27,6 +27,7 @@
   text-align: center;
   margin-right: 20px;
   height: 260px;
+  margin-bottom: 20px;
 }
 
 .item div {
@@ -78,6 +79,24 @@
 }
 
 .explore h1 {
+  margin: 10px 0;
+  font-size: 28px;
+  line-height: 1.6;
+  font-weight: 600;
+  letter-spacing: -.36px;
+  color: white;
+}
+
+.collections {
+  padding-left: 32px;
+}
+
+.collection-index {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.collection-type-text {
   margin: 10px 0;
   font-size: 28px;
   line-height: 1.6;

@@ -513,8 +513,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
+  var currentId = state.session.id;
+  var currentUser = state.entities.users[currentId];
   return {
-    items: Object.values(state.entities.albums)
+    items: Object.values(state.entities.albums),
+    itemType: 'Albums',
+    currentUser: currentUser
   };
 };
 
@@ -708,25 +712,28 @@ var CollectionIndex = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(CollectionIndex);
 
-  function CollectionIndex() {
+  function CollectionIndex(props) {
     _classCallCheck(this, CollectionIndex);
 
-    return _super.apply(this, arguments);
+    return _super.call(this, props);
   }
 
   _createClass(CollectionIndex, [{
     key: "componentDidMount",
-    // constructor(props) {
-    //   super(props);
-    // }
     value: function componentDidMount() {
       this.props.fetchItems();
     }
   }, {
     key: "render",
     value: function render() {
-      var items = this.props.items;
-      var indexItems = items.map(function (item) {
+      var _this$props = this.props,
+          items = _this$props.items,
+          currentUser = _this$props.currentUser,
+          itemType = _this$props.itemType;
+      var filteredItems = Object.values(items).length > 0 ? currentUser.playlistIds.map(function (id) {
+        return items[id];
+      }) : [];
+      var indexItems = filteredItems.map(function (item) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "item",
           key: item.id
@@ -734,9 +741,13 @@ var CollectionIndex = /*#__PURE__*/function (_React$Component) {
           src: item.photoUrl
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, item.title));
       });
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collections"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "collection-type-text"
+      }, itemType), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collection-index"
-      }, indexItems);
+      }, indexItems));
     }
   }]);
 
@@ -1043,7 +1054,8 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      dropdown: "closed"
+      dropdown: "closed",
+      icon: ""
     };
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
@@ -1082,13 +1094,17 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "navbar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "navbar-dropdown"
+        className: "left-nav"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "right-nav"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "navbar-arrow",
+        className: "navbar-dropdown-click",
         onClick: this.toggleDropdown
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "user-preferred-name"
-      }, currentUser.preferred_name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, currentUser.preferred_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-caret-down"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "navbar-menu ".concat(this.state.dropdown)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "navbar-menu-item"
@@ -1190,7 +1206,7 @@ var PlaylistCreate = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        _this2.setState(_defineProperty({}, field, e.currentTarget.value)); // this might be e.target
+        _this2.setState(_defineProperty({}, field, e.target.value)); // this might be e.target
 
       };
     }
@@ -1220,7 +1236,7 @@ var PlaylistCreate = /*#__PURE__*/function (_React$Component) {
           return _this3.props.closeModal();
         }
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-        className: "new-playlist-title"
+        className: "create-prompt"
       }, "Create new playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "new-playlist-input-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -1229,12 +1245,12 @@ var PlaylistCreate = /*#__PURE__*/function (_React$Component) {
         className: "new-playlist-input"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "new-playlist-input-title"
-      }, "Create New Playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Playlist Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.title,
         onChange: this.update("title"),
         placeholder: "New Playlist",
-        className: "new-playlist-input-box"
+        className: "new-playlist-input-name"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "cancel-create-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1276,10 +1292,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _playlist_create__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./playlist_create */ "./frontend/components/playlists/playlist_create.jsx");
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 
 
- // import { withRouter } from 'react-router-dom';
+
+
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -1301,7 +1319,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_playlist_create__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_playlist_create__WEBPACK_IMPORTED_MODULE_1__["default"])));
 
 /***/ }),
 
@@ -1324,12 +1342,14 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(state) {
   var currentUserId = state.session.id;
   var currentUser = state.entities.users[currentUserId];
-  var playlists = state.entities.playlists;
-  var userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(function (id) {
-    return playlists[id];
-  }) : [];
+  var playlists = state.entities.playlists; // const userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
+  //   return playlists[id]
+  // }) : [];
+
   return {
-    items: userPlaylists
+    items: playlists,
+    currentUser: currentUser,
+    itemType: 'Playlists'
   };
 };
 

@@ -6,7 +6,8 @@ class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropdown: "closed"
+      dropdown: "closed",
+      icon: ""
     }
     this.handleLogout = this.handleLogout.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -30,11 +31,15 @@ class Navbar extends React.Component {
     const { currentUser, logout } = this.props;
     return (
       <div className="navbar">
-        {/* search bar here */}
+        <div className="left-nav">
+          {/* <span></span> */}
+        </div>
 
-        <div className="navbar-dropdown">
-          <div className="navbar-arrow" onClick={this.toggleDropdown}>
-            <span className="user-preferred-name">{currentUser.preferred_name}</span>
+        <div className="right-nav">
+
+          <div className="navbar-dropdown-click" onClick={this.toggleDropdown}>
+            <h3 className="user-preferred-name">{currentUser.preferred_name}</h3>
+            <i className="fas fa-caret-down"></i>
           </div>
           <ul className={`navbar-menu ${this.state.dropdown}`} >
             <li className="navbar-menu-item">

@@ -1,0 +1,133 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.9);
+  z-index: 10;
+  width: 100%;
+}
+
+.modal-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.create-playlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+.fa-times {
+  position: absolute;
+  top: -90px;
+}
+
+.fa-times, .create-prompt {
+  color: white;
+  font-size: 48px;
+  margin: 24px 0;
+  transition: font-size ease 0;
+  font-weight: bold;
+}
+
+.fa-times:hover {
+  font-size: 50px;
+}
+
+.new-playlist-input-name {
+  width: 100%
+}
+
+.new-playlist-input-container {
+  height: 150px;
+  width: 100%;
+  background-color: #282828;
+  display: flex;
+  justify-content: center;
+}
+
+.new-playlist-input {
+  width: 100%;
+  background-color: #282828;
+  box-sizing: border-box;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-playlist-input-title {
+  color: white;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.new-playlist-input-name {
+  height: 56px;
+  width: 800px;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  caret-color: #1EBA54;
+  font-size: 48px;
+  padding: 1px 0;
+  color: white;
+  font-weight: 600;
+}
+
+.new-playlist-input-name::placeholder {
+  font-size: 48px;
+  color: #535353;
+  font-weight: 700;
+}
+
+.cancel-create-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 28px 0;
+}
+
+.playlist-cancel-button, .playlist-create-button {
+  padding: 0 10px;
+}
+
+.create-button, .cancel-button {
+  border-radius: 50px;
+  color: white;
+  padding: 9px 32px;
+  letter-spacing: 1.76px;
+  outline: none;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.cancel-button {
+  border: 1px solid #525252;
+}
+
+.create-button {
+  border: 1px solid transparent;
+  background-color: #1EBA54;
+}
+
+.create-button:hover, .cancel-button:hover {
+  transition: none 33ms;
+  transition-property: all;
+  transform: scale(1.06);
+  cursor: pointer;
+}
+
+.create-button:hover {
+  background-color: #1ed760;
+}
