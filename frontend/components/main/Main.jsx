@@ -11,18 +11,18 @@ import Explore from '../library/explore';
 import Sidebar from '../sidebar/sidebar';
 
 const Main = (props) => {
-  const { logout } = props;
+  // const { logout } = props;
   return (
-    <div>
+    <div className="main-page">
       {/* <p>You're on the main page</p>
       <div className='logout-prompt'>
         <button onClick={logout}>Logout</button>
       </div> */}
 
       <Sidebar />
-      <Navbar />
 
       <div className="main-content">
+        <Navbar history={props.history}/>
         <Switch>
           <Route path="/explore" component={Explore} />
           <Route path="/search" component={Search} />

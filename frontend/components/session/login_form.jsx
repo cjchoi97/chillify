@@ -1,4 +1,5 @@
 import React from 'react';
+import LogoHeader from './logo_header';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -48,10 +49,10 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div className="login">
-        <div className="session-error-messages">{this.renderErrors()}</div>
-        {/* some sort of logo header thing*/}
+        <LogoHeader />
         <form className="login-form" onSubmit={this.handleSubmit}>
           <div className="login-message">To continue, log in to Chillify.</div>
+          <div className="session-error-messages-login">{this.renderErrors()}</div>
           <button
             className="demo-button"
             onClick={this.demoLogin}>

@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/session_actions';
 import Main from '../main/Main';
 
-const Splash = ({ currentUser, logout, demoLogin }) => {
+const Splash = ({ currentUser, logout, demoLogin, history }) => {
   const sessionLinks = () => {
     const demoUser = { email: 'demo@gmail.com', password: 'password' };
 
@@ -12,8 +12,18 @@ const Splash = ({ currentUser, logout, demoLogin }) => {
       <div className="home">
         <header className="main-header">
           <nav className="main-nav">
-            {/* logo goes here */}
+            <img
+              src="https://chillify-aa-dev.s3.amazonaws.com/chillifylogo.png"
+              height="80"
+            />
             <div>
+              <a target="_blank" href="https://github.com/cjchoi97/chillify" className="main-nav-link">
+                Github
+              </a>
+              <a target="_blank" href="https://www.linkedin.com/in/chanuchoi/" className="main-nav-link">
+                LinkedIn
+              </a>
+              <span> | </span>
               <Link to="/signup" className="main-nav-link">Sign Up</Link>
               <Link to="/login" className="main-nav-link">Login</Link>
             </div>
@@ -25,7 +35,7 @@ const Splash = ({ currentUser, logout, demoLogin }) => {
           <h3 className="home-sub-text">Millions of songs. No credit card needed.</h3>
           <button
             className="session-submit"
-            onClick={() => demoLogin(demoUser)}
+            onClick={() => demoLogin(demoUser).then(() => history.push("/explore"))}
           >
             Log In as A Demo User
           </button>
@@ -37,7 +47,7 @@ const Splash = ({ currentUser, logout, demoLogin }) => {
   const welcomeMessage = () => {
     return (
       // <Redirect to="/explore" />
-      <Main />
+      <Main history={history}/>
       // <div className='logout-prompt'>
       //   <h1>Welcome {currentUser.username}</h1>
       //   <button onClick={logout}>Logout</button>

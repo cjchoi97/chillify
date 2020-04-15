@@ -1,4 +1,5 @@
 import React from 'react';
+import LogoHeader from './logo_header';
 
 export default class SignupForm extends React.Component {
   constructor(props) {
@@ -90,7 +91,7 @@ export default class SignupForm extends React.Component {
   render() {
     return (
       <div className="signup">
-        {/* some sort of logo header thing*/}
+        <LogoHeader />
 
         <form className="signup-form" onSubmit={this.handleSubmit}>
 

@@ -18,32 +18,32 @@ class Explore extends React.Component {
     const { albums, playlists } = this.props
     const albumItems = albums.map(album => {
       return (
-        <li className="item" key={album.id}>
-          <h2>{album.title}</h2>
+        <div className="item" key={album.id}>
           <img src={album.photoUrl} />
-        </li>
+          <div>{album.title}</div>
+        </div>
       );
     });
 
     const playlistItems = playlists.map(playlist => {
       return (
-        <li className="item" key={playlist.id}>
-          <h2>{playlist.title}</h2>
+        <div className="item" key={playlist.id}>
           <img src={playlist.photoUrl} />
-        </li>
+          <div>{playlist.title}</div>
+        </div>
       );
     });
     return (
       <div className="explore">
-        <span>Albums For You</span>
-        <ul className="explore-albums">
+        <h1>Albums For You</h1>
+        <div className="explore-section">
           {albumItems}
-        </ul>
+        </div>
 
-        <span>Playlists For You</span>
-        <ul className="explore-playlists">
+        <h1>Playlists For You</h1>
+        <div className="explore-section">
           {playlistItems}
-        </ul>
+        </div>
       </div>
     );
   }

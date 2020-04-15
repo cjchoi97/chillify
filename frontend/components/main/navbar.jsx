@@ -5,7 +5,24 @@ import { logout } from '../../actions/session_actions';
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      dropdown: "closed"
+    }
+    this.handleLogout = this.handleLogout.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+  }
 
+  toggleDropdown() {
+    if (this.state.dropdown === "closed") {
+      this.setState({ dropdown: "open" });
+    } else {
+      this.setState({ dropdown: "closed" });
+    }
+  }
+
+  handleLogout(e) {
+    const { logout } = this.props;
+    logout().then(() => this.props.history.push("/"));
   }
 
   render() {
@@ -16,10 +33,10 @@ class Navbar extends React.Component {
         {/* search bar here */}
 
         <div className="navbar-dropdown">
-          <div className="navbar-arrow">
+          <div className="navbar-arrow" onClick={this.toggleDropdown}>
             <span className="user-preferred-name">{currentUser.preferred_name}</span>
           </div>
-          <ul className="navbar-menu">
+          <ul className={`navbar-menu ${this.state.dropdown}`} >
             <li className="navbar-menu-item">
               <a target="_blank" href="https://github.com/cjchoi97/chillify">
                 Github
@@ -32,7 +49,7 @@ class Navbar extends React.Component {
               </a>
             </li>
 
-            <li className="navbar-menu-item" onClick={logout}>
+            <li className="navbar-menu-item" onClick={this.handleLogout}>
               Logout
             </li>
           </ul>

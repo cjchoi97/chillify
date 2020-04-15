@@ -6,7 +6,7 @@
 }
 
 .session-error-messages {
-  color: darkred;
+  color: #B63741;
 }
 
 .login-form {
@@ -164,4 +164,26 @@ button {
   border: 2px solid black;
   color: black;
   transition-duration: 0.3s;
+}
+
+.chillify-header {
+  text-align: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.header-logo > img{
+  margin: -7px 0
+}
+
+.session-error-messages-login {
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  background-color: #B63741;
+  font-size: 12px;
+  width: 320px;
+}
+
+.session-error-messages-login li {
+  padding: 15px;
 }
