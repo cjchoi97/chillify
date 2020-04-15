@@ -74,6 +74,7 @@
 .explore > div {
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .explore h1 {

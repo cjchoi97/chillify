@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { openModal } from '../../actions/modal_actions';
+import { logout } from '../../util/session_api_util';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -27,7 +30,7 @@ class Sidebar extends React.Component {
 
         <div className="create-playlist">
           <button
-            // onClick={}
+            onClick={() => this.props.openModal('createPlaylist')}
             className="side-playlist-create-btn"
           >
             <i className="fas fa-plus-square"></i>
@@ -43,4 +46,13 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+const mdp = dispatch => {
+  return ({
+    openModal: modal => dispatch(openModal(modal))
+  })
+}
+
+export default connect(
+  null,
+  mdp
+)(Sidebar);

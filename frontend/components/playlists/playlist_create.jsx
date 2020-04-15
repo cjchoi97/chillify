@@ -5,28 +5,27 @@ class PlaylistCreate extends React.Component {
     super(props);
     this.state = {
       title: "",
-      request: "dontcreate"
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.update = this.update.bind(this);
   }
 
-  handleCancel() {
-    if (this.state.request === "dontcreate") {
-      this.setState({ dropdown: "create" });
-    } else {
-      this.setState({ dropdown: "dontcreate" });
+  update(field) {
+    return (e) => {
+      this.setState( { [field]: e.currentTarget.value } )
+      // this might be e.target
     }
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.props.closeModal();
-    const newPlaylist = {
-      title: this.state.title
-    }
+    const copyState = Object.assign({}, this.state);
     if (this.state.title.length === 0) {
       copyState.title = "New Playlist"
     }
-    this.props.createPlaylist(copyState);
+    this.props.processForm(copyState);
   }
 
   render() {
@@ -34,8 +33,8 @@ class PlaylistCreate extends React.Component {
     
 
     return(
-      <div className={`create-playlist ${this.state.request}`}>
-        <i className="fas fa-times" onClick={this.handleCancel}></i>
+      <div className="create-playlist">
+        <i className="fas fa-times" onClick={() => this.props.closeModal()}></i>
         <h1 className="new-playlist-title">Create new playlist</h1>
         <div className="new-playlist-input-container">
           <form onSubmit={this.handleSubmit}>
@@ -49,20 +48,20 @@ class PlaylistCreate extends React.Component {
                 className="new-playlist-input-box"
               />
             </div>
-            <div className="new-playlist-btns">
-              <div className="playlist-cancel-btn-box">
+            <div className="cancel-create-buttons">
+              <div className="playlist-cancel-button">
                 <input
                   type="button"
-                  onClick={() => this.pro()}
-                  className="playlist-cancel-btn"
+                  onClick={() => this.props.closeModal()}
+                  className="cancel-button"
                   value="CANCEL"
                 />
               </div>
-              <div className="playlist-create-btn-box">
+              <div className="playlist-create-button">
                 <input
                   type="submit"
                   value="CREATE"
-                  className="playlist-create-btn"
+                  className="create-button"
                 />
               </div>
             </div>

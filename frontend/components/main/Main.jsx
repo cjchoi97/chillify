@@ -9,6 +9,7 @@ import ArtistIndex from '../artists/artist_index_container';
 import Search from '../library/search';
 import Explore from '../library/explore';
 import Sidebar from '../sidebar/sidebar';
+import Modal from '../ui/modal_container';
 
 const Main = (props) => {
   // const { logout } = props;
@@ -18,7 +19,7 @@ const Main = (props) => {
       <div className='logout-prompt'>
         <button onClick={logout}>Logout</button>
       </div> */}
-
+      <Modal />
       <Sidebar />
 
       <div className="main-content">

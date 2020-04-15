@@ -1,19 +1,15 @@
 import { connect } from 'react-redux';
-import PlaylistCreate from './playlist_create';
-import { createPlaylist } from '../../actions/playlist_actions';
+import Modal from './modal';
 import { closeModal } from '../../actions/modal_actions';
-// import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => {
   return {
-    playlist: { title: ''},
-    formType: 'create'
+    modal: state.ui.modal
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    processForm: playlist => dispatch(createPlaylist(playlist)),
     closeModal: () => dispatch(closeModal())
   };
 };
@@ -21,4 +17,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PlaylistCreate);
+)(Modal);

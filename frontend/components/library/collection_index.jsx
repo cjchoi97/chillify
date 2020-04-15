@@ -13,15 +13,15 @@ class CollectionIndex extends React.Component {
 
     const indexItems = items.map(item => {
       return(
-        <li className="item" key={item.id}>
-          <h2>{item.title}</h2>
+        <div className="item" key={item.id}>
           <img src={item.photoUrl} />
-        </li>
+          <div>{item.title}</div>
+        </div>
       );
     });
 
     return (
-      <ul className="items-index">
+      <ul className="collection-index">
         {indexItems}
       </ul>
     );
