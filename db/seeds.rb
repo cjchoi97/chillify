@@ -53,6 +53,9 @@ song4 = Song.create!(title: "Wont' Stop Now", album_id: album2.id)
 song5 = Song.create!(title: "Mighty God", album_id: album2.id)
 song6 = Song.create!(title: "Worthy", album_id: album2.id)
 
+song1_track = open('https://chillify-aa-dev.s3.amazonaws.com/music/Everlasting+Father.mp3')
+song1.track.attach(io: song1_track, filename: "Everlasting+Father.mp3")
+
 playlist1 = Playlist.create!(title: "chill", user_id: chanu.id, private: true)
 playlist1_photo = open('https://chillify-aa-dev.s3.amazonaws.com/defaultphoto.png')
 playlist1.photo.attach(io: playlist1_photo, filename:'defaultphoto.png')

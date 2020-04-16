@@ -20,5 +20,7 @@ class Song < ApplicationRecord
   has_many :playlists,
     through: :playlists_songs,
     source: :playlist
+
+  has_one_attached :track
   
 end
