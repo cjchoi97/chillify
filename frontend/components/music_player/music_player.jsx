@@ -76,7 +76,7 @@ class MusicPlayer extends React.Component {
             />
             {this.renderMainButton()}
             <img
-              src="https://robotify-development.s3.amazonaws.com/next_hover.png"
+              src="https://chillify-aa-dev.s3.amazonaws.com/next.png"
               className="song-select"
             />
           </div>
