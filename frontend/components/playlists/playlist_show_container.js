@@ -18,7 +18,7 @@ const msp = (state, ownProps) => {
     item: playlist,
     // filteredSongs: playlistSongs,
     songs: songs,
-    users: users
+    creators: users
     // creator: creator,
   });
 }
@@ -26,9 +26,9 @@ const msp = (state, ownProps) => {
 const mdp = dispatch => {
   return ({
     deleteItem: id => dispatch(deletePlaylist(id)),
-    fetchPlaylists: () => dispatch(fetchPlaylists()),
+    fetchItems: () => dispatch(fetchPlaylists()),
     fetchSongs: () => dispatch(fetchSongs()),
-    fetchUsers: () => dispatch(fetchUsers())
+    fetchCreators: () => dispatch(fetchUsers())
   })
 }
 

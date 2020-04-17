@@ -6,17 +6,16 @@ class PlaylistShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchPlaylists();
+    this.props.fetchItems();
     this.props.fetchSongs();
-    this.props.fetchUsers();
+    this.props.fetchCreators();
   }
 
   render() {
     const { 
       item, 
-      // creator, 
       deleteItem,
-      users,
+      creators,
       songs
     } = this.props
     if (!item) return null;
@@ -25,14 +24,13 @@ class PlaylistShow extends React.Component {
       return songs[id]
     }) : [];
     
-    const creator = users[item.user_id];
+    const creator = creators[item.user_id];
     // debugger
 
 
     const songItems = filteredSongs.map(song => {
       return (
         <li className="songs" key={song.id}>
-          {/* <img src={song.photoUrl} /> */}
           <div className="song-content">
             <div className="song-content-left">
               <i className="fas fa-music"></i>
@@ -64,7 +62,7 @@ class PlaylistShow extends React.Component {
         <div className="item-information">
           <img src={item.photoUrl} />
           <div className="item-name">{item.title}</div>
-          <div className="creator">{creator.username}</div>
+          <div className="creator"><span>{creator.username}</span></div>
           <button className="play-item-button">PLAY</button>
           <i className="fas fa-ellipsis-h"></i>
           <div className="item-size">

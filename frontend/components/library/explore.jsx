@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchAlbums } from '../../actions/album_actions';
 import { fetchPlaylists } from '../../actions/playlist_actions';
+// import { fetchArtists } from '../../actions/artist_actions';
+// import { fetchUsers } from '../../actions/user_actions';
+import { Link } from 'react-router-dom'
 
 
 class Explore extends React.Component {
@@ -18,19 +21,21 @@ class Explore extends React.Component {
     const { albums, playlists } = this.props
     const albumItems = albums.map(album => {
       return (
-        <div className="item" key={album.id}>
+        <Link className="item" key={album.id} to={`/albums/${album.id}`}>
           <img src={album.photoUrl} />
-          <div>{album.title}</div>
-        </div>
+          <div className="item-title">{album.title}</div>
+          <div className="item-creator">{album.artist_name}</div>
+        </Link>
       );
     });
 
     const playlistItems = playlists.map(playlist => {
       return (
-        <div className="item" key={playlist.id}>
+        <Link className="item" key={playlist.id} to={`/playlists/${playlist.id}`}>
           <img src={playlist.photoUrl} />
-          <div>{playlist.title}</div>
-        </div>
+          <div className="item-title">{playlist.title}</div>
+          <div className="item-creator">By {playlist.user_name}</div>
+        </Link>
       );
     });
     return (
@@ -50,16 +55,22 @@ class Explore extends React.Component {
 }
 
 const msp = state => {
+  const { users, artists, playlists, albums } = state.entities
   return ({
-    playlists: Object.values(state.entities.playlists),
-    albums: Object.values(state.entities.albums)
+    playlists: Object.values(playlists),
+    albums: Object.values(albums),
+    users: users,
+    artists: artists
+
   });
 }
 
 const mdp = dispatch => {
   return ({
     fetchAlbums: () => dispatch(fetchAlbums()),
-    fetchPlaylists: () => dispatch(fetchPlaylists())
+    fetchPlaylists: () => dispatch(fetchPlaylists()),
+    // fetchArtists: () => dispatch(fetchArtists()),
+    // fetchUsers: () => dispatch(fetchUsers())
   });
 }
 

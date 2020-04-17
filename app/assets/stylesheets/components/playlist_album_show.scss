@@ -125,18 +125,19 @@
   margin: 12px 0;
   font-size: 28px;
   font-weight: bold;
+  width: 270px;
 }
 
 .creator {
   color: #686868;
   // transition-duration: 0.4s;
-  width: 60px;
+  width: 100%;
   align-self: center;
   margin-bottom: 30px;
   font-size: 15px;
 }
 
-.creator:hover {
+.creator span:hover {
   // transition-duration: 0.4s;
   color: #A0A0A0;
   text-decoration: underline;

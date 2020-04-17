@@ -13,13 +13,6 @@ class MusicPlayer extends React.Component {
     this.renderMainButton = this.renderMainButton.bind(this);
   }
 
-  // componentDidMount() {
-  //   // const player = this.refs.player;
-  //   // player.addEventListener("ended", this.nextSong);
-  //   // player.addEventListener("timeupdate", this.updateTime);
-  //   // document.addEventListener("keydown", this.spaceBar);
-  // }
-
   componentDidMount() {
     this.props.fetchSongs();
   }
@@ -32,12 +25,7 @@ class MusicPlayer extends React.Component {
   }
 
   play() {
-    // if (!this.refs.player.currentSrc && this.props.queue.length) {
-    //   //you added this late. Delete if it causes problems
-    //   this.nextSong();
-    // }
     if (!this.refs.player.currentSrc) return;
-    // if (!this.refs.player.currentSrc) this.nextSong();
     this.props.togglePlay(true);
     this.refs.player.play();
   }
@@ -51,7 +39,7 @@ class MusicPlayer extends React.Component {
   renderMainButton() {
     let src;
     if (this.props.playing) {
-      src = "https://robotify-development.s3.amazonaws.com/pause_hover.png"
+      src = "https://chillify-aa-dev.s3.amazonaws.com/pausebutton.png"
       return (
         <img
           onClick={this.pause}
@@ -60,7 +48,7 @@ class MusicPlayer extends React.Component {
         />
       )
     } else {
-      src = "https://robotify-development.s3.amazonaws.com/play_hover.png"
+      src = "https://chillify-aa-dev.s3.amazonaws.com/playbutton.png"
       return (
         <img
           onClick={this.play}
@@ -78,80 +66,23 @@ class MusicPlayer extends React.Component {
     return (
       <div className="music-player">
         <div className="song-display">
-          {/* {currentSong.cover_url && (
-            <img
-              src={currentSong.cover_url}
-              className="current-song-img"
-            />
-          )} */}
-
-          {/* <div className="song-info">
-            <Link
-              to={`/albums/${currentSong.album_id}`}
-              className="mp-song-title"
-            >
-              {(currentSong.title)}
-            </Link>
-            <Link
-              to={`/artists/${currentSong.artist_id}`}
-              className="mp-artist-name"
-            >
-              {currentSong.artist_name}
-            </Link>
-          </div> */}
         </div>
 
         <div className="mp-main">
           <div className="control-buttons">
-            {/* {this.renderShuffleButton()} */}
-
             <img
-              // onClick={this.prevSong}
-              src="https://robotify-development.s3.amazonaws.com/prev_hover.png"
+              src="https://chillify-aa-dev.s3.amazonaws.com/previous.png"
               className="song-select"
             />
-
             {this.renderMainButton()}
-
             <img
-              // onClick={this.nextSong}
               src="https://robotify-development.s3.amazonaws.com/next_hover.png"
               className="song-select"
             />
-
-            {/* {this.renderRepeatButton()} */}
-
           </div>
-
-          {/* <div className="progress-bar-container">
-            <p className="time-display">{this.timeToString(this.state.currentTime)}</p>
-
-            <input
-              type="range"
-              min={0}
-              max={this.state.duration}
-              value={this.state.currentTime}
-              onChange={this.changeTime}
-              onMouseDown={this.seek}
-              onMouseUp={this.find}
-              className="progress-bar"
-            />
-            <p className="time-display">{this.timeToString(this.state.duration)}</p>
-          </div> */}
-
         </div>
 
         <div className="volume-control">
-          {/* {this.renderVolumeImg()}
-
-          <input
-            type="range"
-            min={0}
-            max={100}
-            value={this.state.volume}
-            onChange={this.changeVolume}
-            className="volume-slider"
-          /> */}
         </div>
 
         <audio

@@ -5,4 +5,5 @@ else
   json.photoUrl url_for(playlist.photo)
 end
 json.creator_id playlist.user_id
+json.user_name playlist.user.username
 json.songIds playlist.song_ids

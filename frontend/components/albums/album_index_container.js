@@ -7,7 +7,7 @@ const msp = state => {
   const currentUser = state.entities.users[currentId];
   return ({
     items: Object.values(state.entities.albums),
-    itemType: 'Albums',
+    itemType: 'albums',
     currentUser: currentUser
   });
 }

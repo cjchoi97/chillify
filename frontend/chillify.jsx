@@ -7,7 +7,7 @@ import Root from './components/root';
 import configureStore from './store/store';
 
 import {fetchAlbum, fetchAlbums} from './actions/album_actions';
-import {fetchArtist, fetchArtists} from './util/artist_api_util';
+import {fetchArtist, fetchArtists} from './actions/artist_actions';
 import {
   fetchPlaylist, 
   fetchPlaylists, 

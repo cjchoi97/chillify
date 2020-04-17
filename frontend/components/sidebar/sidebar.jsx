@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { openModal } from '../../actions/modal_actions';
 import { logout } from '../../util/session_api_util';
+import { fetchUser } from '../../actions/user_actions';
+import { fetchPlaylists } from '../../actions/playlist_actions';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -12,7 +14,30 @@ class Sidebar extends React.Component {
       request: "dontcreate"
     }
   }
+
+  componentDidMount() {
+    this.props.fetchPlaylists()
+    this.props.fetchUser(this.props.currentUserId);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (Object.values(this.props.playlists).length !== Object.values(prevProps.playlists).length) {
+      this.props.fetchUser(this.props.currentUserId);
+    }
+  }
+
   render() {
+
+    const { playlists } = this.props
+
+    const indexItems = playlists.map(playlist => {
+      return (
+        <li className="sidebar-playlist-item" key={playlist.id}>
+          <Link to={`/playlists/${playlist.id}`}>{playlist.title}</Link>
+        </li>
+      );
+    });
+
     return (
       <div className="sidebar">
         <div className="sidebar-header-logo">
@@ -56,21 +81,37 @@ class Sidebar extends React.Component {
           </button>
         </div>
 
-        <div className="sidebar-playlists">
+        <ul className="sidebar-playlists">
+          {indexItems}
           {/* get your created and liked playlists */}
-        </div>
+        </ul>
       </div>
     );
   }
 }
 
+const msp = state => {
+  const currentUserId = state.session.id;
+  const currentUser = state.entities.users[currentUserId];
+  const { playlists } = state.entities;
+  const userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
+    return playlists[id]
+  }) : [];
+  return ({
+    playlists: userPlaylists,
+    currentUserId: currentUserId
+  })
+}
+
 const mdp = dispatch => {
   return ({
-    openModal: modal => dispatch(openModal(modal))
+    openModal: modal => dispatch(openModal(modal)),
+    fetchUser: id => dispatch(fetchUser(id)),
+    fetchPlaylists: () => dispatch(fetchPlaylists())
   })
 }
 
 export default connect(
-  null,
+  msp,
   mdp
 )(Sidebar);

@@ -37,7 +37,7 @@
   margin-bottom: 20px;
 }
 
-.item div {
+.item-title {
   text-align: left;
   color: white;
   display: block;
@@ -110,9 +110,25 @@
   font-weight: 600;
   letter-spacing: -.36px;
   color: white;
+  text-transform: capitalize;
 }
 
 .items-show-page {
   margin-top: 30px;
   padding-left: 32px;
+}
+
+.item-creator {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: gray;
+  text-align: left;
+  margin-top: 15px;
+}
+
+.item-title {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: white;
 }

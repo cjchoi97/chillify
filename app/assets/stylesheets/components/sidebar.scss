@@ -52,11 +52,18 @@
   justify-content: flex-start;
   padding-left: 0px;
   margin-left: -50px;
+  color: #B3B3B3;
+  transition-duration: 0.3s;
 }
 .side-playlist-create-btn > i {
   font-size: 31px;
   margin-right: 10px;
   // padding-left: 5px;
+}
+
+.side-playlist-create-btn:hover {
+  color: white;
+  transition-duration: 0.3s;
 }
 
 .create-playlist-text {
@@ -73,4 +80,36 @@
   letter-spacing: .16em;
   padding-left: 20px;
   margin-top: 20px;
+}
+
+.sidebar-playlists {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.sidebar-playlist-item {
+  color: #B3B3B3;
+  margin-right: 10px;
+  padding-left: 20px;
+  height: 40px;
+  width: 100%;
+}
+
+.sidebar-playlist-item a {
+  width: 200px;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  font-size: 15px;
+}
+
+.sidebar-playlist-item a:hover {
+  color: white;
+  transition-duration: 0.3s;
+}
+
+.sidebar-playlist-item a:focus {
+  color: white;
 }

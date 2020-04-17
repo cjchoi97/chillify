@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 class CollectionIndex extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class CollectionIndex extends React.Component {
   }
 
   render() {
-    const { items, currentUser, itemType } = this.props
+    const { items, currentUser, itemType, creators } = this.props
     const filteredItems = Object.values(items).length > 0 ? currentUser.playlistIds.map(id => {
       return items[id]
     }) : [];
@@ -26,10 +27,11 @@ class CollectionIndex extends React.Component {
 
     const indexItems = filteredItems.map(item => {
       return(
-        <div className="item" key={item.id}>
+        <Link className="item" key={item.id} to={`/${itemType}/${item.id}`}>
           <img src={item.photoUrl} />
-          <div>{item.title}</div>
-        </div>
+          <div className="item-title">{item.title}</div>
+          <div className="item-creator">By {creators[item.user_id].username}</div>
+        </Link>
       );
     });
 
