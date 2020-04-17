@@ -5,6 +5,13 @@ export const fetchPlaylists = () => (
   })
 );
 
+export const fetchAuthoredPlaylists = id => {
+  return $.ajax({
+    method: 'GET',
+    url: `/api/users/${id}/playlists`
+  })
+}
+
 export const fetchPlaylist = id => (
   $.ajax({
     method: 'GET',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchUser } from '../../util/user_api_util';
 
 class PlaylistCreate extends React.Component {
   constructor(props) {
@@ -20,12 +21,13 @@ class PlaylistCreate extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const { currentUser, fetchUser } = this.props;
     this.props.closeModal();
     const copyState = Object.assign({}, this.state);
     if (this.state.title.length === 0) {
       copyState.title = "New Playlist"
     }
-    this.props.processForm(copyState);
+    this.props.processForm(copyState).then(fetchUser(currentUser.id))
   }
 
   render() {

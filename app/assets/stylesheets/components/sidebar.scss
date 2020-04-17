@@ -1,18 +1,10 @@
 .sidebar {
-  background-color: #040404;
+  background-color: #000000;
   font-family: Arial, Helvetica, sans-serif;
-  // height: 100%;
   height: 89vh;
   width: 300px;
+  
 }
-
-// .sidebar-nav-links {
-//   padding-left: 20px;
-//   // display: flex;
-//   // flex-direction: column;
-//   // justify-content: space-evenly;
-//   // height: 138px;
-// }
 
 .sidebar-nav-links li a{
   height: 40px;
@@ -20,7 +12,20 @@
   font-size: 14px;
   display: flex;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 10px;
+  margin: 0 10px;
+}
+
+.sidebar-nav-links li a:focus {
+  background-color: #282828;
+  border-radius: 4px;
+  color: white;
+}
+
+
+.sidebar-nav-links li a i {
+  margin-right: 17px;
+  font-size: 20px;
 }
 
 .sidebar-nav-links li:hover a{
@@ -39,4 +44,33 @@
 
 .sidebar-heaader-logo {
   text-align: left;
+}
+
+.side-playlist-create-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0px;
+  margin-left: -50px;
+}
+.side-playlist-create-btn > i {
+  font-size: 31px;
+  margin-right: 10px;
+  // padding-left: 5px;
+}
+
+.create-playlist-text {
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  font-size: 13px;
+}
+
+.divider-text {
+  font-size: 11px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #B3B3B3;
+  letter-spacing: .16em;
+  padding-left: 20px;
+  margin-top: 20px;
 }

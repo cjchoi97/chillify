@@ -22,11 +22,29 @@ class Sidebar extends React.Component {
           />
         </div>
 
+
         <ul className="sidebar-nav-links">
-          <li><Link to="/explore">Home</Link></li>
-          <li><Link to="/search">Search</Link></li>
-          <li><Link to="/collection/playlists">Library</Link></li>
+          <li>
+            <Link to="/explore">
+              <i className="fas fa-home"></i>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/search">
+              <i className="fas fa-search"></i>
+              Search
+            </Link>
+          </li>
+          <li>
+            <Link to="/collection/playlists">
+              <i className="fas fa-book-open"></i>
+              Library
+            </Link>
+          </li>
         </ul>
+
+        <h2 className="divider-text">Playlists</h2>
 
         <div className="create-playlist">
           <button

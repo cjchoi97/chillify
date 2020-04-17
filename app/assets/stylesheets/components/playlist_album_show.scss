@@ -1,0 +1,178 @@
+.items-show-page {
+  display: flex;
+  color: white;
+}
+
+.item-information {
+  justify-content: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.item-information > img {
+  height: 270px;
+}
+
+.song-index {
+  width: 100%;
+  margin-left: 15px;
+  margin-right: 40px;
+}
+
+.songs {
+  display: flex;
+  // justify-content: space-between;
+  width: 100%;
+  transition-duration: 0.4s;
+  height: 65px;
+  align-items: center;
+  justify-content: center;
+  // padding: 40px 15px;
+}
+
+.songs:hover {
+  background-color: #2A2A2A;
+  transition-duration: 0.4s;
+}
+
+.songs:hover i.fa-play{
+  display: block;
+}
+
+.songs:hover i.fa-music{
+  display: none;
+}
+
+.song-info {
+  margin-left: 15px;
+}
+
+.fa-play {
+  display: none;
+}
+
+.fa-ellipsis-h {
+  align-self: center;
+  font-size: 14px;
+}
+
+.song-content {
+  display: flex;
+}
+
+.song-creator-info {
+  color: #A0A0A0;
+}
+
+.song-artist {
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.song-album {
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.song-artist:hover {
+  color: white;
+  transition-duration: 0.4s;
+  text-decoration: underline;
+}
+
+.song-album:hover {
+  color: white;
+  transition-duration: 0.4s;
+  text-decoration: underline;
+}
+
+.song-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0px 15px;
+}
+
+.song-content-left, .song-content-right {
+  display: flex;
+}
+
+.song-creator-info span {
+  font-size: 14px;
+}
+
+.song-duration {
+  color: #A0A0A0;
+}
+
+.dot {
+  margin: 0 10px;
+  cursor: default;
+}
+
+.song-content-right i {
+  margin-right: 60px;
+  display: none;
+}
+
+.songs:hover i.fa-ellipsis-h{
+  display: block;
+}
+
+.item-name {
+  margin: 12px 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.creator {
+  color: #686868;
+  // transition-duration: 0.4s;
+  width: 60px;
+  align-self: center;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+
+.creator:hover {
+  // transition-duration: 0.4s;
+  color: #A0A0A0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.play-item-button {
+  background-color:  #1DB954;
+  width: 110px;
+  align-self: center;
+  padding: 13px 0;
+  transition-duration: 0s;
+}
+
+.play-item-button:hover {
+  background-color:  #1ed760;
+  transform: scale(1.06);
+  transition-duration: 0s;
+}
+
+.item-information i {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #A0A0A0;
+  font-size: 20px;
+  // transition-duration: 0.4s;
+}
+
+.item-information i:hover {
+  color: white;
+  // transition-duration: 0.4s;
+}
+
+.item-size {
+  font-size: 11px;
+  letter-spacing: 1.76px;
+  color: #A0A0A0;
+}
+

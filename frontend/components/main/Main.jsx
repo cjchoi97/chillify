@@ -10,6 +10,8 @@ import Search from '../library/search';
 import Explore from '../library/explore';
 import Sidebar from '../sidebar/sidebar';
 import Modal from '../ui/modal_container';
+import MusicPlayer from '../music_player/music_player_container';
+import PlaylistShow from '../playlists/playlist_show_container';
 
 const Main = (props) => {
   // const { logout } = props;
@@ -27,12 +29,14 @@ const Main = (props) => {
         <Switch>
           <Route path="/explore" component={Explore} />
           <Route path="/search" component={Search} />
-          {/* <Route path="/explore" component={Radio} /> */}
           <Route path="/collection/playlists" component={PlaylistIndex} />
           <Route path="/collection/albums" component={AlbumIndex} />
+          <Route path="/playlists/:id" component={PlaylistShow} />
+          {/* <Route path="/albums/:id" component={AlbumShowContainer} /> */}
           {/* <Route path="/collection/artists" component={ArtistIndex} /> */}
         </Switch>
       </div>
+      <MusicPlayer />
     </div>
   );
 }

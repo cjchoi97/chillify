@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 import CollectionIndex from '../library/collection_index';
-import { fetchPlaylists } from '../../actions/playlist_actions';
+import { fetchPlaylists, fetchAuthoredPlaylists } from '../../actions/playlist_actions';
+import { fetchUser } from '../../actions/user_actions';
 
 const msp = state => {
   const currentUserId = state.session.id;
   const currentUser = state.entities.users[currentUserId];
   const { playlists } = state.entities;
+  // debugger
   // const userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
   //   return playlists[id]
   // }) : [];
@@ -18,7 +20,10 @@ const msp = state => {
 
 const mdp = dispatch => {
   return ({
-    fetchItems: () => dispatch(fetchPlaylists())
+    fetchItems: () => dispatch(fetchPlaylists()),
+    fetchOwnedItems: id => dispatch(fetchAuthoredPlaylists(id)),
+    fetchUser: id => dispatch(fetchUser(id))
+
   });
 }
 

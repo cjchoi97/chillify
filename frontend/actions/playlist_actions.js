@@ -27,6 +27,12 @@ export const fetchPlaylists = () => dispatch => (
   ))
 );
 
+export const fetchAuthoredPlaylists = id => dispatch => (
+  PlaylistAPIUtil.fetchAuthoredPlaylists(id).then(playlists => (
+    dispatch(receivePlaylists(playlists))
+  ))
+);
+
 export const fetchPlaylist = id => dispatch => (
   PlaylistAPIUtil.fetchPlaylist(id).then(playlist => (
     dispatch(receivePlaylist(playlist))

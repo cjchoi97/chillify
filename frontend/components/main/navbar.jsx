@@ -42,19 +42,19 @@ class Navbar extends React.Component {
             <i className="fas fa-caret-down"></i>
           </div>
           <ul className={`navbar-menu ${this.state.dropdown}`} >
-            <li className="navbar-menu-item">
+            <li className="navbar-menu-item github">
               <a target="_blank" href="https://github.com/cjchoi97/chillify">
                 Github
               </a>
             </li>
 
-            <li className="navbar-menu-item">
+            <li className="navbar-menu-item linkedin">
               <a target="_blank" href="https://www.linkedin.com/in/chanuchoi/">
                 LinkedIn
               </a>
             </li>
 
-            <li className="navbar-menu-item" onClick={this.handleLogout}>
+            <li className="navbar-menu-item logout" onClick={this.handleLogout}>
               Logout
             </li>
           </ul>
