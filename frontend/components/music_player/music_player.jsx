@@ -86,7 +86,7 @@ class MusicPlayer extends React.Component {
         </div>
 
         <audio
-          src={song.song_url}
+          src="https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3"
           ref="player"
           autoPlay={playing}>
         </audio>
