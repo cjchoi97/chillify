@@ -8,26 +8,42 @@ Chillify is a clone of Spotify that houses music that is listened to when laying
 
 # Feature Highlights
 ## Create Playlists
+![alt text](https://github.com/cjchoi97/chillify/blob/master/app/assets/images/readme/createplaylist.png "Create Playlist")
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+After logging in, users have the option to create a playlist. They can add the name of the playlist and they will be named the creator of that playlist.
 
-Things you may want to cover:
+## Login
 
-* Ruby version
+![alt text](https://github.com/cjchoi97/chillify/blob/master/app/assets/images/readme/login.png "Login option")
 
-* System dependencies
+You can always sign up for the website! When you try to log in without the correct credentials, you will see an error message. If you don't want to sign up, you can always check in as a demo user to see the website!
 
-* Configuration
+# Technologies Used
 
-* Database creation
+* React.js
 
-* Database initialization
+* Redux
 
-* How to run the test suite
+* Javascript
 
-* Services (job queues, cache servers, search engines, etc.)
+* Ruby on Rails
 
-* Deployment instructions
+* SCSS / CSS
 
-* ...
+* PostgreSQL
+
+* AWS S3
+
+* Heroku
+
+# Future Developments
+
+* Playing Music
+
+* Add songs to playlists
+
+* Show pages for artists
+
+* Liking playlists, songs, and albums
+
+* Following Arists
