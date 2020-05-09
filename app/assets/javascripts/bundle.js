@@ -1515,12 +1515,12 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
         src: "https://chillify-aa-dev.s3.amazonaws.com/previous.png",
         className: "song-select"
       }), this.renderMainButton(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "https://robotify-development.s3.amazonaws.com/next_hover.png",
+        src: "https://chillify-aa-dev.s3.amazonaws.com/next.png",
         className: "song-select"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "volume-control"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
-        src: song.song_url,
+        src: "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3",
         ref: "player",
         autoPlay: playing
       }));
