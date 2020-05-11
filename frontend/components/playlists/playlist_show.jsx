@@ -52,7 +52,7 @@ class PlaylistShow extends React.Component {
           <div className="song-content">
             <div className="song-content-left">
               <i className="fas fa-music"></i>
-              <i className="fas fa-play"></i>
+              <i className="fas fa-play song-play"></i>
               <div className="song-info">
                 
                 <div className="song-title">{song.title}</div>
@@ -93,7 +93,9 @@ class PlaylistShow extends React.Component {
           </div>
         </div>
         <div className="play-or-delete">
-          <button className="play-item-button">PLAY</button>
+          <button className="play-item-button">
+            <i className="fas fa-play"></i>
+          </button>
           <i className="far fa-heart"></i>
           <i className={`fas fa-ellipsis-h delete-button`} onClick={this.toggleDropdown}>
             <ul className={`delete-menu ${this.state.dropdown}`}>

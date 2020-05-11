@@ -63,7 +63,7 @@
   margin-left: 15px;
 }
 
-.fa-play {
+.song-play {
   display: none;
 }
 
@@ -158,10 +158,16 @@
 
 .play-item-button {
   background-color:  #1DB954;
-  width: 110px;
+  width: 56px;
+  height: 56px;
   align-self: center;
   padding: 13px 0;
   transition-duration: 0s;
+  font-size: 20px;
+}
+
+.play-item-button i {
+  margin-left: 5px;
 }
 
 .play-item-button:hover {
