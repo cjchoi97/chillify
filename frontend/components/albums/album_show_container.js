@@ -13,7 +13,8 @@ const msp = (state, ownProps) => {
   return ({
     item: album,
     songs: songs,
-    creators: artists
+    creators: artists,
+    type: "album"
   });
 }
 

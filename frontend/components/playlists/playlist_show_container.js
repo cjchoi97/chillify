@@ -18,7 +18,8 @@ const msp = (state, ownProps) => {
     item: playlist,
     // filteredSongs: playlistSongs,
     songs: songs,
-    creators: users
+    creators: users,
+    type: "playlist"
     // creator: creator,
   });
 }

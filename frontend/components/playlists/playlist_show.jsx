@@ -3,11 +3,25 @@ import React from 'react';
 class PlaylistShow extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      dropdown: "closed"
+    }
+
+    this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
-  componentWillMount() {
+  toggleDropdown() {
+    if (this.state.dropdown === "closed") {
+      this.setState({ dropdown: "open" });
+    } else {
+      this.setState({ dropdown: "closed" });
+    }
+  }
+
+  componentDidMount() {
     this.props.fetchItems();
-    this.props.fetchSongs();
+    // this.props.fetchSongs();
     this.props.fetchCreators();
   }
 
@@ -16,7 +30,8 @@ class PlaylistShow extends React.Component {
       item, 
       deleteItem,
       creators,
-      songs
+      songs,
+      type
     } = this.props
     if (!item) return null;
     
@@ -25,12 +40,14 @@ class PlaylistShow extends React.Component {
     }) : [];
     
     const creator = creators[item.user_id];
+
+    if (!creator) return null;
     // debugger
 
 
-    const songItems = filteredSongs.map(song => {
+    const songItems = filteredSongs.map((song, i) => {
       return (
-        <li className="songs" key={song.id}>
+        <li className="songs" key={i}>
           <div className="song-content">
             <div className="song-content-left">
               <i className="fas fa-music"></i>
@@ -59,15 +76,32 @@ class PlaylistShow extends React.Component {
     });
     return (
       <div className="items-show-page">
-        <div className="item-information">
+        <div className="img-and-info">
           <img src={item.photoUrl} />
-          <div className="item-name">{item.title}</div>
-          <div className="creator"><span>{creator.username}</span></div>
-          <button className="play-item-button">PLAY</button>
-          <i className="fas fa-ellipsis-h"></i>
-          <div className="item-size">
-            {filteredSongs.length} SONGS
+          <div className="item-information">
+              <span className="item-type">{type}</span>
+              <span className="item-name">{item.title}</span>
+              <div className="creator-year-time">
+                <div className="creator"><span>{creator.username}</span></div>
+                <span className="dot">•</span>
+                <span className="total-duration">0m 0s</span>
+              </div>
+            {/* <div className="item-size">
+              {filteredSongs.length} SONGS
+            </div> */}
           </div>
+        </div>
+        <div className="play-or-delete">
+          <button className="play-item-button">PLAY</button>
+          <i className="far fa-heart"></i>
+          <i className={`fas fa-ellipsis-h delete-button`} onClick={this.toggleDropdown}>
+            <ul className={`delete-menu ${this.state.dropdown}`}>
+              <li className={`navbar-menu-item`} onClick={() => deleteItem(item.id)}>
+                delete
+              </li>
+            </ul>
+          </i>
+
         </div>
 
         <ul className="song-index">

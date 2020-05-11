@@ -1,25 +1,39 @@
 .items-show-page {
-  display: flex;
+  // display: flex;
   color: white;
+  background: rgb(18,18,18);
+  background: linear-gradient(0deg, rgba(18,18,18,1) 52%, rgba(81,81,81,1) 100%);
+  // margin-top: 65px;
 }
 
 .item-information {
   justify-content: center;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   flex-direction: column;
-  text-align: center;
+  margin-left: 24px;
+  width: 100%;
+  // text-align: center;
 }
 
-.item-information > img {
-  height: 270px;
-  width: 270px;
+.img-and-info > img {
+  height: 234px;
+  width: 234px;
+}
+
+.img-and-info {
+  display: flex;
+}
+
+.item-type {
+  text-transform: uppercase;
+  font-size: 12px;
 }
 
 .song-index {
   width: 100%;
-  margin-left: 15px;
-  margin-right: 40px;
+  margin-left: auto;
+  padding-right: 50px;
 }
 
 .songs {
@@ -111,6 +125,7 @@
 .dot {
   margin: 0 10px;
   cursor: default;
+  color: #9C9B9A;
 }
 
 .song-content-right i {
@@ -122,20 +137,17 @@
   display: block;
 }
 
-.item-name {
-  margin: 12px 0;
-  font-size: 28px;
-  font-weight: bold;
-  width: 270px;
+.creator {
+  color: white;
+  // transition-duration: 0.4s;
+  // width: 100%;
+  align-self: center;
+  font-size: 15px;
+  font-weight: 900;
 }
 
-.creator {
-  color: #686868;
-  // transition-duration: 0.4s;
-  width: 100%;
-  align-self: center;
-  margin-bottom: 30px;
-  font-size: 15px;
+.total-duration {
+  color: #9C9B9A;
 }
 
 .creator span:hover {
@@ -164,6 +176,7 @@
   margin-bottom: 15px;
   color: #A0A0A0;
   font-size: 20px;
+  width: 100%;
   // transition-duration: 0.4s;
 }
 
@@ -177,4 +190,65 @@
   letter-spacing: 1.76px;
   color: #A0A0A0;
 }
+
+.delete-button {
+  position: relative;
+}
+
+.delete-menu {
+  position: absolute;
+}
+
+.play-or-delete {
+  display: flex;
+}
+
+.creator-year-time {
+  display: flex;
+}
+
+.item-name {
+  margin-top: 12px;
+  font-size: 28px;
+  font-weight: bold;
+  width: 100%;
+  font-size:85px;
+  margin-left: -3px;
+}
+
+.play-or-delete {
+  padding-top: 50px;
+  padding-bottom: 24px;
+  align-items: center;
+}
+
+.fa-heart {
+  font-size: 32px;
+  margin: 0 25px;
+}
+
+@media only screen and (max-width: 1060px) {
+  .item-name {
+    font-size: 48px;
+  }
+
+    .item-information {
+    margin-left: 16px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .img-and-info > img {
+    height: 192px;
+    width: 192px;
+  }
+
+}
+
+@media only screen and (min-width: 1060px) and (max-width: 1200px) {
+  .item-name {
+    font-size: 72px;
+  }
+}
+
+
 

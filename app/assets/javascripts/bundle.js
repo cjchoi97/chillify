@@ -701,7 +701,8 @@ var msp = function msp(state, ownProps) {
   return {
     item: album,
     songs: songs,
-    creators: artists
+    creators: artists,
+    type: "album"
   };
 };
 
@@ -1872,16 +1873,36 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(PlaylistShow);
 
   function PlaylistShow(props) {
+    var _this;
+
     _classCallCheck(this, PlaylistShow);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      dropdown: "closed"
+    };
+    _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(PlaylistShow, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.props.fetchItems();
-      this.props.fetchSongs();
+    key: "toggleDropdown",
+    value: function toggleDropdown() {
+      if (this.state.dropdown === "closed") {
+        this.setState({
+          dropdown: "open"
+        });
+      } else {
+        this.setState({
+          dropdown: "closed"
+        });
+      }
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchItems(); // this.props.fetchSongs();
+
       this.props.fetchCreators();
     }
   }, {
@@ -1891,17 +1912,19 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
           item = _this$props.item,
           deleteItem = _this$props.deleteItem,
           creators = _this$props.creators,
-          songs = _this$props.songs;
+          songs = _this$props.songs,
+          type = _this$props.type;
       if (!item) return null;
       var filteredSongs = Object.values(songs).length > 0 ? item.songIds.map(function (id) {
         return songs[id];
       }) : [];
-      var creator = creators[item.user_id]; // debugger
+      var creator = creators[item.user_id];
+      if (!creator) return null; // debugger
 
-      var songItems = filteredSongs.map(function (song) {
+      var songItems = filteredSongs.map(function (song, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "songs",
-          key: song.id
+          key: i
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "song-content"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1933,20 +1956,40 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "items-show-page"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "item-information"
+        className: "img-and-info"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: item.photoUrl
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "item-information"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "item-type"
+      }, type), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "item-name"
       }, item.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "creator-year-time"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "creator"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, creator.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, creator.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "dot"
+      }, "\u2022"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "total-duration"
+      }, "0m 0s")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "play-or-delete"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "play-item-button"
       }, "PLAY"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-ellipsis-h"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "item-size"
-      }, filteredSongs.length, " SONGS")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "far fa-heart"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-ellipsis-h delete-button",
+        onClick: this.toggleDropdown
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "delete-menu ".concat(this.state.dropdown)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "navbar-menu-item",
+        onClick: function onClick() {
+          return deleteItem(item.id);
+        }
+      }, "delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "song-index"
       }, songItems));
     }
@@ -1993,7 +2036,8 @@ var msp = function msp(state, ownProps) {
     item: playlist,
     // filteredSongs: playlistSongs,
     songs: songs,
-    creators: users // creator: creator,
+    creators: users,
+    type: "playlist" // creator: creator,
 
   };
 };
