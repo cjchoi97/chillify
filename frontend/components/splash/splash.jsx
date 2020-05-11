@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/session_actions';
 import Main from '../main/Main';
 
-const Splash = ({ currentUser, logout, demoLogin, history }) => {
+const Splash = ({ currentUser, logout, demoLogin, history, location }) => {
   const sessionLinks = () => {
     const demoUser = { email: 'demo@gmail.com', password: 'password' };
 
@@ -47,7 +47,7 @@ const Splash = ({ currentUser, logout, demoLogin, history }) => {
   const welcomeMessage = () => {
     return (
       // <Redirect to="/explore" />
-      <Main history={history}/>
+      <Main history={history} location={location}/>
       // <div className='logout-prompt'>
       //   <h1>Welcome {currentUser.username}</h1>
       //   <button onClick={logout}>Logout</button>

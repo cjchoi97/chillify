@@ -16,6 +16,12 @@ import AlbumShow from '../albums/album_show_container';
 
 const Main = (props) => {
   // const { logout } = props;
+  let page = "main";
+  const path = props.location.pathname.split('/');
+  const loc = path[1];
+  if (loc === "albums" || loc === "playlists") {
+    page = "show";
+  }
   return (
     <div className="main-page">
       {/* <p>You're on the main page</p>
@@ -25,8 +31,8 @@ const Main = (props) => {
       <Modal />
       <Sidebar />
 
-      <div className="main-content">
-        <Navbar history={props.history}/>
+      <div className={`main-content ${page}`} >
+        <Navbar history={props.history} location={props.location}/>
         <Switch>
           <Route path="/explore" component={Explore} />
           <Route path="/search" component={Search} />

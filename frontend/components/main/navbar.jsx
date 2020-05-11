@@ -7,7 +7,7 @@ class Navbar extends React.Component {
     super(props);
     this.state = {
       dropdown: "closed",
-      icon: ""
+      icon: "",
     }
     this.handleLogout = this.handleLogout.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -27,7 +27,9 @@ class Navbar extends React.Component {
   }
 
   render() {
-
+    // console.log(this.props.location.pathname);
+    // const path = this.props.location.pathname.split("/");
+    
     const { currentUser, logout } = this.props;
     return (
       <div className="navbar">

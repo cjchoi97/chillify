@@ -1,8 +1,6 @@
 .items-show-page {
   // display: flex;
   color: white;
-  background: rgb(18,18,18);
-  background: linear-gradient(0deg, rgba(18,18,18,1) 52%, rgba(81,81,81,1) 100%);
   // margin-top: 65px;
 }
 
@@ -19,6 +17,7 @@
 .img-and-info > img {
   height: 234px;
   width: 234px;
+  box-shadow: 0 4px 60px rgba(0,0,0,.5);
 }
 
 .img-and-info {

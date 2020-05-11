@@ -1211,12 +1211,21 @@ __webpack_require__.r(__webpack_exports__);
 
 var Main = function Main(props) {
   // const { logout } = props;
+  var page = "main";
+  var path = props.location.pathname.split('/');
+  var loc = path[1];
+
+  if (loc === "albums" || loc === "playlists") {
+    page = "show";
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "main-page"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ui_modal_container__WEBPACK_IMPORTED_MODULE_11__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar_sidebar__WEBPACK_IMPORTED_MODULE_10__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "main-content"
+    className: "main-content ".concat(page)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    history: props.history
+    history: props.history,
+    location: props.location
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
     path: "/explore",
     component: _library_explore__WEBPACK_IMPORTED_MODULE_9__["default"]
@@ -1335,6 +1344,8 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      // console.log(this.props.location.pathname);
+      // const path = this.props.location.pathname.split("/");
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           logout = _this$props.logout;
@@ -2854,7 +2865,8 @@ var Splash = function Splash(_ref) {
   var currentUser = _ref.currentUser,
       logout = _ref.logout,
       demoLogin = _ref.demoLogin,
-      history = _ref.history;
+      history = _ref.history,
+      location = _ref.location;
 
   var sessionLinks = function sessionLinks() {
     var demoUser = {
@@ -2905,7 +2917,8 @@ var Splash = function Splash(_ref) {
       /*#__PURE__*/
       // <Redirect to="/explore" />
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_main_Main__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        history: history
+        history: history,
+        location: location
       }) // <div className='logout-prompt'>
       //   <h1>Welcome {currentUser.username}</h1>
       //   <button onClick={logout}>Logout</button>

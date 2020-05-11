@@ -26,6 +26,7 @@ class PlaylistShow extends React.Component {
   }
 
   render() {
+
     const { 
       item, 
       deleteItem,
