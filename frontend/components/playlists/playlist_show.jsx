@@ -9,6 +9,18 @@ class PlaylistShow extends React.Component {
     }
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
+  }
+
+  closeDropdown() {
+    if (this.state.dropdown === "open") 
+      this.setState({dropdown: "closed"});
+  }
+
+  handleDelete() {
+    const { deleteItem, item } = this.props;
+    deleteItem(item.id).then(() => this.props.history.push("/explore"));
   }
 
   toggleDropdown() {
@@ -25,11 +37,14 @@ class PlaylistShow extends React.Component {
     this.props.fetchCreators();
   }
 
+  // componentWillUnmount() {
+
+  // }
+
   render() {
 
     const { 
       item, 
-      deleteItem,
       creators,
       songs,
       type
@@ -76,7 +91,7 @@ class PlaylistShow extends React.Component {
       );
     });
     return (
-      <div className="items-show-page">
+      <div className="items-show-page" onClick={this.closeDropdown}>
         <div className="img-and-info">
           <img src={item.photoUrl} />
           <div className="item-information">
@@ -99,7 +114,7 @@ class PlaylistShow extends React.Component {
           <i className="far fa-heart"></i>
           <i className={`fas fa-ellipsis-h delete-button`} onClick={this.toggleDropdown}>
             <ul className={`delete-menu ${this.state.dropdown}`}>
-              <li className={`navbar-menu-item`} onClick={() => deleteItem(item.id)}>
+              <li className={`navbar-menu-item`} onClick={this.handleDelete}>
                 delete
               </li>
             </ul>

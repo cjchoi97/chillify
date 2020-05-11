@@ -26,6 +26,7 @@ class CollectionIndex extends React.Component {
     // debugger
 
     const indexItems = filteredItems.map(item => {
+      if (!item) return null;
       return(
         <Link className="item" key={item.id} to={`/${itemType}/${item.id}`}>
           <img src={item.photoUrl} />
