@@ -1,6 +1,5 @@
 import {
   UPDATE_CURRENT_SONG,
-  UPDATE_CURRENT_ARTIST,
   TOGGLE_PLAY,
   TOGGLE_PAUSE
 } from '../actions/music_actions';
@@ -15,7 +14,7 @@ const musicReducer = (state = _defaultState, action) => {
   const musicState = Object.assign({}, state);
   switch (action.type) {
     case UPDATE_CURRENT_SONG:
-      musicState.currentSong = action.song;
+      musicState.currentSong = action.song.id;
       return musicState;
     case TOGGLE_PLAY:
       musicState.playing = true;

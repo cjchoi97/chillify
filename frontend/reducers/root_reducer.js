@@ -4,7 +4,7 @@ import sessionReducer from './session_reducer';
 import errorsReducer from './errors_reducer';
 import entitiesReducer from './entities_reducer';
 import uiReducer from './ui_reducer';
-import musicReducer from './music_reducer';
+// import musicReducer from './music_reducer';
 
 
 const rootReducer = combineReducers({
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   errors: errorsReducer,
   ui: uiReducer,
-  music: musicReducer
+  // music: musicReducer
 });
 
 export default rootReducer;
