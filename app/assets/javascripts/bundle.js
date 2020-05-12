@@ -940,6 +940,7 @@ var CollectionIndex = /*#__PURE__*/function (_React$Component) {
       }) : []; // debugger
 
       var indexItems = filteredItems.map(function (item) {
+        if (!item) return null;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "item",
           key: item.id,
@@ -1240,10 +1241,12 @@ var Main = function Main(props) {
     component: _albums_album_index_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
     path: "/playlists/:id",
-    component: _playlists_playlist_show_container__WEBPACK_IMPORTED_MODULE_13__["default"]
+    component: _playlists_playlist_show_container__WEBPACK_IMPORTED_MODULE_13__["default"],
+    history: props.history
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
     path: "/albums/:id",
-    component: _albums_album_show_container__WEBPACK_IMPORTED_MODULE_14__["default"]
+    component: _albums_album_show_container__WEBPACK_IMPORTED_MODULE_14__["default"],
+    history: props.history
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_music_player_music_player_container__WEBPACK_IMPORTED_MODULE_12__["default"], null));
 };
 
@@ -1890,22 +1893,49 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      dropdown: "closed"
+      dropdown: "closed",
+      x: 0,
+      y: 0
     };
     _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    _this.closeDropdown = _this.closeDropdown.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(PlaylistShow, [{
+    key: "closeDropdown",
+    value: function closeDropdown() {
+      if (this.state.dropdown === "open") this.setState({
+        dropdown: "closed"
+      });
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          deleteItem = _this$props.deleteItem,
+          item = _this$props.item;
+      deleteItem(item.id).then(function () {
+        return _this2.props.history.push("/explore");
+      });
+    }
+  }, {
     key: "toggleDropdown",
-    value: function toggleDropdown() {
+    value: function toggleDropdown(e) {
       if (this.state.dropdown === "closed") {
         this.setState({
-          dropdown: "open"
+          dropdown: "open",
+          x: e.screenX,
+          y: e.clientY + 5
         });
       } else {
         this.setState({
-          dropdown: "closed"
+          dropdown: "closed",
+          x: e.screenX,
+          y: e.clientY + 5
         });
       }
     }
@@ -1915,16 +1945,17 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       this.props.fetchItems(); // this.props.fetchSongs();
 
       this.props.fetchCreators();
-    }
+    } // componentWillUnmount() {
+    // }
+
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          item = _this$props.item,
-          deleteItem = _this$props.deleteItem,
-          creators = _this$props.creators,
-          songs = _this$props.songs,
-          type = _this$props.type;
+      var _this$props2 = this.props,
+          item = _this$props2.item,
+          creators = _this$props2.creators,
+          songs = _this$props2.songs,
+          type = _this$props2.type;
       if (!item) return null;
       var filteredSongs = Object.values(songs).length > 0 ? item.songIds.map(function (id) {
         return songs[id];
@@ -1965,7 +1996,8 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         }, "0:00"))));
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "items-show-page"
+        className: "items-show-page",
+        onClick: this.closeDropdown
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "img-and-info"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1995,14 +2027,16 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-h delete-button",
         onClick: this.toggleDropdown
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "delete-menu ".concat(this.state.dropdown)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "delete-menu ".concat(this.state.dropdown),
+        style: {
+          top: this.state.y,
+          left: this.state.x
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "navbar-menu-item",
-        onClick: function onClick() {
-          return deleteItem(item.id);
-        }
-      }, "delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        onClick: this.handleDelete
+      }, "delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "song-index"
       }, songItems));
     }
@@ -2050,7 +2084,8 @@ var msp = function msp(state, ownProps) {
     // filteredSongs: playlistSongs,
     songs: songs,
     creators: users,
-    type: "playlist" // creator: creator,
+    type: "playlist",
+    history: ownProps.history // creator: creator,
 
   };
 };
@@ -2761,6 +2796,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
 
       var playlists = this.props.playlists;
       var indexItems = playlists.map(function (playlist) {
+        if (!playlist) return null;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "sidebar-playlist-item",
           key: playlist.id

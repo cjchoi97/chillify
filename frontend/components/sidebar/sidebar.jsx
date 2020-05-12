@@ -31,6 +31,7 @@ class Sidebar extends React.Component {
     const { playlists } = this.props
 
     const indexItems = playlists.map(playlist => {
+      if (!playlist) return null;
       return (
         <li className="sidebar-playlist-item" key={playlist.id}>
           <Link to={`/playlists/${playlist.id}`}>{playlist.title}</Link>

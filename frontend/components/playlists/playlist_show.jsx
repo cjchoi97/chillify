@@ -5,17 +5,39 @@ class PlaylistShow extends React.Component {
     super(props);
 
     this.state = {
-      dropdown: "closed"
+      dropdown: "closed",
+      x: 0,
+      y: 0
     }
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
   }
 
-  toggleDropdown() {
+  closeDropdown() {
+    if (this.state.dropdown === "open") 
+      this.setState({dropdown: "closed"});
+  }
+
+  handleDelete() {
+    const { deleteItem, item } = this.props;
+    deleteItem(item.id).then(() => this.props.history.push("/explore"));
+  }
+
+  toggleDropdown(e) {
     if (this.state.dropdown === "closed") {
-      this.setState({ dropdown: "open" });
+      this.setState({ 
+        dropdown: "open",
+        x: e.screenX,
+        y: e.clientY + 5
+      });
     } else {
-      this.setState({ dropdown: "closed" });
+      this.setState({ 
+        dropdown: "closed",
+        x: e.screenX,
+        y: e.clientY + 5
+      });
     }
   }
 
@@ -25,11 +47,14 @@ class PlaylistShow extends React.Component {
     this.props.fetchCreators();
   }
 
+  // componentWillUnmount() {
+
+  // }
+
   render() {
 
     const { 
       item, 
-      deleteItem,
       creators,
       songs,
       type
@@ -76,7 +101,7 @@ class PlaylistShow extends React.Component {
       );
     });
     return (
-      <div className="items-show-page">
+      <div className="items-show-page" onClick={this.closeDropdown}>
         <div className="img-and-info">
           <img src={item.photoUrl} />
           <div className="item-information">
@@ -98,12 +123,15 @@ class PlaylistShow extends React.Component {
           </button>
           <i className="far fa-heart"></i>
           <i className={`fas fa-ellipsis-h delete-button`} onClick={this.toggleDropdown}>
-            <ul className={`delete-menu ${this.state.dropdown}`}>
-              <li className={`navbar-menu-item`} onClick={() => deleteItem(item.id)}>
-                delete
-              </li>
-            </ul>
           </i>
+          <ul className={`delete-menu ${this.state.dropdown}`} style={{
+            top: this.state.y,
+            left: this.state.x
+            }} >
+            <li className={`navbar-menu-item`} onClick={this.handleDelete}>
+              delete
+            </li>
+          </ul>
 
         </div>
 

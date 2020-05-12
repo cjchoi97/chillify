@@ -38,8 +38,8 @@ const Main = (props) => {
           <Route path="/search" component={Search} />
           <Route path="/collection/playlists" component={PlaylistIndex} />
           <Route path="/collection/albums" component={AlbumIndex} />
-          <Route path="/playlists/:id" component={PlaylistShow} />
-          <Route path="/albums/:id" component={AlbumShow} />
+          <Route path="/playlists/:id" component={PlaylistShow} history={props.history} />
+          <Route path="/albums/:id" component={AlbumShow} history={props.history} />
           {/* <Route path="/collection/artists" component={ArtistIndex} /> */}
         </Switch>
       </div>
