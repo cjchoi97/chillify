@@ -1473,30 +1473,11 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchSongs();
+      this.props.fetchUsers();
     }
   }, {
-    key: "UNSAFE_componentWillReceiveProps",
-    value: function UNSAFE_componentWillReceiveProps(nextProps) {
-      if (!this.refs.player.currentSrc) return;
-
-      if (this.props.playing !== nextProps.playing) {
-        this.props.playing ? this.pause() : this.play();
-      }
-    }
-  }, {
-    key: "play",
-    value: function play() {
-      if (!this.refs.player.currentSrc) return;
-      this.props.togglePlay(true);
-      this.refs.player.play();
-    }
-  }, {
-    key: "pause",
-    value: function pause() {
-      if (!this.refs.player.currentSrc) return;
-      this.props.togglePlay(false);
-      this.refs.player.pause();
-    }
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {}
   }, {
     key: "renderMainButton",
     value: function renderMainButton() {
@@ -1522,16 +1503,19 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          currentSong = _this$props.currentSong,
-          playing = _this$props.playing;
-      var song = Object.values(this.props.songs).length > 0 ? Object.values(this.props.songs)[0] : {};
+          song = _this$props.song,
+          artist = _this$props.artist;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "music-player"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-display"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mp-main"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
+        id: "audio"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        type: "audio/mp3"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "control-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "https://chillify-aa-dev.s3.amazonaws.com/previous.png",

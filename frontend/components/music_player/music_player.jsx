@@ -15,25 +15,11 @@ class MusicPlayer extends React.Component {
 
   componentDidMount() {
     this.props.fetchSongs();
+    this.props.fetchUsers();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!this.refs.player.currentSrc) return;
-    if (this.props.playing !== nextProps.playing) {
-      (this.props.playing) ? this.pause() : this.play();
-    }
-  }
+  componentDidUpdate() {
 
-  play() {
-    if (!this.refs.player.currentSrc) return;
-    this.props.togglePlay(true);
-    this.refs.player.play();
-  }
-
-  pause() {
-    if (!this.refs.player.currentSrc) return;
-    this.props.togglePlay(false);
-    this.refs.player.pause();
   }
 
   renderMainButton() {
@@ -60,15 +46,21 @@ class MusicPlayer extends React.Component {
   }
 
   render() {
-    const { currentSong, playing } = this.props;
-    const song = Object.values(this.props.songs).length > 0 ? 
-      Object.values(this.props.songs)[0] : {};
+    const { song, artist } = this.props
     return (
       <div className="music-player">
         <div className="song-display">
+          {/* song name */}
+          {/* artist name */}
+          {/* album cover */}
+          {/* links to show pages */}
+          {/* favorite button */}
         </div>
 
         <div className="mp-main">
+          <audio id="audio">
+            <source type="audio/mp3"/>
+          </audio>
           <div className="control-buttons">
             <img
               src="https://chillify-aa-dev.s3.amazonaws.com/previous.png"
