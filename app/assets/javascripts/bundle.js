@@ -217,17 +217,22 @@ var closeModal = function closeModal() {
 /*!*******************************************!*\
   !*** ./frontend/actions/music_actions.js ***!
   \*******************************************/
-/*! exports provided: TOGGLE_PLAY, UPDATE_CURRENT_SONG, updateCurrentSong, togglePlay */
+/*! exports provided: UPDATE_CURRENT_SONG, UPDATE_CURRENT_ARTIST, TOGGLE_PLAY, TOGGLE_PAUSE, updateCurrentSong, togglePlay, togglePause */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PLAY", function() { return TOGGLE_PLAY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CURRENT_SONG", function() { return UPDATE_CURRENT_SONG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CURRENT_ARTIST", function() { return UPDATE_CURRENT_ARTIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PLAY", function() { return TOGGLE_PLAY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PAUSE", function() { return TOGGLE_PAUSE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentSong", function() { return updateCurrentSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePlay", function() { return togglePlay; });
-var TOGGLE_PLAY = "TOGGLE_PLAY";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePause", function() { return togglePause; });
 var UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
+var UPDATE_CURRENT_ARTIST = "UPDATE_CURRENT_ARTIST";
+var TOGGLE_PLAY = "TOGGLE_PLAY";
+var TOGGLE_PAUSE = "TOGGLE_PAUSE";
 var updateCurrentSong = function updateCurrentSong(song) {
   return {
     type: UPDATE_CURRENT_SONG,
@@ -237,6 +242,12 @@ var updateCurrentSong = function updateCurrentSong(song) {
 var togglePlay = function togglePlay(play) {
   return {
     type: TOGGLE_PLAY,
+    play: play
+  };
+};
+var togglePause = function togglePause(play) {
+  return {
+    type: TOGGLE_PAUSE,
     play: play
   };
 };
@@ -3304,10 +3315,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/music_actions */ "./frontend/actions/music_actions.js");
 
 var _defaultState = {
-  currentSong: {
-    title: '',
-    song_url: ''
-  },
+  songId: 1,
   playing: false
 };
 
@@ -3323,7 +3331,11 @@ var musicReducer = function musicReducer() {
       return musicState;
 
     case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_PLAY"]:
-      musicState.playing = action.play;
+      musicState.playing = true;
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_PAUSE"]:
+      musicState.playing = false;
       return musicState;
 
     default:
