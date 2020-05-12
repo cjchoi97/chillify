@@ -1893,7 +1893,9 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      dropdown: "closed"
+      dropdown: "closed",
+      x: 0,
+      y: 0
     };
     _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
@@ -1922,14 +1924,18 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "toggleDropdown",
-    value: function toggleDropdown() {
+    value: function toggleDropdown(e) {
       if (this.state.dropdown === "closed") {
         this.setState({
-          dropdown: "open"
+          dropdown: "open",
+          x: e.screenX,
+          y: e.clientY + 5
         });
       } else {
         this.setState({
-          dropdown: "closed"
+          dropdown: "closed",
+          x: e.screenX,
+          y: e.clientY + 5
         });
       }
     }
@@ -2021,12 +2027,16 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-h delete-button",
         onClick: this.toggleDropdown
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "delete-menu ".concat(this.state.dropdown)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "delete-menu ".concat(this.state.dropdown),
+        style: {
+          top: this.state.y,
+          left: this.state.x
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "navbar-menu-item",
         onClick: this.handleDelete
-      }, "delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, "delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "song-index"
       }, songItems));
     }

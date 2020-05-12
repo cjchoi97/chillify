@@ -5,7 +5,9 @@ class PlaylistShow extends React.Component {
     super(props);
 
     this.state = {
-      dropdown: "closed"
+      dropdown: "closed",
+      x: 0,
+      y: 0
     }
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -23,11 +25,19 @@ class PlaylistShow extends React.Component {
     deleteItem(item.id).then(() => this.props.history.push("/explore"));
   }
 
-  toggleDropdown() {
+  toggleDropdown(e) {
     if (this.state.dropdown === "closed") {
-      this.setState({ dropdown: "open" });
+      this.setState({ 
+        dropdown: "open",
+        x: e.screenX,
+        y: e.clientY + 5
+      });
     } else {
-      this.setState({ dropdown: "closed" });
+      this.setState({ 
+        dropdown: "closed",
+        x: e.screenX,
+        y: e.clientY + 5
+      });
     }
   }
 
@@ -113,12 +123,15 @@ class PlaylistShow extends React.Component {
           </button>
           <i className="far fa-heart"></i>
           <i className={`fas fa-ellipsis-h delete-button`} onClick={this.toggleDropdown}>
-            <ul className={`delete-menu ${this.state.dropdown}`}>
-              <li className={`navbar-menu-item`} onClick={this.handleDelete}>
-                delete
-              </li>
-            </ul>
           </i>
+          <ul className={`delete-menu ${this.state.dropdown}`} style={{
+            top: this.state.y,
+            left: this.state.x
+            }} >
+            <li className={`navbar-menu-item`} onClick={this.handleDelete}>
+              delete
+            </li>
+          </ul>
 
         </div>
 

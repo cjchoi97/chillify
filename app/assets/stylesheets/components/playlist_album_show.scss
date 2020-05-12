@@ -2,6 +2,7 @@
   // display: flex;
   color: white;
   // margin-top: 65px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .item-information {
@@ -199,10 +200,37 @@
 
 .delete-button {
   position: relative;
+  color: #A5A5A5;
+}
+
+.delete-button:hover {
+  color: white;
+}
+
+.delete-button:hover ul {
+  color: #A5A5A5;
+}
+
+.delete-menu li:hover {
+  color: white;
+}
+
+.delete-menu li {
+  cursor: pointer;
+  padding: 3px 20px;
+  width: 100%;
+  line-height: 32px;
 }
 
 .delete-menu {
   position: absolute;
+  color: #A5A5A5;
+  width: 210px;
+  background: #282828;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 4px;
+  font-weight: 100;
+  text-transform: capitalize;
 }
 
 .play-or-delete {
