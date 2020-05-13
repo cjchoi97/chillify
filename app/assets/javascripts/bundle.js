@@ -1463,9 +1463,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       currentTime: 0
     };
-    _this.play = _this.play.bind(_assertThisInitialized(_this));
-    _this.pause = _this.pause.bind(_assertThisInitialized(_this));
     _this.renderMainButton = _this.renderMainButton.bind(_assertThisInitialized(_this));
+    _this.renderButtons = _this.renderButtons.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1477,7 +1476,40 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {}
+    value: function componentDidUpdate() {
+      var audio = document.getElementById("player");
+
+      if (audio) {
+        audio.src = "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3";
+
+        if (this.props.playing) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      }
+    }
+  }, {
+    key: "renderButtons",
+    value: function renderButtons() {
+      var audio = document.getElementById("player");
+
+      if (audio) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return document.getElementById('player').play();
+          }
+        }, "Play"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return document.getElementById('player').pause();
+          }
+        }, "Pause"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: "document.getElementById('player').volume += 0.1"
+        }, "Vol +"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: "document.getElementById('player').volume -= 0.1"
+        }, "Vol -"));
+      }
+    }
   }, {
     key: "renderMainButton",
     value: function renderMainButton() {
@@ -1512,23 +1544,14 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mp-main"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
-        id: "audio"
+        id: "player",
+        controls: true
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         type: "audio/mp3"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "control-buttons"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "https://chillify-aa-dev.s3.amazonaws.com/previous.png",
-        className: "song-select"
-      }), this.renderMainButton(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "https://chillify-aa-dev.s3.amazonaws.com/next.png",
-        className: "song-select"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.renderButtons())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "volume-control"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
-        src: "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3",
-        ref: "player",
-        autoPlay: playing
       }));
     }
   }]);
@@ -1565,6 +1588,8 @@ var msp = function msp(_ref) {
   // debugger
   var songs = entities.songs;
   var song = songs[ui.music.songId];
+  console.log(ui.music);
+  if (!song) return {};
   return {
     song: song,
     playing: ui.music.playing,

@@ -9,6 +9,8 @@ const msp = ({ui, entities }) => {
   // debugger
   const { songs } = entities;
   const song = songs[ui.music.songId];
+  console.log(ui.music);
+  if (!song) return {};
   return {
     song: song,
     playing: ui.music.playing,

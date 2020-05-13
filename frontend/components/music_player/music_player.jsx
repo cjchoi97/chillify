@@ -8,9 +8,9 @@ class MusicPlayer extends React.Component {
     this.state = {
       currentTime: 0
     }
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
+    
     this.renderMainButton = this.renderMainButton.bind(this);
+    this.renderButtons = this.renderButtons.bind(this);
   }
 
   componentDidMount() {
@@ -19,7 +19,31 @@ class MusicPlayer extends React.Component {
   }
 
   componentDidUpdate() {
+    const audio = document.getElementById("player");
+    if (audio) {
+      audio.src = "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3";
+      if (this.props.playing) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
 
+    }
+
+  }
+
+  renderButtons() {
+    const audio = document.getElementById("player");
+    if (audio) {
+      return (
+        <>
+          <button onClick={() => document.getElementById('player').play()}>Play</button>
+          <button onClick={() => document.getElementById('player').pause()}>Pause</button>
+          <button onClick="document.getElementById('player').volume += 0.1">Vol +</button>
+          <button onClick="document.getElementById('player').volume -= 0.1">Vol -</button>
+        </>
+      )
+    }
   }
 
   renderMainButton() {
@@ -58,11 +82,14 @@ class MusicPlayer extends React.Component {
         </div>
 
         <div className="mp-main">
-          <audio id="audio">
+          <audio id="player"
+            controls
+            >
             <source type="audio/mp3"/>
           </audio>
           <div className="control-buttons">
-            <img
+             {this.renderButtons()}
+            {/* <img
               src="https://chillify-aa-dev.s3.amazonaws.com/previous.png"
               className="song-select"
             />
@@ -70,18 +97,18 @@ class MusicPlayer extends React.Component {
             <img
               src="https://chillify-aa-dev.s3.amazonaws.com/next.png"
               className="song-select"
-            />
+            /> */}
           </div>
         </div>
 
         <div className="volume-control">
         </div>
 
-        <audio
+        {/* <audio
           src="https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3"
           ref="player"
           autoPlay={playing}>
-        </audio>
+        </audio> */}
       </div>
     )
   }
