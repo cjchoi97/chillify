@@ -5,6 +5,7 @@ import { fetchAlbums } from '../../actions/album_actions';
 import { fetchSongs } from '../../actions/song_actions';
 // import { fetchUsers } from '../../actions/user_actions';
 import { fetchArtists } from '../../actions/artist_actions';
+import { togglePlay, togglePause, updateCurrentSong } from '../../actions/music_actions'
 
 const msp = (state, ownProps) => {
   const album = state.entities.albums[ownProps.match.params.id];
@@ -14,7 +15,9 @@ const msp = (state, ownProps) => {
     item: album,
     songs: songs,
     creators: artists,
-    type: "album"
+    type: "album",
+    // history: ownProps.history,
+    currentSongId: state.ui.music.songId
   });
 }
 

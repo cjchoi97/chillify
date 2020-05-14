@@ -49,8 +49,8 @@ class MusicPlayer extends React.Component {
   componentDidUpdate() {
     const audio = document.getElementById("player");
     if (audio) {
-      if (!audio.src) {
-        audio.src = "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3";
+      if (audio.src !== this.props.song.song_url) {
+        audio.src = this.props.song.song_url;
       }
       console.log(this.props.playing);
       if (this.props.playing) {

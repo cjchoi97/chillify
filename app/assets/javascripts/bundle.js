@@ -692,11 +692,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_album_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/album_actions */ "./frontend/actions/album_actions.js");
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
 /* harmony import */ var _actions_artist_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/artist_actions */ "./frontend/actions/artist_actions.js");
+/* harmony import */ var _actions_music_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/music_actions */ "./frontend/actions/music_actions.js");
 
 
 
 
  // import { fetchUsers } from '../../actions/user_actions';
+
 
 
 
@@ -709,7 +711,9 @@ var msp = function msp(state, ownProps) {
     item: album,
     songs: songs,
     creators: artists,
-    type: "album"
+    type: "album",
+    // history: ownProps.history,
+    currentSongId: state.ui.music.songId
   };
 };
 
@@ -727,45 +731,15 @@ var mdp = function mdp(dispatch) {
     fetchCreators: function fetchCreators() {
       return dispatch(Object(_actions_artist_actions__WEBPACK_IMPORTED_MODULE_5__["fetchArtists"])());
     },
-    togglePlay: function (_togglePlay) {
-      function togglePlay() {
-        return _togglePlay.apply(this, arguments);
-      }
-
-      togglePlay.toString = function () {
-        return _togglePlay.toString();
-      };
-
-      return togglePlay;
-    }(function () {
-      return dispatch(togglePlay());
-    }),
-    togglePause: function (_togglePause) {
-      function togglePause() {
-        return _togglePause.apply(this, arguments);
-      }
-
-      togglePause.toString = function () {
-        return _togglePause.toString();
-      };
-
-      return togglePause;
-    }(function () {
-      return dispatch(togglePause());
-    }),
-    updateCurrentSong: function (_updateCurrentSong) {
-      function updateCurrentSong(_x) {
-        return _updateCurrentSong.apply(this, arguments);
-      }
-
-      updateCurrentSong.toString = function () {
-        return _updateCurrentSong.toString();
-      };
-
-      return updateCurrentSong;
-    }(function (song) {
-      return dispatch(updateCurrentSong(song));
-    })
+    togglePlay: function togglePlay() {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["togglePlay"])());
+    },
+    togglePause: function togglePause() {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["togglePause"])());
+    },
+    updateCurrentSong: function updateCurrentSong(song) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentSong"])(song));
+    }
   };
 };
 
@@ -1544,8 +1518,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       var audio = document.getElementById("player");
 
       if (audio) {
-        if (!audio.src) {
-          audio.src = "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3";
+        if (audio.src !== this.props.song.song_url) {
+          audio.src = this.props.song.song_url;
         }
 
         console.log(this.props.playing);
