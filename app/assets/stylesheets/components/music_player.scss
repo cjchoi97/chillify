@@ -62,3 +62,19 @@ img.song-select {
   display: flex;
   min-width: 200px;
 }
+
+.play.dontshow {
+  display: none;
+}
+
+.play.show {
+  display: block;
+}
+
+.pause.dontshow {
+  display: none;
+}
+
+.pause.show {
+  display: block;
+}

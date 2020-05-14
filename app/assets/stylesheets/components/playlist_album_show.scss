@@ -48,16 +48,32 @@
   // padding: 40px 15px;
 }
 
+.songs:focus {
+  background-color: #2A2A2A;
+}
+
 .songs:hover {
   background-color: #2A2A2A;
   transition-duration: 0.4s;
 }
 
-.songs:hover i.fa-play{
+.songs:hover i.fa-play.show{
   display: block;
 }
 
 .songs:hover i.fa-music{
+  display: none;
+}
+
+.songs:hover i.fa-pause.show{
+  display: block;
+}
+
+.song-play.dontshow {
+  display: none;
+}
+
+.song-pause {
   display: none;
 }
 
@@ -261,6 +277,10 @@
   font-size: 32px;
   margin: 0 25px;
 }
+
+// .song-pause.show {
+//   display: block;
+// }
 
 @media only screen and (max-width: 1060px) {
   .item-name {

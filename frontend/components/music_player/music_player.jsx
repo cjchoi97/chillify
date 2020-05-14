@@ -6,11 +6,39 @@ class MusicPlayer extends React.Component {
     super(props);
 
     this.state = {
-      currentTime: 0
+      play: "show",
+      pause: "dontshow"
     }
     
+    this.play = this.play.bind(this);
+    this.pause = this.pause.bind(this);
     this.renderMainButton = this.renderMainButton.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
+  }
+
+  play(e) {
+    // e.preventDefault();
+    document.getElementById('player').play();
+    // this.props.playing = true;
+    this.props.togglePlay();
+    // this.setState({
+    //   play: "dontshow",
+    //   pause: "show"
+    // });
+    // e.preventDefault();
+
+  }
+
+  pause(e) {
+    // e.preventDefault();
+    document.getElementById('player').pause();
+    // this.props.playing = false;
+    this.props.togglePause();
+    // this.setState({
+    //   play: "show",
+    //   pause: "dontshow"
+    // });
+    // e.preventDefault();
   }
 
   componentDidMount() {
@@ -21,7 +49,10 @@ class MusicPlayer extends React.Component {
   componentDidUpdate() {
     const audio = document.getElementById("player");
     if (audio) {
-      audio.src = "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3";
+      if (!audio.src) {
+        audio.src = "https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3";
+      }
+      console.log(this.props.playing);
       if (this.props.playing) {
         audio.play();
       } else {
@@ -32,13 +63,13 @@ class MusicPlayer extends React.Component {
 
   }
 
-  renderButtons() {
+  renderButtons(playshow, pauseshow) {
     const audio = document.getElementById("player");
     if (audio) {
       return (
         <>
-          <button onClick={() => document.getElementById('player').play()}>Play</button>
-          <button onClick={() => document.getElementById('player').pause()}>Pause</button>
+          <button className={`play ${playshow}`} onClick={this.play}>Play</button>
+          <button className={`pause ${pauseshow}`} onClick={this.pause}>Pause</button>
           <button onClick="document.getElementById('player').volume += 0.1">Vol +</button>
           <button onClick="document.getElementById('player').volume -= 0.1">Vol -</button>
         </>
@@ -70,7 +101,17 @@ class MusicPlayer extends React.Component {
   }
 
   render() {
-    const { song, artist } = this.props
+    // console.log(this.props);
+    const { song, playing, artist } = this.props
+    let playshow;
+    let pauseshow;
+    if (playing === false) {
+      playshow = "show";
+      pauseshow = "dontshow";
+    } else {
+      playshow = "dontshow";
+      pauseshow = "show";
+    }
     return (
       <div className="music-player">
         <div className="song-display">
@@ -88,7 +129,7 @@ class MusicPlayer extends React.Component {
             <source type="audio/mp3"/>
           </audio>
           <div className="control-buttons">
-             {this.renderButtons()}
+             {this.renderButtons(playshow, pauseshow)}
             {/* <img
               src="https://chillify-aa-dev.s3.amazonaws.com/previous.png"
               className="song-select"

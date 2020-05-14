@@ -14,7 +14,8 @@ const musicReducer = (state = _defaultState, action) => {
   const musicState = Object.assign({}, state);
   switch (action.type) {
     case UPDATE_CURRENT_SONG:
-      musicState.currentSong = action.song.id;
+      console.log("changing song to:" + action.song.id);
+      musicState.songId = action.song.id;
       return musicState;
     case TOGGLE_PLAY:
       musicState.playing = true;

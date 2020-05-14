@@ -23,7 +23,10 @@ const mdp = dispatch => {
     deleteItem: id => dispatch(deletePlaylist(id)),
     fetchItems: () => dispatch(fetchAlbums()),
     fetchSongs: () => dispatch(fetchSongs()),
-    fetchCreators: () => dispatch(fetchArtists())
+    fetchCreators: () => dispatch(fetchArtists()),
+    togglePlay: () => dispatch(togglePlay()),
+    togglePause: () => dispatch(togglePause()),
+    updateCurrentSong: (song) => dispatch(updateCurrentSong(song))
   })
 }
 
