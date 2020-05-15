@@ -98,7 +98,7 @@ class PlaylistShow extends React.Component {
           <i className={`fas fa-play song-play show ${green}`}
             onClick={() => this.playSong(song)}></i>
         )
-      } else if (currentSongId === song.id) {
+      } else if (currentSongId === song.id && this.props.playing) {
         return(
           <i className={`fas fa-pause song-pause ${this.state.pauseshow} ${green}`}
             onClick={this.pauseSong}></i>

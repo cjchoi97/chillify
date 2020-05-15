@@ -69,10 +69,10 @@ class MusicPlayer extends React.Component {
     if (audio) {
       return (
         <>
-          <button className={`play ${playshow}`} onClick={this.play}>Play</button>
-          <button className={`pause ${pauseshow}`} onClick={this.pause}>Pause</button>
-          <button onClick="document.getElementById('player').volume += 0.1">Vol +</button>
-          <button onClick="document.getElementById('player').volume -= 0.1">Vol -</button>
+          <button className={`play ${playshow}`} onClick={this.play}><i className="far fa-play-circle"></i></button>
+          <button className={`pause ${pauseshow}`} onClick={this.pause}><i className="far fa-pause-circle"></i></button>
+          {/* <button onClick="document.getElementById('player').volume += 0.1">Vol +</button>
+          <button onClick="document.getElementById('player').volume -= 0.1">Vol -</button> */}
         </>
       )
     }
@@ -124,23 +124,27 @@ class MusicPlayer extends React.Component {
         </div>
 
         <div className="mp-main">
+          <div className="control-buttons">
+            <i className="fas fa-random"></i>
+            <i className="fas fa-step-backward"></i>
+            {this.renderButtons(playshow, pauseshow)}
+            <i className="fas fa-step-forward"></i>
+            <i className="fas fa-retweet"></i>
+            {/* <img
+              src="https://chillify-aa-dev.s3.amazonaws.com/previous.png"
+              className="song-select"
+              />
+              {this.renderMainButton()}
+              <img
+              src="https://chillify-aa-dev.s3.amazonaws.com/next.png"
+              className="song-select"
+            /> */}
+          </div>
           <audio id="player"
             controls
             >
             <source type="audio/mp3"/>
           </audio>
-          <div className="control-buttons">
-             {this.renderButtons(playshow, pauseshow)}
-            {/* <img
-              src="https://chillify-aa-dev.s3.amazonaws.com/previous.png"
-              className="song-select"
-            />
-            {this.renderMainButton()}
-            <img
-              src="https://chillify-aa-dev.s3.amazonaws.com/next.png"
-              className="song-select"
-            /> */}
-          </div>
         </div>
 
         <div className="volume-control">
