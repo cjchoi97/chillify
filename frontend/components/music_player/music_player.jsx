@@ -46,13 +46,14 @@ class MusicPlayer extends React.Component {
     this.props.fetchUsers();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const audio = document.getElementById("player");
     if (audio) {
-      if (audio.src !== this.props.song.song_url) {
+      if (prevProps.currentSongId !== this.props.song.id) {
+        // console.log("changed song");
         audio.src = this.props.song.song_url;
       }
-      console.log(this.props.playing);
+      // console.log(this.props.playing);
       if (this.props.playing) {
         audio.play();
       } else {

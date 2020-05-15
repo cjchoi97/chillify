@@ -78,7 +78,8 @@ class PlaylistShow extends React.Component {
       creators,
       songs,
       type,
-      currentSongId
+      currentSongId,
+      playing
     } = this.props
     if (!item) return null;
     
@@ -91,34 +92,44 @@ class PlaylistShow extends React.Component {
     if (!creator) return null;
     // debugger
 
-    const addPlayOrPauseButton = song => {
+    const addPlayOrPauseButton = (song, green) => {
       if (currentSongId === song.id && this.state.playshow === "show") {
         return(
-          <i className={`fas fa-play song-play show`}
+          <i className={`fas fa-play song-play show ${green}`}
             onClick={() => this.playSong(song)}></i>
         )
       } else if (currentSongId === song.id) {
         return(
-          <i className={`fas fa-pause song-pause ${this.state.pauseshow}`}
+          <i className={`fas fa-pause song-pause ${this.state.pauseshow} ${green}`}
             onClick={this.pauseSong}></i>
         )
       } else {
         return (
-          <i className={`fas fa-play song-play show`}
+          <i className={`fas fa-play song-play show ${green}`}
             onClick={() => this.playSong(song)}></i>
         )
       }
     }
 
     const songItems = filteredSongs.map((song, i) => {
+      let green = "";
+      let listening = "";
+      if (currentSongId === song.id) {
+        green = "green";
+      } 
+      
+      if (currentSongId === song.id && playing) {
+        listening = "listening"
+      }
       return (
         <li className="songs" key={i} tabIndex="1">
           <div className="song-content">
             <div className="song-content-left">
-              <i className="fas fa-music"></i>
-              {addPlayOrPauseButton(song)}
+              <i className={`fas fa-music ${green} ${listening}`}></i>
+              <i className={`fas fa-volume-up ${green}`} id={`${listening}`}></i>
+              {addPlayOrPauseButton(song, green)}
               <div className="song-info">
-                <div className="song-title">{song.title}</div>
+                <div className={`song-title ${green}`}>{song.title}</div>
                 <div className="song-creator-info">
                   <span className="song-artist">
                     { song.artist_name }
@@ -132,13 +143,13 @@ class PlaylistShow extends React.Component {
             </div>
             <div className="song-content-right">
               <i className="fas fa-ellipsis-h"></i>
-              <span className="song-duration">0:00</span>
+              <span className={`song-duration ${green}`}>0:00</span>
             </div>
           </div>
         </li>
       );
     });
-    console.log(currentSongId);
+    // console.log(currentSongId);
 
     return (
       

@@ -1514,15 +1514,15 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
+    value: function componentDidUpdate(prevProps) {
       var audio = document.getElementById("player");
 
       if (audio) {
-        if (audio.src !== this.props.song.song_url) {
+        if (prevProps.currentSongId !== this.props.song.id) {
+          // console.log("changed song");
           audio.src = this.props.song.song_url;
-        }
+        } // console.log(this.props.playing);
 
-        console.log(this.props.playing);
 
         if (this.props.playing) {
           audio.play();
@@ -1648,6 +1648,7 @@ var msp = function msp(_ref) {
   return {
     song: song,
     playing: ui.music.playing,
+    currentSongId: ui.music.songId,
     artist: song.artist_name
   };
 };
@@ -2053,7 +2054,8 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
           creators = _this$props2.creators,
           songs = _this$props2.songs,
           type = _this$props2.type,
-          currentSongId = _this$props2.currentSongId;
+          currentSongId = _this$props2.currentSongId,
+          playing = _this$props2.playing;
       if (!item) return null;
       var filteredSongs = Object.values(songs).length > 0 ? item.songIds.map(function (id) {
         return songs[id];
@@ -2061,22 +2063,22 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       var creator = creators[item.user_id];
       if (!creator) return null; // debugger
 
-      var addPlayOrPauseButton = function addPlayOrPauseButton(song) {
+      var addPlayOrPauseButton = function addPlayOrPauseButton(song, green) {
         if (currentSongId === song.id && _this3.state.playshow === "show") {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-play song-play show",
+            className: "fas fa-play song-play show ".concat(green),
             onClick: function onClick() {
               return _this3.playSong(song);
             }
           });
         } else if (currentSongId === song.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-pause song-pause ".concat(_this3.state.pauseshow),
+            className: "fas fa-pause song-pause ".concat(_this3.state.pauseshow, " ").concat(green),
             onClick: _this3.pauseSong
           });
         } else {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-play song-play show",
+            className: "fas fa-play song-play show ".concat(green),
             onClick: function onClick() {
               return _this3.playSong(song);
             }
@@ -2085,6 +2087,17 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       };
 
       var songItems = filteredSongs.map(function (song, i) {
+        var green = "";
+        var listening = "";
+
+        if (currentSongId === song.id) {
+          green = "green";
+        }
+
+        if (currentSongId === song.id && playing) {
+          listening = "listening";
+        }
+
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "songs",
           key: i,
@@ -2094,11 +2107,14 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "song-content-left"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-music"
-        }), addPlayOrPauseButton(song), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "fas fa-music ".concat(green, " ").concat(listening)
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up ".concat(green),
+          id: "".concat(listening)
+        }), addPlayOrPauseButton(song, green), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "song-info"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "song-title"
+          className: "song-title ".concat(green)
         }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "song-creator-info"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -2112,10 +2128,10 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-ellipsis-h"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "song-duration"
+          className: "song-duration ".concat(green)
         }, "0:00"))));
-      });
-      console.log(currentSongId);
+      }); // console.log(currentSongId);
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "items-show-page",
         onClick: this.closeDropdown
@@ -2206,6 +2222,7 @@ var msp = function msp(state, ownProps) {
     item: playlist,
     // filteredSongs: playlistSongs,
     currentSongId: state.ui.music.songId,
+    playing: state.ui.music.playing,
     songs: songs,
     creators: users,
     type: "playlist",

@@ -19,6 +19,7 @@ const msp = (state, ownProps) => {
     item: playlist,
     // filteredSongs: playlistSongs,
     currentSongId: state.ui.music.songId,
+    playing: state.ui.music.playing,
     songs: songs,
     creators: users,
     type: "playlist",
