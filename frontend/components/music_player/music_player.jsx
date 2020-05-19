@@ -7,63 +7,132 @@ class MusicPlayer extends React.Component {
 
     this.state = {
       play: "show",
-      pause: "dontshow"
+      pause: "dontshow",
+      mute: "dontshow",
+      quiet: "dontshow",
+      loud: "show",
+      percentage: 1
     }
     
     this.play = this.play.bind(this);
     this.pause = this.pause.bind(this);
     this.renderMainButton = this.renderMainButton.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
+    this.setNewVolume = this.setNewVolume.bind(this);
+    this.mute = this.mute.bind(this);
+    this.unmute = this.unmute.bind(this);
   }
 
-  play(e) {
-    // e.preventDefault();
-    document.getElementById('player').play();
-    // this.props.playing = true;
-    this.props.togglePlay();
-    // this.setState({
-    //   play: "dontshow",
-    //   pause: "show"
-    // });
-    // e.preventDefault();
-
-  }
-
-  pause(e) {
-    // e.preventDefault();
-    document.getElementById('player').pause();
-    // this.props.playing = false;
-    this.props.togglePause();
-    // this.setState({
-    //   play: "show",
-    //   pause: "dontshow"
-    // });
-    // e.preventDefault();
-  }
-
+  
   componentDidMount() {
     this.props.fetchSongs();
     this.props.fetchUsers();
   }
-
+  
   componentDidUpdate(prevProps) {
     const audio = document.getElementById("player");
     if (audio) {
       if (prevProps.currentSongId !== this.props.song.id) {
-        // console.log("changed song");
         audio.src = this.props.song.song_url;
       }
-      // console.log(this.props.playing);
       if (this.props.playing) {
         audio.play();
       } else {
         audio.pause();
       }
-
-    }
-
+    } 
+  }
+  
+  play(e) {
+    document.getElementById('player').play();
+    this.props.togglePlay();
   }
 
+  pause(e) {
+    document.getElementById('player').pause();
+    this.props.togglePause();
+  }
+
+  mute() {
+    document.getElementById("player").volume = 0;
+    document.getElementById("volume-status").style.width = "0px";
+    // document.getElementById("volume-status").style.width = 0 + "px";
+    this.setState({
+      mute: "show",
+      quiet: "dontshow",
+      loud: "dontshow",
+    })
+  }
+
+  unmute() {
+    document.getElementById("player").volume = this.state.percentage;
+    const volumeMeter = document.getElementById("volume-meter");
+    const meterWidth = volumeMeter.offsetWidth;
+    const percentVolume = this.state.percentage / 1;
+    const volumeSlider = meterWidth * percentVolume;
+    document.getElementById("volume-status").style.width = Math.round(volumeSlider) + "px";
+    
+    if (this.state.percentage <= .5 && this.state.percentage != 0) {
+      this.setState({
+        mute:"dontshow",
+        quiet: "show",
+        loud: "dontshow",
+      })
+    } else if (this.state.percentage > .5 && this.state.percentage <= 1) {
+      this.setState({
+        mute:"dontshow",
+        quiet: "dontshow",
+        loud: "show",
+      })
+    } else {
+      this.setState({
+        mute: "show",
+        quiet: "dontshow",
+        loud: "dontshow",
+      })
+    }
+  }
+
+  setNewVolume(e) {
+    const volumeMeter = document.getElementById("volume-meter");
+    const meterWidth = volumeMeter.offsetWidth;
+    const evt = window.event ? event : e;
+    const clickLoc = evt.layerX - volumeMeter.offsetLeft;
+
+    const percentage = (clickLoc/meterWidth);
+
+    if (percentage <= .5 && percentage != 0) {
+      this.setState({
+        mute:"dontshow",
+        quiet: "show",
+        loud: "dontshow",
+        percentage: percentage
+        // percentage: percentage
+      })
+    } else if (percentage > .5 && percentage <= 1) {
+      this.setState({
+        mute:"dontshow",
+        quiet: "dontshow",
+        loud: "show",
+        percentage: percentage
+      })
+    } else {
+      this.setState({
+        mute: "show",
+        quiet: "dontshow",
+        loud: "dontshow",
+        percentage: percentage
+      })
+    }
+
+    const song = document.getElementById("player");
+
+    song.volume = percentage;
+
+    const percentVolume = song.volume / 1;
+    const volumeSlider = meterWidth * percentVolume;
+    document.getElementById("volume-status").style.width = Math.round(volumeSlider) + "px";
+  }
   renderButtons(playshow, pauseshow) {
     const audio = document.getElementById("player");
     if (audio) {
@@ -71,8 +140,6 @@ class MusicPlayer extends React.Component {
         <>
           <button className={`play ${playshow}`} onClick={this.play}><i className="far fa-play-circle"></i></button>
           <button className={`pause ${pauseshow}`} onClick={this.pause}><i className="far fa-pause-circle"></i></button>
-          {/* <button onClick="document.getElementById('player').volume += 0.1">Vol +</button>
-          <button onClick="document.getElementById('player').volume -= 0.1">Vol -</button> */}
         </>
       )
     }
@@ -130,31 +197,32 @@ class MusicPlayer extends React.Component {
             {this.renderButtons(playshow, pauseshow)}
             <i className="fas fa-step-forward"></i>
             <i className="fas fa-retweet"></i>
-            {/* <img
-              src="https://chillify-aa-dev.s3.amazonaws.com/previous.png"
-              className="song-select"
-              />
-              {this.renderMainButton()}
-              <img
-              src="https://chillify-aa-dev.s3.amazonaws.com/next.png"
-              className="song-select"
-            /> */}
           </div>
-          <audio id="player"
-            controls
-            >
+          <div id="song-slider">
+
+          </div>
+          <audio id="player">
             <source type="audio/mp3"/>
           </audio>
         </div>
 
-        <div className="volume-control">
-        </div>
+        <div className="right-side">
+          <div className="volume">
+            <div className="volume-icon">
+              <i className={`fas fa-volume-mute ${this.state.mute}`} tabIndex="1" onClick={this.unmute}></i>
+              <i className={`fas fa-volume-down ${this.state.quiet}`} tabIndex="1" onClick={this.mute}></i>
+              <i className={`fas fa-volume-up ${this.state.loud}`} tabIndex="1" onClick={this.mute}></i>
 
-        {/* <audio
-          src="https://chillify-aa-dev.s3.amazonaws.com/music/Towkio+-+Heaven+Only+Knows+(ft.+Chance+The+Rapper%2C+Lido+%26+Eryn+Allen+Kane).mp3"
-          ref="player"
-          autoPlay={playing}>
-        </audio> */}
+            </div>
+            <div className="progress-bar" onClick={this.setNewVolume}>
+              <div id="volume-meter">
+                <div id="volume-status">
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

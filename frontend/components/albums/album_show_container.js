@@ -16,6 +16,7 @@ const msp = (state, ownProps) => {
     songs: songs,
     creators: artists,
     type: "album",
+    playing: state.ui.music.playing,
     // history: ownProps.history,
     currentSongId: state.ui.music.songId
   });

@@ -712,6 +712,7 @@ var msp = function msp(state, ownProps) {
     songs: songs,
     creators: artists,
     type: "album",
+    playing: state.ui.music.playing,
     // history: ownProps.history,
     currentSongId: state.ui.music.songId
   };
@@ -1473,40 +1474,23 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       play: "show",
-      pause: "dontshow"
+      pause: "dontshow",
+      mute: "dontshow",
+      quiet: "dontshow",
+      loud: "show",
+      percentage: 1
     };
     _this.play = _this.play.bind(_assertThisInitialized(_this));
     _this.pause = _this.pause.bind(_assertThisInitialized(_this));
     _this.renderMainButton = _this.renderMainButton.bind(_assertThisInitialized(_this));
     _this.renderButtons = _this.renderButtons.bind(_assertThisInitialized(_this));
+    _this.setNewVolume = _this.setNewVolume.bind(_assertThisInitialized(_this));
+    _this.mute = _this.mute.bind(_assertThisInitialized(_this));
+    _this.unmute = _this.unmute.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(MusicPlayer, [{
-    key: "play",
-    value: function play(e) {
-      // e.preventDefault();
-      document.getElementById('player').play(); // this.props.playing = true;
-
-      this.props.togglePlay(); // this.setState({
-      //   play: "dontshow",
-      //   pause: "show"
-      // });
-      // e.preventDefault();
-    }
-  }, {
-    key: "pause",
-    value: function pause(e) {
-      // e.preventDefault();
-      document.getElementById('player').pause(); // this.props.playing = false;
-
-      this.props.togglePause(); // this.setState({
-      //   play: "show",
-      //   pause: "dontshow"
-      // });
-      // e.preventDefault();
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchSongs();
@@ -1519,10 +1503,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
 
       if (audio) {
         if (prevProps.currentSongId !== this.props.song.id) {
-          // console.log("changed song");
           audio.src = this.props.song.song_url;
-        } // console.log(this.props.playing);
-
+        }
 
         if (this.props.playing) {
           audio.play();
@@ -1530,6 +1512,99 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
           audio.pause();
         }
       }
+    }
+  }, {
+    key: "play",
+    value: function play(e) {
+      document.getElementById('player').play();
+      this.props.togglePlay();
+    }
+  }, {
+    key: "pause",
+    value: function pause(e) {
+      document.getElementById('player').pause();
+      this.props.togglePause();
+    }
+  }, {
+    key: "mute",
+    value: function mute() {
+      document.getElementById("player").volume = 0;
+      document.getElementById("volume-status").style.width = "0px"; // document.getElementById("volume-status").style.width = 0 + "px";
+
+      this.setState({
+        mute: "show",
+        quiet: "dontshow",
+        loud: "dontshow"
+      });
+    }
+  }, {
+    key: "unmute",
+    value: function unmute() {
+      document.getElementById("player").volume = this.state.percentage;
+      var volumeMeter = document.getElementById("volume-meter");
+      var meterWidth = volumeMeter.offsetWidth;
+      var percentVolume = this.state.percentage / 1;
+      var volumeSlider = meterWidth * percentVolume;
+      document.getElementById("volume-status").style.width = Math.round(volumeSlider) + "px";
+
+      if (this.state.percentage <= .5 && this.state.percentage != 0) {
+        this.setState({
+          mute: "dontshow",
+          quiet: "show",
+          loud: "dontshow"
+        });
+      } else if (this.state.percentage > .5 && this.state.percentage <= 1) {
+        this.setState({
+          mute: "dontshow",
+          quiet: "dontshow",
+          loud: "show"
+        });
+      } else {
+        this.setState({
+          mute: "show",
+          quiet: "dontshow",
+          loud: "dontshow"
+        });
+      }
+    }
+  }, {
+    key: "setNewVolume",
+    value: function setNewVolume(e) {
+      var volumeMeter = document.getElementById("volume-meter");
+      var meterWidth = volumeMeter.offsetWidth;
+      var evt = window.event ? event : e;
+      var clickLoc = evt.layerX - volumeMeter.offsetLeft;
+      var percentage = clickLoc / meterWidth;
+
+      if (percentage <= .5 && percentage != 0) {
+        this.setState({
+          mute: "dontshow",
+          quiet: "show",
+          loud: "dontshow",
+          percentage: percentage // percentage: percentage
+
+        });
+      } else if (percentage > .5 && percentage <= 1) {
+        this.setState({
+          mute: "dontshow",
+          quiet: "dontshow",
+          loud: "show",
+          percentage: percentage
+        });
+      } else {
+        this.setState({
+          mute: "show",
+          quiet: "dontshow",
+          loud: "dontshow",
+          percentage: percentage
+        });
+      }
+
+      var song = document.getElementById("player");
+      song.volume = percentage;
+      var percentVolume = song.volume / 1;
+      var volumeSlider = meterWidth * percentVolume;
+      document.getElementById("volume-status").style.width = Math.round(volumeSlider) + "px";
     }
   }, {
     key: "renderButtons",
@@ -1606,14 +1681,38 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-step-forward"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-retweet"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
-        id: "player",
-        controls: true
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "song-slider"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
+        id: "player"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         type: "audio/mp3"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "volume-control"
-      }));
+        className: "right-side"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "volume"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "volume-icon"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-volume-mute ".concat(this.state.mute),
+        tabIndex: "1",
+        onClick: this.unmute
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-volume-down ".concat(this.state.quiet),
+        tabIndex: "1",
+        onClick: this.mute
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-volume-up ".concat(this.state.loud),
+        tabIndex: "1",
+        onClick: this.mute
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "progress-bar",
+        onClick: this.setNewVolume
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "volume-meter"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "volume-status"
+      }))))));
     }
   }]);
 

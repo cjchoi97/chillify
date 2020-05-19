@@ -2,33 +2,41 @@
   position: fixed;
   bottom: 0;
   display: flex;
-  justify-content: flex-start;
-  height: 11vh;
+  justify-content: space-between;
+  // height: 11vh;
+  height: 90px;
   width: 100%;
   background: #282828;
   color: white;
   font-weight: 500;
   font-family: Arial, Helvetica, sans-serif;
   z-index: 17;
+  padding: 0 16px;
+  line-height: 20px;
 }
 
 .mp-main {
   display: flex;
   position: relative;
-  width: 50%;
-  justify-content: flex-start;
+  width: 40%;
+  align-items: center;
   flex-direction: column;
   // margin-left: 100px;
+}
+
+.right-side {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .control-buttons {
   display: flex;
   justify-content: space-between;
-  margin: 10px auto;
-  margin-bottom: 2%;
+  width: 224px;
   align-items: center;
-  height: 50%;
-  width: 60%;
+  // height: 50%;
+  max-width: 722px;
 }
 
 .main-button {
@@ -58,7 +66,7 @@ img.song-select {
   opacity: 1;
 }
 .song-display {
-  width: 25%;
+  width: 30%;
   display: flex;
   min-width: 200px;
 }
@@ -70,6 +78,7 @@ img.song-select {
 .play.show {
   display: block;
   font-size: 35px;
+  padding: 0;
 }
 
 .pause.dontshow {
@@ -79,4 +88,116 @@ img.song-select {
 .pause.show {
   display: block;
   font-size: 35px;
+  padding: 0;
 }
+
+.volume {
+  width: 136px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
+.volume:hover {
+  #volume-status {
+    background-color: #1EBA54;
+  }
+}
+
+#volume-meter{
+  width: 100%;
+  background-color: #535353;
+  float: right;
+  height: 4px;
+  border-radius: 2px;
+  margin: auto 0;
+}
+
+#volume-status {
+  background-color: #B3B3B3;
+  width: 100%;
+  height: inherit;
+  border-radius: inherit;
+}
+
+#volume-meter:hover #volume-status {
+  background-color: #1EBA54;
+}
+
+.volume-icon {
+  height: 32px;
+  width: 55px;
+  display: flex;
+  justify-content: center;
+  color: #B3B3B3;
+}
+
+.fa-volume-mute {
+  display: none;
+}
+
+.fa-volume-down {
+  display: none;
+}
+
+.fa-volume-mute.show:hover {
+  color: white;
+}
+
+.fa-volume-down.show:hover {
+  color: white;
+}
+
+.fa-volume-up.show:hover {
+  color: white;
+}
+
+.fa-volume-mute.show:focus {
+  color: white;
+}
+
+.fa-volume-down.show:focus {
+  color: white;
+}
+
+.fa-volume-up.show:focus {
+  color: white;
+}
+
+.fa-volume-mute.show:active {
+  color: #B3B3B3;
+}
+
+.fa-volume-down.show:active {
+  color: #B3B3B3;
+}
+
+.fa-volume-up.show:active {
+  color: #B3B3B3;
+}
+
+.fa-volume-mute.show {
+  align-self: center;
+  display: block;
+}
+
+.fa-volume-down.show {
+  align-self: center;
+  display: block;
+}
+
+.fa-volume-up.show {
+  align-self: center;
+  display: block;
+  // font-size: 16px;
+}
+
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  display: flex;
+}
+
+
