@@ -5,6 +5,7 @@ import { openModal } from '../../actions/modal_actions';
 import { logout } from '../../util/session_api_util';
 import { fetchUser } from '../../actions/user_actions';
 import { fetchPlaylists } from '../../actions/playlist_actions';
+import { fetchSongs } from '../../actions/song_actions';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Sidebar extends React.Component {
   componentDidMount() {
     this.props.fetchPlaylists()
     this.props.fetchUser(this.props.currentUserId);
+    this.props.fetchSongs();
   }
 
   componentDidUpdate(prevProps) {
@@ -108,7 +110,8 @@ const mdp = dispatch => {
   return ({
     openModal: modal => dispatch(openModal(modal)),
     fetchUser: id => dispatch(fetchUser(id)),
-    fetchPlaylists: () => dispatch(fetchPlaylists())
+    fetchPlaylists: () => dispatch(fetchPlaylists()),
+    fetchSongs: () => dispatch(fetchSongs())
   })
 }
 

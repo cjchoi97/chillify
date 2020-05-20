@@ -42,6 +42,7 @@ class MusicPlayer extends React.Component {
   componentDidUpdate(prevProps) {
     const audio = document.getElementById("player");
     if (audio) {
+      // audio.addEventListener("timeupdate", this.updateTime)
       if (prevProps.currentSongId !== this.props.song.id) {
         audio.src = this.props.song.song_url;
       }
@@ -51,7 +52,6 @@ class MusicPlayer extends React.Component {
         audio.pause();
       }
     } 
-    audio.addEventListener("timeupdate", this.updateTime)
   }
   
   play(e) {
