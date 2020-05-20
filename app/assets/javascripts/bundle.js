@@ -2274,7 +2274,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
           className: "fas fa-ellipsis-h"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "song-length ".concat(green)
-        }, _this3.convertTime()))));
+        }, song.duration))));
       }); // console.log(currentSongId);
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
