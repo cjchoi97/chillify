@@ -1500,9 +1500,11 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchSongs();
       this.props.fetchUsers();
-      var player = document.getElementById("player"); // if (player) {
-      //   player.addEventListener("timeupdate", this.updateTime)
-      // }
+      var player = document.getElementById("player");
+
+      if (player) {
+        player.addEventListener("timeupdate", this.updateTime);
+      }
     }
   }, {
     key: "componentDidUpdate",

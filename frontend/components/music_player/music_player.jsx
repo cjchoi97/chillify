@@ -33,10 +33,10 @@ class MusicPlayer extends React.Component {
     this.props.fetchSongs();
     this.props.fetchUsers();
     const player = document.getElementById("player");
-    // if (player) {
-    //   player.addEventListener("timeupdate", this.updateTime)
+    if (player) {
+      player.addEventListener("timeupdate", this.updateTime)
 
-    // }
+    }
   }
   
   componentDidUpdate(prevProps) {
