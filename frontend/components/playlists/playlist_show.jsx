@@ -139,7 +139,7 @@ class PlaylistShow extends React.Component {
             </div>
             <div className="song-content-right">
               <i className="fas fa-ellipsis-h"></i>
-              <span className={`song-length ${green}`}>{this.convertTime()}</span>
+              <span className={`song-length ${green}`}>{song.duration}</span>
             </div>
           </div>
         </li>
