@@ -11,12 +11,10 @@ const msp = ({ui, entities }) => {
   const { songs } = entities;
   const song = songs[ui.music.songId];
   // console.log(ui.music);
-  if (!song) return {};
   return {
     song: song,
     playing: ui.music.playing,
     currentSongId: ui.music.songId,
-    artist: song.artist_name
   }
 };
 

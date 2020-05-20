@@ -1613,7 +1613,6 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }
 
       var song = document.getElementById("player");
-      console.log(song.duration);
       song.volume = percentage;
       var percentVolume = song.volume / 1;
       var volumeSlider = meterWidth * percentVolume;
@@ -1671,8 +1670,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       // console.log(this.props);
       var _this$props = this.props,
           song = _this$props.song,
-          playing = _this$props.playing,
-          artist = _this$props.artist;
+          playing = _this$props.playing;
+      console.log(song);
       if (!song) return null;
       var playshow;
       var pauseshow;
@@ -1793,12 +1792,10 @@ var msp = function msp(_ref) {
   var songs = entities.songs;
   var song = songs[ui.music.songId]; // console.log(ui.music);
 
-  if (!song) return {};
   return {
     song: song,
     playing: ui.music.playing,
-    currentSongId: ui.music.songId,
-    artist: song.artist_name
+    currentSongId: ui.music.songId
   };
 };
 

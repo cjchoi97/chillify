@@ -138,9 +138,6 @@ class MusicPlayer extends React.Component {
     }
 
     const song = document.getElementById("player");
-
-    console.log(song.duration);
-
     song.volume = percentage;
 
     const percentVolume = song.volume / 1;
@@ -188,7 +185,8 @@ class MusicPlayer extends React.Component {
 
   render() {
     // console.log(this.props);
-    const { song, playing, artist } = this.props
+    const { song, playing} = this.props
+    console.log(song);
     if (!song) return null;
     let playshow;
     let pauseshow;
