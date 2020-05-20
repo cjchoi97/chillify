@@ -11,22 +11,32 @@ class MusicPlayer extends React.Component {
       mute: "dontshow",
       quiet: "dontshow",
       loud: "show",
+      duration: 0,
+      currentTime: 0,
       percentage: 1
     }
     
     this.play = this.play.bind(this);
     this.pause = this.pause.bind(this);
-    this.renderMainButton = this.renderMainButton.bind(this);
+    // this.renderMainButton = this.renderMainButton.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
     this.setNewVolume = this.setNewVolume.bind(this);
     this.mute = this.mute.bind(this);
     this.unmute = this.unmute.bind(this);
+    this.changeTime = this.changeTime.bind(this);
+    this.updateTime = this.updateTime.bind(this);
+    this.convertTime = this.convertTime.bind(this);
   }
 
   
   componentDidMount() {
     this.props.fetchSongs();
     this.props.fetchUsers();
+    const player = document.getElementById("player");
+    // if (player) {
+    //   player.addEventListener("timeupdate", this.updateTime)
+
+    // }
   }
   
   componentDidUpdate(prevProps) {
@@ -41,11 +51,13 @@ class MusicPlayer extends React.Component {
         audio.pause();
       }
     } 
+    audio.addEventListener("timeupdate", this.updateTime)
   }
   
   play(e) {
     document.getElementById('player').play();
     this.props.togglePlay();
+    
   }
 
   pause(e) {
@@ -127,50 +139,57 @@ class MusicPlayer extends React.Component {
 
     const song = document.getElementById("player");
 
+    console.log(song.duration);
+
     song.volume = percentage;
 
     const percentVolume = song.volume / 1;
     const volumeSlider = meterWidth * percentVolume;
     document.getElementById("volume-status").style.width = Math.round(volumeSlider) + "px";
   }
+
+  changeTime(e) {
+    e.preventDefault();
+    this.setState({
+      currentTime: e.currentTarget.value
+    })
+    document.getElementById("player").currentTime = e.currentTarget.value;
+  }
+
+  updateTime() {
+    const player = document.getElementById("player");
+    this.setState({
+      currentTime: player.currentTime || 0,
+      duration: player.duration || 0
+    })
+  }
+
+  convertTime(time) {
+    if (time === 0) return '0:00';
+    if (!time) return null;
+    time = Math.floor(time);
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    if (seconds < 10) seconds = `0${seconds}`;
+    return `${minutes}:${seconds}`;
+  }
+
   renderButtons(playshow, pauseshow) {
     const audio = document.getElementById("player");
-    if (audio) {
+    // if (audio) {
       return (
         <>
           <button className={`play ${playshow}`} onClick={this.play}><i className="far fa-play-circle"></i></button>
           <button className={`pause ${pauseshow}`} onClick={this.pause}><i className="far fa-pause-circle"></i></button>
         </>
       )
-    }
-  }
-
-  renderMainButton() {
-    let src;
-    if (this.props.playing) {
-      src = "https://chillify-aa-dev.s3.amazonaws.com/pausebutton.png"
-      return (
-        <img
-          onClick={this.pause}
-          src={src}
-          className="main-button"
-        />
-      )
-    } else {
-      src = "https://chillify-aa-dev.s3.amazonaws.com/playbutton.png"
-      return (
-        <img
-          onClick={this.play}
-          src={src}
-          className="main-button"
-        />
-      )
-    }
+    // }
   }
 
   render() {
     // console.log(this.props);
     const { song, playing, artist } = this.props
+    if (!song) return null;
     let playshow;
     let pauseshow;
     if (playing === false) {
@@ -183,6 +202,13 @@ class MusicPlayer extends React.Component {
     return (
       <div className="music-player">
         <div className="song-display">
+          <div className="album-image">
+            <img src={song.album_photo_url}/>
+          </div>
+          <div className="song-title-artist">
+            <Link to={`/albums/${song.album_id}`} className="song-title">{song.title}</Link>
+            <p className="artist-name">{song.artist_name}</p>
+          </div>
           {/* song name */}
           {/* artist name */}
           {/* album cover */}
@@ -198,9 +224,18 @@ class MusicPlayer extends React.Component {
             <i className="fas fa-step-forward"></i>
             <i className="fas fa-retweet"></i>
           </div>
-          <div id="song-slider">
-
-          </div>
+          <div className="song-slider">
+            <p className="time-progressed">{this.convertTime(this.state.currentTime)}</p>
+            <input 
+              type="range" 
+              min={0}
+              max={this.state.duration}
+              value={this.state.currentTime}
+              onChange={this.changeTime}
+              className="song-progress"
+            />
+            <p className="song-duration">{this.convertTime(this.state.duration)}</p>
+          </div>  
           <audio id="player">
             <source type="audio/mp3"/>
           </audio>

@@ -1478,15 +1478,20 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       mute: "dontshow",
       quiet: "dontshow",
       loud: "show",
+      duration: 0,
+      currentTime: 0,
       percentage: 1
     };
     _this.play = _this.play.bind(_assertThisInitialized(_this));
-    _this.pause = _this.pause.bind(_assertThisInitialized(_this));
-    _this.renderMainButton = _this.renderMainButton.bind(_assertThisInitialized(_this));
+    _this.pause = _this.pause.bind(_assertThisInitialized(_this)); // this.renderMainButton = this.renderMainButton.bind(this);
+
     _this.renderButtons = _this.renderButtons.bind(_assertThisInitialized(_this));
     _this.setNewVolume = _this.setNewVolume.bind(_assertThisInitialized(_this));
     _this.mute = _this.mute.bind(_assertThisInitialized(_this));
     _this.unmute = _this.unmute.bind(_assertThisInitialized(_this));
+    _this.changeTime = _this.changeTime.bind(_assertThisInitialized(_this));
+    _this.updateTime = _this.updateTime.bind(_assertThisInitialized(_this));
+    _this.convertTime = _this.convertTime.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1495,6 +1500,9 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchSongs();
       this.props.fetchUsers();
+      var player = document.getElementById("player"); // if (player) {
+      //   player.addEventListener("timeupdate", this.updateTime)
+      // }
     }
   }, {
     key: "componentDidUpdate",
@@ -1512,6 +1520,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
           audio.pause();
         }
       }
+
+      audio.addEventListener("timeupdate", this.updateTime);
     }
   }, {
     key: "play",
@@ -1601,50 +1611,57 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }
 
       var song = document.getElementById("player");
+      console.log(song.duration);
       song.volume = percentage;
       var percentVolume = song.volume / 1;
       var volumeSlider = meterWidth * percentVolume;
       document.getElementById("volume-status").style.width = Math.round(volumeSlider) + "px";
     }
   }, {
-    key: "renderButtons",
-    value: function renderButtons(playshow, pauseshow) {
-      var audio = document.getElementById("player");
-
-      if (audio) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "play ".concat(playshow),
-          onClick: this.play
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-play-circle"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "pause ".concat(pauseshow),
-          onClick: this.pause
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-pause-circle"
-        })));
-      }
+    key: "changeTime",
+    value: function changeTime(e) {
+      e.preventDefault();
+      this.setState({
+        currentTime: e.currentTarget.value
+      });
+      document.getElementById("player").currentTime = e.currentTarget.value;
     }
   }, {
-    key: "renderMainButton",
-    value: function renderMainButton() {
-      var src;
+    key: "updateTime",
+    value: function updateTime() {
+      var player = document.getElementById("player");
+      this.setState({
+        currentTime: player.currentTime || 0,
+        duration: player.duration || 0
+      });
+    }
+  }, {
+    key: "convertTime",
+    value: function convertTime(time) {
+      if (time === 0) return '0:00';
+      if (!time) return null;
+      time = Math.floor(time);
+      var minutes = Math.floor(time / 60);
+      var seconds = time % 60;
+      if (seconds < 10) seconds = "0".concat(seconds);
+      return "".concat(minutes, ":").concat(seconds);
+    }
+  }, {
+    key: "renderButtons",
+    value: function renderButtons(playshow, pauseshow) {
+      var audio = document.getElementById("player"); // if (audio) {
 
-      if (this.props.playing) {
-        src = "https://chillify-aa-dev.s3.amazonaws.com/pausebutton.png";
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          onClick: this.pause,
-          src: src,
-          className: "main-button"
-        });
-      } else {
-        src = "https://chillify-aa-dev.s3.amazonaws.com/playbutton.png";
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          onClick: this.play,
-          src: src,
-          className: "main-button"
-        });
-      }
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "play ".concat(playshow),
+        onClick: this.play
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-play-circle"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "pause ".concat(pauseshow),
+        onClick: this.pause
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-pause-circle"
+      }))); // }
     }
   }, {
     key: "render",
@@ -1654,6 +1671,7 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
           song = _this$props.song,
           playing = _this$props.playing,
           artist = _this$props.artist;
+      if (!song) return null;
       var playshow;
       var pauseshow;
 
@@ -1669,7 +1687,18 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
         className: "music-player"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-display"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "album-image"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: song.album_photo_url
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-title-artist"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/albums/".concat(song.album_id),
+        className: "song-title"
+      }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "artist-name"
+      }, song.artist_name))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mp-main"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "control-buttons"
@@ -1682,8 +1711,19 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-retweet"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "song-slider"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
+        className: "song-slider"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "time-progressed"
+      }, this.convertTime(this.state.currentTime)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "range",
+        min: 0,
+        max: this.state.duration,
+        value: this.state.currentTime,
+        onChange: this.changeTime,
+        className: "song-progress"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "song-duration"
+      }, this.convertTime(this.state.duration))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
         id: "player"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         type: "audio/mp3"
@@ -2148,9 +2188,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       this.props.fetchItems(); // this.props.fetchSongs();
 
       this.props.fetchCreators();
-    } // componentWillUnmount() {
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -2235,8 +2273,8 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-ellipsis-h"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "song-duration ".concat(green)
-        }, "0:00"))));
+          className: "song-length ".concat(green)
+        }, _this3.convertTime()))));
       }); // console.log(currentSongId);
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

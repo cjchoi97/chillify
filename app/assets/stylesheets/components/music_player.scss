@@ -21,6 +21,7 @@
   width: 40%;
   align-items: center;
   flex-direction: column;
+  justify-content: space-evenly;
   // margin-left: 100px;
 }
 
@@ -37,6 +38,21 @@
   align-items: center;
   // height: 50%;
   max-width: 722px;
+  color: #B3B3B3;
+  transition-duration: 0.2s;
+
+  i:hover {
+    color: white;
+    transition-duration: 0.1s;
+  }
+
+  button {
+    color: #B3B3B3;
+  }
+  button:hover i{
+    color: white;
+    transition-duration: 0.1s;
+  }
 }
 
 .main-button {
@@ -68,6 +84,7 @@ img.song-select {
 .song-display {
   width: 30%;
   display: flex;
+  align-items: center;
   min-width: 200px;
 }
 
@@ -193,11 +210,89 @@ img.song-select {
   // font-size: 16px;
 }
 
-
 .progress-bar {
   width: 100%;
   height: 12px;
   display: flex;
+}
+
+.song-slider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.time-progressed, .song-duration {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: .015em;
+  min-width: 40px;
+  text-align: center;
+}
+
+.album-image {
+  width: 56px;
+  height: 56px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.song-title-artist {
+  margin-left: 16px;
+  .song-title {
+    font-size: 14px;
+  }
+
+  .song-title:hover {
+    text-decoration: underline;
+  }
+
+  .artist-name {
+    font-size: 12px;
+    color: #B3B3B3;
+  }
+
+  .artist-name:hover {
+    text-decoration: underline;
+  }
+}
+
+// .song-progress{
+//   width: 100%;
+//   -webkit-appearance: none;
+//   height: 4px;
+//   background: #535353;
+//   border-radius: 2px;
+// }
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .song-progress {
+      overflow: hidden;
+      width: 100%;
+      -webkit-appearance: none;
+      background-color: #535353;
+      height: 4px;
+      border-radius: 2px;
+    }
+    
+    .song-progress::-webkit-slider-runnable-track {
+      height: 10px;
+      width: inherit;
+      -webkit-appearance: none;
+      color: #13bba4;
+      margin-top: -1px;
+    }
+    
+    .song-progress::-webkit-slider-thumb {
+      width: 10px;
+      -webkit-appearance: none;
+      height: 10px;
+      background: white;
+      box-shadow: -500px 0 0 500px #1EBA54;
+    }
 }
 
 

@@ -68,10 +68,6 @@ class PlaylistShow extends React.Component {
     this.props.fetchCreators();
   }
 
-  // componentWillUnmount() {
-
-  // }
-
   render() {
     const { 
       item, 
@@ -143,7 +139,7 @@ class PlaylistShow extends React.Component {
             </div>
             <div className="song-content-right">
               <i className="fas fa-ellipsis-h"></i>
-              <span className={`song-duration ${green}`}>0:00</span>
+              <span className={`song-length ${green}`}>{this.convertTime()}</span>
             </div>
           </div>
         </li>
