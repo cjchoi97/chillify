@@ -85,6 +85,9 @@
 .sidebar-playlists {
   width: 100%;
   margin-top: 15px;
+  height: 390px;
+  overflow-y: scroll;
+  padding-bottom: 20px;
 }
 
 .sidebar-playlist-item {

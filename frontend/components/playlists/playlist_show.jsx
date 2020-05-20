@@ -6,10 +6,14 @@ class PlaylistShow extends React.Component {
 
     this.state = {
       dropdown: "closed",
+      playshow: "show",
+      pauseshow: "dontshow",
       x: 0,
       y: 0
     }
 
+    this.playSong = this.playSong.bind(this);
+    this.pauseSong = this.pauseSong.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
@@ -41,23 +45,37 @@ class PlaylistShow extends React.Component {
     }
   }
 
+  playSong(song) {
+    this.props.updateCurrentSong(song);
+    this.props.togglePlay();
+    this.setState({
+      playshow: "dontshow",
+      pauseshow: "show"
+    })
+  }
+
+  pauseSong() {
+    this.props.togglePause();
+    this.setState({
+      playshow: "show",
+      pauseshow: "dontshow"
+    })
+  }
+
   componentDidMount() {
     this.props.fetchItems();
     // this.props.fetchSongs();
     this.props.fetchCreators();
   }
 
-  // componentWillUnmount() {
-
-  // }
-
   render() {
-
     const { 
       item, 
       creators,
       songs,
-      type
+      type,
+      currentSongId,
+      playing
     } = this.props
     if (!item) return null;
     
@@ -70,17 +88,44 @@ class PlaylistShow extends React.Component {
     if (!creator) return null;
     // debugger
 
+    const addPlayOrPauseButton = (song, green) => {
+      if (currentSongId === song.id && this.state.playshow === "show") {
+        return(
+          <i className={`fas fa-play song-play show ${green}`}
+            onClick={() => this.playSong(song)}></i>
+        )
+      } else if (currentSongId === song.id && this.props.playing) {
+        return(
+          <i className={`fas fa-pause song-pause ${this.state.pauseshow} ${green}`}
+            onClick={this.pauseSong}></i>
+        )
+      } else {
+        return (
+          <i className={`fas fa-play song-play show ${green}`}
+            onClick={() => this.playSong(song)}></i>
+        )
+      }
+    }
 
     const songItems = filteredSongs.map((song, i) => {
+      let green = "";
+      let listening = "";
+      if (currentSongId === song.id) {
+        green = "green";
+      } 
+      
+      if (currentSongId === song.id && playing) {
+        listening = "listening"
+      }
       return (
-        <li className="songs" key={i}>
+        <li className="songs" key={i} tabIndex="1">
           <div className="song-content">
             <div className="song-content-left">
-              <i className="fas fa-music"></i>
-              <i className="fas fa-play song-play"></i>
+              <i className={`fas fa-music ${green} ${listening}`}></i>
+              <i className={`fas fa-volume-up ${green}`} id={`${listening}`}></i>
+              {addPlayOrPauseButton(song, green)}
               <div className="song-info">
-                
-                <div className="song-title">{song.title}</div>
+                <div className={`song-title ${green}`}>{song.title}</div>
                 <div className="song-creator-info">
                   <span className="song-artist">
                     { song.artist_name }
@@ -94,13 +139,16 @@ class PlaylistShow extends React.Component {
             </div>
             <div className="song-content-right">
               <i className="fas fa-ellipsis-h"></i>
-              <span className="song-duration">0:00</span>
+              <span className={`song-length ${green}`}>{this.convertTime()}</span>
             </div>
           </div>
         </li>
       );
     });
+    // console.log(currentSongId);
+
     return (
+      
       <div className="items-show-page" onClick={this.closeDropdown}>
         <div className="img-and-info">
           <img src={item.photoUrl} />
@@ -112,6 +160,7 @@ class PlaylistShow extends React.Component {
                 <span className="dot">•</span>
                 <span className="total-duration">0m 0s</span>
               </div>
+              
             {/* <div className="item-size">
               {filteredSongs.length} SONGS
             </div> */}

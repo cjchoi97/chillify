@@ -1,34 +1,36 @@
 import { connect } from 'react-redux';
 import MusicPlayer from './music_player';
-import {
-  updateCurrentSong,
-  togglePlay
-} from '../../actions/music_actions';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 import { fetchSongs } from '../../actions/song_actions';
+import { fetchUsers } from '../../actions/user_actions';
+import { togglePlay, togglePause } from '../../actions/music_actions';
 
 
-const msp = ({ music, ui, entities }) => {
+const msp = ({ui, entities }) => {
   // debugger
   const { songs } = entities;
+  const song = songs[ui.music.songId];
+  // console.log(ui.music);
+  if (!song) return {};
   return {
-    currentSong: music.currentSong,
-    playing: music.playing,
-    modal: ui.modal,
-    songs: songs
-  };
+    song: song,
+    playing: ui.music.playing,
+    currentSongId: ui.music.songId,
+    artist: song.artist_name
+  }
 };
 
 const mdp = dispatch => {
   return {
-    updateCurrentSong: song => dispatch(updateCurrentSong(song)),
-    togglePlay: play => dispatch(togglePlay(play)),
-    fetchSongs: () => dispatch(fetchSongs())
+    fetchSongs: () => dispatch(fetchSongs()),
+    fetchUsers: () => dispatch(fetchUsers()),
+    togglePause: () => dispatch(togglePause()),
+    togglePlay: () => dispatch(togglePlay())
   };
 };
 
 
-export default withRouter(connect(
+export default connect(
   msp,
   mdp
-)(MusicPlayer));
+)(MusicPlayer);

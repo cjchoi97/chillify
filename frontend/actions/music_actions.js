@@ -1,5 +1,4 @@
 export const UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
-export const UPDATE_CURRENT_ARTIST = "UPDATE_CURRENT_ARTIST";
 export const TOGGLE_PLAY = "TOGGLE_PLAY";
 export const TOGGLE_PAUSE = "TOGGLE_PAUSE";
 
@@ -10,16 +9,14 @@ export const updateCurrentSong = song => {
   }
 };
 
-export const togglePlay = play => {
+export const togglePlay = () => {
   return {
     type: TOGGLE_PLAY,
-    play
   }
 };
 
-export const togglePause = play => {
+export const togglePause = () => {
   return {
     type: TOGGLE_PAUSE,
-    play
   }
 }

@@ -5,6 +5,7 @@ import { fetchAlbums } from '../../actions/album_actions';
 import { fetchSongs } from '../../actions/song_actions';
 // import { fetchUsers } from '../../actions/user_actions';
 import { fetchArtists } from '../../actions/artist_actions';
+import { togglePlay, togglePause, updateCurrentSong } from '../../actions/music_actions'
 
 const msp = (state, ownProps) => {
   const album = state.entities.albums[ownProps.match.params.id];
@@ -14,7 +15,10 @@ const msp = (state, ownProps) => {
     item: album,
     songs: songs,
     creators: artists,
-    type: "album"
+    type: "album",
+    playing: state.ui.music.playing,
+    // history: ownProps.history,
+    currentSongId: state.ui.music.songId
   });
 }
 
@@ -23,7 +27,10 @@ const mdp = dispatch => {
     deleteItem: id => dispatch(deletePlaylist(id)),
     fetchItems: () => dispatch(fetchAlbums()),
     fetchSongs: () => dispatch(fetchSongs()),
-    fetchCreators: () => dispatch(fetchArtists())
+    fetchCreators: () => dispatch(fetchArtists()),
+    togglePlay: () => dispatch(togglePlay()),
+    togglePause: () => dispatch(togglePause()),
+    updateCurrentSong: (song) => dispatch(updateCurrentSong(song))
   })
 }
 
