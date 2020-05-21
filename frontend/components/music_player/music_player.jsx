@@ -186,8 +186,8 @@ class MusicPlayer extends React.Component {
   render() {
     // console.log(this.props);
     const { song, playing } = this.props;
+    // console.log(song);
     if (!song) return null;
-    console.log(song);
     let playshow;
     let pauseshow;
     if (playing === false) {

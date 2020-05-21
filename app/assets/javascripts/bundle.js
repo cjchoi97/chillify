@@ -1669,9 +1669,9 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       // console.log(this.props);
       var _this$props = this.props,
           song = _this$props.song,
-          playing = _this$props.playing;
+          playing = _this$props.playing; // console.log(song);
+
       if (!song) return null;
-      console.log(song);
       var playshow;
       var pauseshow;
 
@@ -1789,7 +1789,9 @@ var msp = function msp(_ref) {
       entities = _ref.entities;
   // debugger
   var songs = entities.songs;
+  console.log(songs);
   var song = songs[ui.music.songId];
+  console.log(song);
   return {
     song: song,
     playing: ui.music.playing,
@@ -3074,8 +3076,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchPlaylists();
-      this.props.fetchUser(this.props.currentUserId);
-      this.props.fetchSongs();
+      this.props.fetchUser(this.props.currentUserId); // this.props.fetchSongs();
     }
   }, {
     key: "componentDidUpdate",

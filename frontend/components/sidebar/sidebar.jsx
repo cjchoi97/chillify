@@ -19,7 +19,7 @@ class Sidebar extends React.Component {
   componentDidMount() {
     this.props.fetchPlaylists()
     this.props.fetchUser(this.props.currentUserId);
-    this.props.fetchSongs();
+    // this.props.fetchSongs();
   }
 
   componentDidUpdate(prevProps) {
