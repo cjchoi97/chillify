@@ -1789,9 +1789,7 @@ var msp = function msp(_ref) {
       entities = _ref.entities;
   // debugger
   var songs = entities.songs;
-  console.log(songs);
   var song = songs[ui.music.songId];
-  console.log(song);
   return {
     song: song,
     playing: ui.music.playing,

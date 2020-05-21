@@ -9,9 +9,7 @@ import { togglePlay, togglePause } from '../../actions/music_actions';
 const msp = ({ui, entities }) => {
   // debugger
   const { songs } = entities;
-  console.log(songs);
   const song = songs[ui.music.songId];
-  console.log(song);
   return {
     song: song,
     playing: ui.music.playing,
