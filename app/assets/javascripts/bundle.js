@@ -3603,7 +3603,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/music_actions */ "./frontend/actions/music_actions.js");
 
 var _defaultState = {
-  songId: 1,
+  songId: 139,
   playing: false
 };
 
