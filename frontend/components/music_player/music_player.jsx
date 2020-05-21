@@ -32,13 +32,12 @@ class MusicPlayer extends React.Component {
   componentDidMount() {
     this.props.fetchSongs();
     this.props.fetchUsers();
-    const player = document.getElementById("player");
-    if (player) {
-      player.addEventListener("timeupdate", this.updateTime)
+    // const player = document.getElementById("player");
+    // if (player) {
+      // player.addEventListener("timeupdate", this.updateTime)
+      // console.log("I have mounted")
+    // }
 
-    }
-
-    console.log("I have mounted")
   }
   
   componentDidUpdate(prevProps) {
@@ -59,7 +58,6 @@ class MusicPlayer extends React.Component {
   play(e) {
     document.getElementById('player').play();
     this.props.togglePlay();
-    
   }
 
   pause(e) {
@@ -187,9 +185,9 @@ class MusicPlayer extends React.Component {
 
   render() {
     // console.log(this.props);
-    const { song, playing} = this.props
-    console.log(song);
+    const { song, playing } = this.props;
     if (!song) return null;
+    console.log(song);
     let playshow;
     let pauseshow;
     if (playing === false) {

@@ -1499,14 +1499,11 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchSongs();
-      this.props.fetchUsers();
-      var player = document.getElementById("player");
-
-      if (player) {
-        player.addEventListener("timeupdate", this.updateTime);
-      }
-
-      console.log("I have mounted");
+      this.props.fetchUsers(); // const player = document.getElementById("player");
+      // if (player) {
+      // player.addEventListener("timeupdate", this.updateTime)
+      // console.log("I have mounted")
+      // }
     }
   }, {
     key: "componentDidUpdate",
@@ -1673,8 +1670,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           song = _this$props.song,
           playing = _this$props.playing;
-      console.log(song);
       if (!song) return null;
+      console.log(song);
       var playshow;
       var pauseshow;
 
