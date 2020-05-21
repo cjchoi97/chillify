@@ -1505,6 +1505,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       if (player) {
         player.addEventListener("timeupdate", this.updateTime);
       }
+
+      console.log("I have mounted");
     }
   }, {
     key: "componentDidUpdate",
@@ -1512,7 +1514,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       var audio = document.getElementById("player");
 
       if (audio) {
-        // audio.addEventListener("timeupdate", this.updateTime)
+        audio.addEventListener("timeupdate", this.updateTime);
+
         if (prevProps.currentSongId !== this.props.song.id) {
           audio.src = this.props.song.song_url;
         }

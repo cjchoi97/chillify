@@ -37,12 +37,14 @@ class MusicPlayer extends React.Component {
       player.addEventListener("timeupdate", this.updateTime)
 
     }
+
+    console.log("I have mounted")
   }
   
   componentDidUpdate(prevProps) {
     const audio = document.getElementById("player");
     if (audio) {
-      // audio.addEventListener("timeupdate", this.updateTime)
+      audio.addEventListener("timeupdate", this.updateTime)
       if (prevProps.currentSongId !== this.props.song.id) {
         audio.src = this.props.song.song_url;
       }
