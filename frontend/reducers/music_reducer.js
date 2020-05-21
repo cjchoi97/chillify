@@ -5,7 +5,7 @@ import {
 } from '../actions/music_actions';
 
 const _defaultState = {
-  songId: 139,
+  songId: 1,
   playing: false,
 }
 

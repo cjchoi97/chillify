@@ -11,6 +11,7 @@ const msp = ({ui, entities }) => {
   const { songs } = entities;
   const song = songs[ui.music.songId];
   return {
+    songs: songs,
     song: song,
     playing: ui.music.playing,
     currentSongId: ui.music.songId,

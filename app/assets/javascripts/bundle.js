@@ -1791,6 +1791,7 @@ var msp = function msp(_ref) {
   var songs = entities.songs;
   var song = songs[ui.music.songId];
   return {
+    songs: songs,
     song: song,
     playing: ui.music.playing,
     currentSongId: ui.music.songId
@@ -3601,7 +3602,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/music_actions */ "./frontend/actions/music_actions.js");
 
 var _defaultState = {
-  songId: 139,
+  songId: 1,
   playing: false
 };
 
