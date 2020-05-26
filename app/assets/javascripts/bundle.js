@@ -3089,8 +3089,13 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var playlists = this.props.playlists;
-      var indexItems = playlists.map(function (playlist) {
+      var _this$props = this.props,
+          playlists = _this$props.playlists,
+          currentUser = _this$props.currentUser;
+      var filteredItems = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(function (id) {
+        return playlists[id];
+      }) : [];
+      var indexItems = filteredItems.map(function (playlist) {
         if (!playlist) return null;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "sidebar-playlist-item",
@@ -3150,8 +3155,9 @@ var msp = function msp(state) {
     return playlists[id];
   }) : [];
   return {
-    playlists: userPlaylists,
-    currentUserId: currentUserId
+    playlists: playlists,
+    currentUserId: currentUserId,
+    currentUser: currentUser
   };
 };
 

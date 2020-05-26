@@ -30,9 +30,13 @@ class Sidebar extends React.Component {
 
   render() {
 
-    const { playlists } = this.props
+    const { playlists, currentUser } = this.props
 
-    const indexItems = playlists.map(playlist => {
+    const filteredItems = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
+      return playlists[id]
+    }) : [];
+
+    const indexItems = filteredItems.map(playlist => {
       if (!playlist) return null;
       return (
         <li className="sidebar-playlist-item" key={playlist.id}>
@@ -101,8 +105,9 @@ const msp = state => {
     return playlists[id]
   }) : [];
   return ({
-    playlists: userPlaylists,
-    currentUserId: currentUserId
+    playlists: playlists,
+    currentUserId: currentUserId,
+    currentUser: currentUser
   })
 }
 
