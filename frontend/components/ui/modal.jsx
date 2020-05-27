@@ -16,6 +16,10 @@ class Modal extends React.Component {
       case 'createPlaylist':
         component = <PlaylistCreate />
         break;
+
+      case 'addSongToPlaylist':
+        // addSongToPlaylist
+        break;
   
       default:
         return null;

@@ -75,7 +75,8 @@ class PlaylistShow extends React.Component {
       songs,
       type,
       currentSongId,
-      playing
+      playing,
+      openModal
     } = this.props
     if (!item) return null;
     
@@ -139,6 +140,14 @@ class PlaylistShow extends React.Component {
             </div>
             <div className="song-content-right">
               <i className="fas fa-ellipsis-h"></i>
+              <ul className="add-song-dropdown" style={{
+                top: this.state.y,
+                left: this.state.x
+              }}>
+                <li className="navbar-menu-item" onClick={() => openModal("addSongToPlaylist")}>
+                  Add to Playlist
+                </li>
+              </ul>
               <span className={`song-length ${green}`}>{song.duration}</span>
             </div>
           </div>
