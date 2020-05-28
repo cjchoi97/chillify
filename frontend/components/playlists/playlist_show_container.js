@@ -16,6 +16,8 @@ const msp = (state, ownProps) => {
   //   return songs[id]
   // }) : [];
 
+  console.log(openModal);
+
   return ({
     item: playlist,
     // filteredSongs: playlistSongs,

@@ -8,6 +8,7 @@ class PlaylistShow extends React.Component {
       dropdown: "closed",
       playshow: "show",
       pauseshow: "dontshow",
+      songDropdown: "dontshow",
       x: 0,
       y: 0
     }
@@ -17,11 +18,15 @@ class PlaylistShow extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
+    this.toggleSongDropdown = this.toggleSongDropdown.bind(this);
   }
 
   closeDropdown() {
     if (this.state.dropdown === "open") 
       this.setState({dropdown: "closed"});
+    
+    if (this.state.songDropdown === "show") 
+      this.setState({songDropdown: "dontshow"});
   }
 
   handleDelete() {
@@ -44,6 +49,23 @@ class PlaylistShow extends React.Component {
       });
     }
   }
+
+  toggleSongDropdown(e) {
+
+    if (this.state.songDropdown === "dontshow") {
+      this.setState({
+        songDropdown: "show",
+        x: e.screenX - 210,
+        y: e.clientY + 5
+      })
+    } else {
+      this.setState({
+        songDropdown: "dontshow",
+        x: e.screenX - 210,
+        y: e.clientY + 5
+      })
+    }
+  } 
 
   playSong(song) {
     this.props.updateCurrentSong(song);
@@ -76,7 +98,6 @@ class PlaylistShow extends React.Component {
       type,
       currentSongId,
       playing,
-      openModal
     } = this.props
     if (!item) return null;
     
@@ -139,12 +160,12 @@ class PlaylistShow extends React.Component {
               </div>
             </div>
             <div className="song-content-right">
-              <i className="fas fa-ellipsis-h"></i>
-              <ul className="add-song-dropdown" style={{
+              <i className="fas fa-ellipsis-h" onClick={this.toggleSongDropdown}></i>
+              <ul className={`add-song-dropdown ${this.state.songDropdown}`} style={{
                 top: this.state.y,
                 left: this.state.x
               }}>
-                <li className="navbar-menu-item" onClick={() => openModal("addSongToPlaylist")}>
+                <li className="navbar-menu-item" onClick={() => this.props.openModal("addSongToPlaylist")}>
                   Add to Playlist
                 </li>
               </ul>

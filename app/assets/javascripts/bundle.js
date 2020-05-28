@@ -693,11 +693,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
 /* harmony import */ var _actions_artist_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/artist_actions */ "./frontend/actions/artist_actions.js");
 /* harmony import */ var _actions_music_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/music_actions */ "./frontend/actions/music_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 
 
 
 
  // import { fetchUsers } from '../../actions/user_actions';
+
 
 
 
@@ -740,6 +742,9 @@ var mdp = function mdp(dispatch) {
     },
     updateCurrentSong: function updateCurrentSong(song) {
       return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentSong"])(song));
+    },
+    openModal: function openModal(modal) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_7__["openModal"])(modal));
     }
   };
 };
@@ -2114,6 +2119,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       dropdown: "closed",
       playshow: "show",
       pauseshow: "dontshow",
+      songDropdown: "dontshow",
       x: 0,
       y: 0
     };
@@ -2122,6 +2128,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
     _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.closeDropdown = _this.closeDropdown.bind(_assertThisInitialized(_this));
+    _this.toggleSongDropdown = _this.toggleSongDropdown.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2130,6 +2137,9 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
     value: function closeDropdown() {
       if (this.state.dropdown === "open") this.setState({
         dropdown: "closed"
+      });
+      if (this.state.songDropdown === "show") this.setState({
+        songDropdown: "dontshow"
       });
     }
   }, {
@@ -2157,6 +2167,23 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         this.setState({
           dropdown: "closed",
           x: e.screenX,
+          y: e.clientY + 5
+        });
+      }
+    }
+  }, {
+    key: "toggleSongDropdown",
+    value: function toggleSongDropdown(e) {
+      if (this.state.songDropdown === "dontshow") {
+        this.setState({
+          songDropdown: "show",
+          x: e.screenX - 210,
+          y: e.clientY + 5
+        });
+      } else {
+        this.setState({
+          songDropdown: "dontshow",
+          x: e.screenX - 210,
           y: e.clientY + 5
         });
       }
@@ -2198,8 +2225,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
           songs = _this$props2.songs,
           type = _this$props2.type,
           currentSongId = _this$props2.currentSongId,
-          playing = _this$props2.playing,
-          openModal = _this$props2.openModal;
+          playing = _this$props2.playing;
       if (!item) return null;
       var filteredSongs = Object.values(songs).length > 0 ? item.songIds.map(function (id) {
         return songs[id];
@@ -2270,9 +2296,10 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         }, song.album_title)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "song-content-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-ellipsis-h"
+          className: "fas fa-ellipsis-h",
+          onClick: _this3.toggleSongDropdown
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "add-song-dropdown",
+          className: "add-song-dropdown ".concat(_this3.state.songDropdown),
           style: {
             top: _this3.state.y,
             left: _this3.state.x
@@ -2280,7 +2307,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "navbar-menu-item",
           onClick: function onClick() {
-            return openModal("addSongToPlaylist");
+            return _this3.props.openModal("addSongToPlaylist");
           }
         }, "Add to Playlist")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "song-length ".concat(green)
@@ -2375,6 +2402,7 @@ var msp = function msp(state, ownProps) {
   //   return songs[id]
   // }) : [];
 
+  console.log(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_6__["openModal"]);
   return {
     item: playlist,
     // filteredSongs: playlistSongs,
