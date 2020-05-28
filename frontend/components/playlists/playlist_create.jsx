@@ -1,5 +1,4 @@
 import React from 'react';
-import { fetchUser } from '../../util/user_api_util';
 
 class PlaylistCreate extends React.Component {
   constructor(props) {

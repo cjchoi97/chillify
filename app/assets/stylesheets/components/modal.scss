@@ -131,3 +131,65 @@
 .create-button:hover {
   background-color: #1ed760;
 }
+
+// Add song to playlist
+
+.add-song-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  overflow: hidden;
+  padding: 0 22px;
+
+  h1 {
+    font-size: 72px;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.img-container img{
+  height: 173px;
+  width: 173px;
+}
+
+.add-song-playlist-index {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+}
+
+.playlist-item-information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+
+  span {
+    font-size: 14px;
+  }
+
+  .playlist-item-name {
+    color: white;
+  }
+
+  .playlist-item-size {
+    color: #9A9A9A;
+    margin-top: 10px;
+  }
+}
+
+.add-song-playlist-item {
+  padding: 0 8px;
+}
+
+.new-playlist-button {
+  background: #1EBA54;
+  width: 180px;
+  font-size: 12px;
+  margin-top: 16px;
+  margin-bottom: 40px;
+  line-height: 6px;
+}
