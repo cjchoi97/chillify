@@ -35,7 +35,7 @@ class PlaylistCreate extends React.Component {
 
     return(
       <div className="create-playlist">
-        <i className="fas fa-times" onClick={() => this.props.closeModal()}></i>
+        <i className="fas fa-times create" onClick={() => this.props.closeModal()}></i>
         <h1 className="create-prompt">Create new playlist</h1>
         <div className="new-playlist-input-container">
           <form onSubmit={this.handleSubmit}>

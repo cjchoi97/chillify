@@ -8,7 +8,7 @@ class AddSongToPlaylist extends React.Component {
 
   render() {
 
-    const { playlists, currentUser } = this.props;
+    const { playlists, currentUser, addSongToPlaylist } = this.props;
 
     const userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
       return playlists[id]
@@ -21,10 +21,10 @@ class AddSongToPlaylist extends React.Component {
           <div className="img-container">
             <img src={item.photoUrl} />
             <div className="modal-add-song-graphic">
-
+              <i className="fas fa-plus-circle"></i>
             </div>
           </div>
-          <div className="playlist-item-information">
+          <div className="playlist-item-information" onClick={() => addSongToPlaylist({})}>
             <span className="playlist-item-name">{item.title}</span>
             <span className="playlist-item-size">{item.songIds.length} songs</span>
           </div>
@@ -34,9 +34,12 @@ class AddSongToPlaylist extends React.Component {
 
     return(
       <div className="add-song-container">
-        <i className="fas fa-times" onClick={() => this.props.closeModal()}></i>
+        <div className="add-song-button-container">
+          <i className="fas fa-times addsong" onClick={() => this.props.closeModal()}></i>
+
+        </div>
         <h1>Add to playlist</h1>
-        <button className="new-playlist-button">New playlist</button>
+        <button className="new-playlist-button" onClick={() => this.props.openModal("createPlaylist")}>New playlist</button>
         <div className="add-song-playlist-index">
           {indexItems}
         </div>

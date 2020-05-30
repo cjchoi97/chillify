@@ -12,14 +12,19 @@ class Modal extends React.Component {
     const { modal, closeModal } = this.props;
     if (!modal) return null;
   
-    let component;
+    let component, divName;
     switch (modal) {
       case 'createPlaylist':
-        component = <PlaylistCreate />
+        component = 
+        <div className="create-playlist-container">
+          <PlaylistCreate />
+
+        </div>
         break;
 
       case 'addSongToPlaylist':
-        component = <AddSongToPlaylist />
+        component = 
+          <AddSongToPlaylist />
         break;
   
       default:

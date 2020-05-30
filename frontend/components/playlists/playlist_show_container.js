@@ -16,8 +16,6 @@ const msp = (state, ownProps) => {
   //   return songs[id]
   // }) : [];
 
-  console.log(openModal);
-
   return ({
     item: playlist,
     // filteredSongs: playlistSongs,
@@ -40,7 +38,7 @@ const mdp = dispatch => {
     togglePlay: () => dispatch(togglePlay()),
     togglePause: () => dispatch(togglePause()),
     updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
-    openModal: modal => dispatch(openModal(modal))
+    openModal: (modal, song) => dispatch(openModal(modal, song))
   })
 }
 

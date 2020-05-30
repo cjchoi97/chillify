@@ -19,6 +19,7 @@ class PlaylistShow extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
     this.toggleSongDropdown = this.toggleSongDropdown.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
   }
 
   closeDropdown() {
@@ -68,6 +69,7 @@ class PlaylistShow extends React.Component {
   } 
 
   playSong(song) {
+    console.log(song.title);
     this.props.updateCurrentSong(song);
     this.props.togglePlay();
     this.setState({
@@ -82,6 +84,11 @@ class PlaylistShow extends React.Component {
       playshow: "show",
       pauseshow: "dontshow"
     })
+  }
+
+  handleModalOpen(song) {
+    console.log(song.title);
+    // this.props.openModal("addSongToPlaylist", song);
   }
 
   componentDidMount() {
@@ -129,6 +136,15 @@ class PlaylistShow extends React.Component {
       }
     }
 
+    const something = (song) => {
+      console.log(song.title);
+      return (
+        <li className="navbar-menu-item" onClick={() => this.handleModalOpen(song)}>
+          Add to Playlist
+        </li>
+      )
+    }
+
     const songItems = filteredSongs.map((song, i) => {
       let green = "";
       let listening = "";
@@ -165,9 +181,10 @@ class PlaylistShow extends React.Component {
                 top: this.state.y,
                 left: this.state.x
               }}>
-                <li className="navbar-menu-item" onClick={() => this.props.openModal("addSongToPlaylist")}>
+                {something(song)}
+                {/* <li className="navbar-menu-item" onClick={() => this.props.openModal("addSongToPlaylist", song)}>
                   Add to Playlist
-                </li>
+                </li> */}
               </ul>
               <span className={`song-length ${green}`}>{song.duration}</span>
             </div>
