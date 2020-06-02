@@ -5,6 +5,7 @@ import { fetchSongs } from '../../actions/song_actions';
 import { fetchUsers } from '../../actions/user_actions';
 import { togglePlay, togglePause, updateCurrentSong } from '../../actions/music_actions';
 import { openModal } from '../../actions/modal_actions';
+import { removeSongFromPlaylist } from '../../actions/playlist_song_actions';
 
 const msp = (state, ownProps) => {
   const playlist = state.entities.playlists[ownProps.match.params.id];
@@ -38,7 +39,8 @@ const mdp = dispatch => {
     togglePlay: () => dispatch(togglePlay()),
     togglePause: () => dispatch(togglePause()),
     updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
-    openModal: (modal, song) => dispatch(openModal(modal, song))
+    openModal: (modal, song) => dispatch(openModal(modal, song)),
+    removeSongFromPlaylist: (songId, playlistId) => dispatch(removeSongFromPlaylist(songId, playlistId))
   })
 }
 

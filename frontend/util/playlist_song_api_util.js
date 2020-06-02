@@ -2,7 +2,7 @@
 export const addSongToPlaylist = playlist_song => {
   return $.ajax({
     method:'POST',
-    url: '/api/playlist_songs',
+    url: '/api/playlists_songs',
     data: {playlist_song}
   });
 };

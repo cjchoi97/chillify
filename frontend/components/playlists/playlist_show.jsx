@@ -9,6 +9,7 @@ class PlaylistShow extends React.Component {
       playshow: "show",
       pauseshow: "dontshow",
       songDropdown: "dontshow",
+      dropdownId: -1,
       x: 0,
       y: 0
     }
@@ -20,6 +21,7 @@ class PlaylistShow extends React.Component {
     this.closeDropdown = this.closeDropdown.bind(this);
     this.toggleSongDropdown = this.toggleSongDropdown.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
+    this.something = this.something.bind(this);
   }
 
   closeDropdown() {
@@ -27,7 +29,10 @@ class PlaylistShow extends React.Component {
       this.setState({dropdown: "closed"});
     
     if (this.state.songDropdown === "show") 
-      this.setState({songDropdown: "dontshow"});
+      this.setState({
+        songDropdown: "dontshow",
+        dropdownId: -1
+      });
   }
 
   handleDelete() {
@@ -51,20 +56,24 @@ class PlaylistShow extends React.Component {
     }
   }
 
-  toggleSongDropdown(e) {
-
-    if (this.state.songDropdown === "dontshow") {
-      this.setState({
-        songDropdown: "show",
-        x: e.screenX - 210,
-        y: e.clientY + 5
-      })
-    } else {
-      this.setState({
-        songDropdown: "dontshow",
-        x: e.screenX - 210,
-        y: e.clientY + 5
-      })
+  toggleSongDropdown(songId) {
+    return (e) => {
+      e.preventDefault();
+      if (this.state.songDropdown === "dontshow") {
+        this.setState({
+          songDropdown: "show",
+          x: e.screenX - 210,
+          y: e.clientY + 5,
+          dropdownId: songId
+        })
+      } else {
+        this.setState({
+          songDropdown: "dontshow",
+          x: e.screenX - 210,
+          y: e.clientY + 5,
+          dropdownId: -1
+        })
+      }
     }
   } 
 
@@ -88,13 +97,39 @@ class PlaylistShow extends React.Component {
 
   handleModalOpen(song) {
     console.log(song.title);
-    // this.props.openModal("addSongToPlaylist", song);
+    return (e) => {
+      e.preventDefault();
+      this.props.openModal("addSongToPlaylist", song.id);
+    }
   }
 
   componentDidMount() {
     this.props.fetchItems();
     // this.props.fetchSongs();
     this.props.fetchCreators();
+  }
+
+  something(song) {
+    // debugger
+
+    const song1 = song;
+    // if (type === "album") {
+    return (
+      <li className="navbar-menu-item" onClick={this.handleModalOpen(song1)}>
+        Add to Playlist
+      </li>
+    )
+    // } 
+    // else if (type === "playlist") {
+    //   return (
+    //     <li className="navbar-menu-item" onClick={() => this.handleModalOpen(song)}>
+    //       Add to Playlist
+    //     </li>
+    //     <li className="navbar-menu-item" onClick={() => this.props.removeSongFromPlaylist(song.id)}>
+
+    //     </li>
+    //   )
+    // }
   }
 
   render() {
@@ -136,14 +171,6 @@ class PlaylistShow extends React.Component {
       }
     }
 
-    const something = (song) => {
-      console.log(song.title);
-      return (
-        <li className="navbar-menu-item" onClick={() => this.handleModalOpen(song)}>
-          Add to Playlist
-        </li>
-      )
-    }
 
     const songItems = filteredSongs.map((song, i) => {
       let green = "";
@@ -176,15 +203,15 @@ class PlaylistShow extends React.Component {
               </div>
             </div>
             <div className="song-content-right">
-              <i className="fas fa-ellipsis-h" onClick={this.toggleSongDropdown}></i>
-              <ul className={`add-song-dropdown ${this.state.songDropdown}`} style={{
+              <i className="fas fa-ellipsis-h" onClick={this.toggleSongDropdown(song.id)}></i>
+              <ul className={`add-song-dropdown ${song.id === this.state.dropdownId ? "show" : "dontshow"}`} style={{
                 top: this.state.y,
                 left: this.state.x
               }}>
-                {something(song)}
-                {/* <li className="navbar-menu-item" onClick={() => this.props.openModal("addSongToPlaylist", song)}>
+                {/* {this.something(song)} */}
+                <li className="navbar-menu-item" onClick={() => this.props.openModal("addSongToPlaylist", song.id)}>
                   Add to Playlist
-                </li> */}
+                </li>
               </ul>
               <span className={`song-length ${green}`}>{song.duration}</span>
             </div>

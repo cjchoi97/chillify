@@ -4,11 +4,18 @@ class AddSongToPlaylist extends React.Component {
   constructor(props) {
     super(props);
     
+    this.handleAddSong = this.handleAddSong.bind(this);
+  }
+
+  handleAddSong(playlist) {
+    this.props.addSongToPlaylist({ song_id: this.props.currentSongId, playlist_id: playlist.id })
+    this.props.closeModal();
+
   }
 
   render() {
 
-    const { playlists, currentUser, addSongToPlaylist } = this.props;
+    const { playlists, currentUser } = this.props;
 
     const userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
       return playlists[id]
@@ -24,7 +31,7 @@ class AddSongToPlaylist extends React.Component {
               <i className="fas fa-plus-circle"></i>
             </div>
           </div>
-          <div className="playlist-item-information" onClick={() => addSongToPlaylist({})}>
+          <div className="playlist-item-information" onClick={() => this.handleAddSong(item)}>
             <span className="playlist-item-name">{item.title}</span>
             <span className="playlist-item-size">{item.songIds.length} songs</span>
           </div>

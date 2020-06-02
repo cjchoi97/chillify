@@ -8,9 +8,11 @@ import { fetchPlaylists } from '../../actions/playlist_actions';
 const msp = state => {
   const playlists = state.entities.playlists;
   const currentUser = state.entities.users[state.session.id];
+  const currentSongId = state.ui.modal.songId;
   return {
     playlists: playlists,
-    currentUser: currentUser
+    currentUser: currentUser,
+    currentSongId: currentSongId
   }
 }
 
