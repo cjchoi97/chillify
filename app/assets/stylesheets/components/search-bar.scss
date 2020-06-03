@@ -1,0 +1,24 @@
+.search-bar {
+  height: 40px;
+  padding: 6px 48px;
+  width: 100%;
+  background: white;
+  border-radius: 50px;
+  text-align: left;
+  font-size: 13px;
+  letter-spacing: .5px;
+}
+
+.search-bar-container {
+  position: relative;
+  width: 364px;
+
+  svg {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    color: black;
+    height: 24px;
+    width: 24px;
+  }
+}

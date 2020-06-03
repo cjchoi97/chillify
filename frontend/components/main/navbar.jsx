@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'; 
 import { logout } from '../../actions/session_actions';
+import SearchBar from '../search/search-bar-container';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Navbar extends React.Component {
     if (this.props.url[1] === "search") {
       return(
         <div className="search-bar-container">
-          
+          <SearchBar />
         </div>
       )
     }
