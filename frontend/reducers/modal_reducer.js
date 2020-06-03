@@ -8,7 +8,7 @@ const modalReducer = (state = null, action) => {
       if (action.modal === "addSongToPlaylist"){
         return Object.assign({}, state, {modal: action.modal, songId: action.song});
       } else {
-        return action.modal;
+        return Object.assign({}, state, { modal: action.modal});
       }
 
     case CLOSE_MODAL:

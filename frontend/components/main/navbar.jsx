@@ -11,6 +11,7 @@ class Navbar extends React.Component {
     }
     this.handleLogout = this.handleLogout.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.leftComponent = this.leftComponent.bind(this);
   }
 
   toggleDropdown() {
@@ -26,15 +27,25 @@ class Navbar extends React.Component {
     logout().then(() => this.props.history.push("/"));
   }
 
+  leftComponent() {
+    if (this.props.url[1] === "search") {
+      return(
+        <div className="search-bar-container">
+          
+        </div>
+      )
+    }
+  }
+
   render() {
     // console.log(this.props.location.pathname);
     // const path = this.props.location.pathname.split("/");
     
-    const { currentUser, logout } = this.props;
+    const { currentUser } = this.props;
     return (
       <div className="navbar">
         <div className="left-nav">
-          {/* <span></span> */}
+          {this.leftComponent()}
         </div>
 
         <div className="right-nav">

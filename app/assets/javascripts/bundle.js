@@ -1288,7 +1288,7 @@ var Main = function Main(props) {
     className: "main-content ".concat(page)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {
     history: props.history,
-    location: props.location
+    url: path
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
     path: "/explore",
     component: _library_explore__WEBPACK_IMPORTED_MODULE_9__["default"]
@@ -1378,6 +1378,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
+    _this.leftComponent = _this.leftComponent.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1405,18 +1406,25 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "leftComponent",
+    value: function leftComponent() {
+      if (this.props.url[1] === "search") {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "search-bar-container"
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       // console.log(this.props.location.pathname);
       // const path = this.props.location.pathname.split("/");
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          logout = _this$props.logout;
+      var currentUser = this.props.currentUser;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "navbar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-nav"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.leftComponent()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "right-nav"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "navbar-dropdown-click",
@@ -1934,7 +1942,10 @@ var AddSongToPlaylist = /*#__PURE__*/function (_React$Component) {
         if (!item) return null;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "add-song-playlist-item",
-          key: item.id
+          key: item.id,
+          onClick: function onClick() {
+            return _this2.handleAddSong(item);
+          }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "img-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1944,10 +1955,7 @@ var AddSongToPlaylist = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-plus-circle"
         }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "playlist-item-information",
-          onClick: function onClick() {
-            return _this2.handleAddSong(item);
-          }
+          className: "playlist-item-information"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "playlist-item-name"
         }, item.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -2339,7 +2347,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
     _this.closeDropdown = _this.closeDropdown.bind(_assertThisInitialized(_this));
     _this.toggleSongDropdown = _this.toggleSongDropdown.bind(_assertThisInitialized(_this));
     _this.handleModalOpen = _this.handleModalOpen.bind(_assertThisInitialized(_this));
-    _this.something = _this.something.bind(_assertThisInitialized(_this));
+    _this.listOptions = _this.listOptions.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2431,14 +2439,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleModalOpen",
     value: function handleModalOpen(song) {
-      var _this4 = this;
-
-      console.log(song.title);
-      return function (e) {
-        e.preventDefault();
-
-        _this4.props.openModal("addSongToPlaylist", song.id);
-      };
+      this.props.openModal("addSongToPlaylist", song.id);
     }
   }, {
     key: "componentDidMount",
@@ -2448,24 +2449,33 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       this.props.fetchCreators();
     }
   }, {
-    key: "something",
-    value: function something(song) {
-      // debugger
-      var song1 = song; // if (type === "album") {
+    key: "listOptions",
+    value: function listOptions(song) {
+      var _this4 = this;
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "navbar-menu-item",
-        onClick: this.handleModalOpen(song1)
-      }, "Add to Playlist"); // } 
-      // else if (type === "playlist") {
-      //   return (
-      //     <li className="navbar-menu-item" onClick={() => this.handleModalOpen(song)}>
-      //       Add to Playlist
-      //     </li>
-      //     <li className="navbar-menu-item" onClick={() => this.props.removeSongFromPlaylist(song.id)}>
-      //     </li>
-      //   )
-      // }
+      // debugger
+      if (this.props.type === "album") {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "navbar-menu-item",
+          onClick: function onClick() {
+            return _this4.handleModalOpen(song);
+          }
+        }, "Add to Playlist");
+      }
+
+      if (this.props.type === "playlist") {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "navbar-menu-item",
+          onClick: function onClick() {
+            return _this4.handleModalOpen(song);
+          }
+        }, "Add to Playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "navbar-menu-item",
+          onClick: function onClick() {
+            return _this4.props.removeSongFromPlaylist(song.id, _this4.props.item.id);
+          }
+        }, "Remove from this playlist"));
+      }
     }
   }, {
     key: "render",
@@ -2557,12 +2567,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
             top: _this5.state.y,
             left: _this5.state.x
           }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "navbar-menu-item",
-          onClick: function onClick() {
-            return _this5.props.openModal("addSongToPlaylist", song.id);
-          }
-        }, "Add to Playlist")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, _this5.listOptions(song)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "song-length ".concat(green)
         }, song.duration))));
       }); // console.log(currentSongId);
@@ -3898,7 +3903,9 @@ var modalReducer = function modalReducer() {
           songId: action.song
         });
       } else {
-        return action.modal;
+        return Object.assign({}, state, {
+          modal: action.modal
+        });
       }
 
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["CLOSE_MODAL"]:

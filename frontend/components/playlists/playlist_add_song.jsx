@@ -24,14 +24,14 @@ class AddSongToPlaylist extends React.Component {
     const indexItems = userPlaylists.map(item => {
       if (!item) return null;
       return(
-        <div className="add-song-playlist-item" key={item.id}>
+        <div className="add-song-playlist-item" key={item.id} onClick={() => this.handleAddSong(item)}>
           <div className="img-container">
             <img src={item.photoUrl} />
             <div className="modal-add-song-graphic">
               <i className="fas fa-plus-circle"></i>
             </div>
           </div>
-          <div className="playlist-item-information" onClick={() => this.handleAddSong(item)}>
+          <div className="playlist-item-information">
             <span className="playlist-item-name">{item.title}</span>
             <span className="playlist-item-size">{item.songIds.length} songs</span>
           </div>

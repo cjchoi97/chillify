@@ -32,7 +32,7 @@ const Main = (props) => {
       <Sidebar />
 
       <div className={`main-content ${page}`} >
-        <Navbar history={props.history} location={props.location}/>
+        <Navbar history={props.history} url={path}/>
         <Switch>
           <Route path="/explore" component={Explore} />
           <Route path="/search" component={Search} />
