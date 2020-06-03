@@ -22,7 +22,11 @@ Rails.application.routes.draw do
 
     resources :songs, only: [:index]
 
-    resources :playlists_songs, only: [:create, :destroy]
+    resources :playlists_songs, only: [:create, :destroy] do
+      collection do
+        delete :remove
+      end
+    end
 
   end
 

@@ -6,6 +6,7 @@ import { fetchSongs } from '../../actions/song_actions';
 // import { fetchUsers } from '../../actions/user_actions';
 import { fetchArtists } from '../../actions/artist_actions';
 import { togglePlay, togglePause, updateCurrentSong } from '../../actions/music_actions'
+import { openModal } from '../../actions/modal_actions'
 
 const msp = (state, ownProps) => {
   const album = state.entities.albums[ownProps.match.params.id];
@@ -30,7 +31,8 @@ const mdp = dispatch => {
     fetchCreators: () => dispatch(fetchArtists()),
     togglePlay: () => dispatch(togglePlay()),
     togglePause: () => dispatch(togglePause()),
-    updateCurrentSong: (song) => dispatch(updateCurrentSong(song))
+    updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
+    openModal: (modal, song) => dispatch(openModal(modal, song))
   })
 }
 

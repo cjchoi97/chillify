@@ -1,5 +1,6 @@
 import React from 'react';
 import PlaylistCreate from '../playlists/playlist_create_container';
+import AddSongToPlaylist from '../playlists/playlist_add_song_container'
 // import {  } from '../../actions/modal_actions';
 
 class Modal extends React.Component {
@@ -11,14 +12,19 @@ class Modal extends React.Component {
     const { modal, closeModal } = this.props;
     if (!modal) return null;
   
-    let component;
+    let component, divName;
     switch (modal) {
       case 'createPlaylist':
-        component = <PlaylistCreate />
+        component = 
+        <div className="create-playlist-container">
+          <PlaylistCreate />
+
+        </div>
         break;
 
       case 'addSongToPlaylist':
-        // addSongToPlaylist
+        component = 
+          <AddSongToPlaylist />
         break;
   
       default:

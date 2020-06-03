@@ -19,7 +19,7 @@ class CollectionIndex extends React.Component {
   }
 
   render() {
-    const { items, currentUser, itemType, creators } = this.props
+    const { items, currentUser, itemType, creators } = this.props;
     const filteredItems = Object.values(items).length > 0 ? currentUser.playlistIds.map(id => {
       return items[id]
     }) : [];

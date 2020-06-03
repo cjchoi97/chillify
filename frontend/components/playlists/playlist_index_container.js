@@ -8,9 +8,9 @@ const msp = state => {
   const currentUser = state.entities.users[currentUserId];
   const { playlists, users } = state.entities;
   // debugger
-  const userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
-    return playlists[id]
-  }) : [];
+  // const userPlaylists = Object.values(playlists).length > 0 ? currentUser.playlistIds.map(id => {
+  //   return playlists[id]
+  // }) : [];
   return ({
     items: playlists,
     currentUser: currentUser, 
