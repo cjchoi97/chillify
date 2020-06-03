@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :searches, only: [:index]
+
     resources :artists, only: [:index, :show]
 
     resources :songs, only: [:index]
