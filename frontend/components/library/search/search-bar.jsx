@@ -24,9 +24,6 @@ class SearchBar extends React.Component {
         </input>
 
         <svg 
-          // height="24" 
-          // role="img" 
-          // width="24" 
           viewBox="0 0 512 512" 
           aria-hidden="true">
             <path d="M349.714 347.937l93.714 109.969-16.254 

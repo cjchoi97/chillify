@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom'
 import PlaylistIndex from '../playlists/playlist_index_container';
 import AlbumIndex from '../albums/album_index_container';
 import ArtistIndex from '../artists/artist_index_container';
-import Search from '../library/search';
+import SearchResults from '../library/search/search-results-container';
 import Explore from '../library/explore';
 import Sidebar from '../sidebar/sidebar';
 import Modal from '../ui/modal_container';
@@ -35,7 +35,7 @@ const Main = (props) => {
         <Navbar history={props.history} url={path}/>
         <Switch>
           <Route path="/explore" component={Explore} />
-          <Route path="/search" component={Search} />
+          <Route path="/search" component={SearchResults} />
           <Route path="/collection/playlists" component={PlaylistIndex} />
           <Route path="/collection/albums" component={AlbumIndex} />
           <Route path="/playlists/:id" component={PlaylistShow} />

@@ -1,0 +1,241 @@
+.search-results-container {
+  padding-left: 32px;
+
+  h1 {
+    margin: 10px 0;
+    font-size: 28px;
+    line-height: 1.6;
+    font-weight: 600;
+    letter-spacing: -.36px;
+    color: white;
+  }
+}
+
+.search-item {
+  width: 175px;
+  height: 250px;
+  background: #282828;
+  border-radius: 8px;
+  text-align: center;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  
+  img {
+    height: 135px;
+    width: 135px;
+    margin-bottom: 16px;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .search-item-title {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: white;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .search-item-creator {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: #B3B3B3;
+    text-align: left;
+    margin-top: 10px;
+  }
+}
+
+.album-results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// SONGS
+
+
+
+.song-results {
+  margin-right: 32px;
+}
+
+.search-song-item:hover {
+  background: #282828;
+
+  .search-song-dropdown i {
+    display: block;
+    position: relative;
+  }
+
+  .left-side {
+    .img-container {
+
+      .song-img-modal {
+        display: flex;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.6);
+        height: 72px;
+        width: 72px;
+        top: 0px;
+        justify-content: center;
+        align-items: center;
+
+        .play-item-button {
+          width: 32px;
+          height: 32px;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .fa-play {
+            font-size: 11px;
+            margin-left: 4px;
+          }
+
+          .fa-pause {
+            font-size: 11px;
+            margin-left: 2px;
+          }
+        }
+
+        .play-item-button.dontshow {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.search-song-item.playing {
+  background: #282828;
+  
+  .search-song-dropdown i {
+    display: block;
+    position: relative;
+  }
+
+  .left-side {
+    .img-container {
+
+      .song-img-modal {
+        display: flex;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.6);
+        height: 72px;
+        width: 72px;
+        top: 0px;
+        justify-content: center;
+        align-items: center;
+
+        .play-item-button {
+          width: 32px;
+          height: 32px;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .fa-play {
+            font-size: 11px;
+            margin-left: 4px;
+          }
+
+          .fa-pause {
+            font-size: 11px;
+            margin-left: 2px;
+          }
+        }
+
+        .play-item-button.dontshow {
+          display: none;
+        }
+      }
+    }
+  }
+
+
+}
+
+.search-song-item {
+  display: flex;
+  color: white;
+  height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .search-song-dropdown {
+    margin-right: 20px;
+
+    i {
+      display: none;
+      
+    }
+
+    ul {
+      display: none;
+    }
+
+    ul.show {
+      display: block;
+      position: absolute;
+      background: #282828;
+      border: 1px solid rgba(0,0,0,.15);
+      border-radius: .25rem;
+      width: 210px;
+      li {
+        cursor: pointer;
+        padding: 3px 20px;
+        width: 100%;
+        font-size: 14px;
+        line-height: 32px;
+        color: #A5A5A5;
+        border-radius: 4px;
+      }
+
+      li:hover {
+        color: white;
+        background: #333333;
+      }
+    }
+  }
+
+  .left-side {
+    display: flex;
+    align-items: center;
+
+    .img-container {
+      height: 72px;
+      width: 72px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      .song-img-modal {
+        display: none;
+      }
+    }
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .search-song-info {
+      margin-left: 15px;
+
+      .search-song-title {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .search-song-artist {
+        color: #B3B3B3;
+        font-size: 14px;
+      }
+    }
+    
+  }
+}

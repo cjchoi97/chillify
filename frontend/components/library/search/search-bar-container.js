@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { search } from '../../actions/search_actions';
+import { search } from '../../../actions/search_actions';
 import SearchBar from './search-bar';
 
 const mdp = dispatch => {
