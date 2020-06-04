@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'; 
 import { logout } from '../../actions/session_actions';
-import SearchBar from '../search/search-bar-container';
+import SearchBar from '../library/search/search-bar-container';
 
 class Navbar extends React.Component {
   constructor(props) {
