@@ -109,9 +109,9 @@ class SongResults extends React.Component {
               <img src={song.album_photo_url} />
             </div>
             <div className="search-song-info">
-              <div className="search-song-title">
+              <Link to={`/albums/${song.album_id}`} className="search-song-title"> 
                 {song.title}
-              </div>
+              </Link>
               <div className="search-song-artist">
                 {song.artist_name}
               </div>

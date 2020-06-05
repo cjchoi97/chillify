@@ -112,7 +112,7 @@
 
 .search-song-item.playing {
   background: #282828;
-  
+
   .search-song-dropdown i {
     display: block;
     position: relative;
@@ -229,6 +229,10 @@
       .search-song-title {
         font-size: 14px;
         font-weight: bold;
+      }
+
+      .search-song-title:hover {
+        text-decoration: underline;
       }
 
       .search-song-artist {

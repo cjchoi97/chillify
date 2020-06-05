@@ -1686,7 +1686,8 @@ var SongResults = /*#__PURE__*/function (_React$Component) {
           src: song.album_photo_url
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "search-song-info"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "/albums/".concat(song.album_id),
           className: "search-song-title"
         }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "search-song-artist"
@@ -3017,7 +3018,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       if (!creator) return null; // debugger
 
       var addPlayOrPauseButton = function addPlayOrPauseButton(song, green) {
-        if (currentSongId === song.id && _this5.state.playshow === "show") {
+        if (currentSongId === song.id && !_this5.props.playing) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-play song-play show ".concat(green),
             onClick: function onClick() {
@@ -3026,7 +3027,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
           });
         } else if (currentSongId === song.id && _this5.props.playing) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-pause song-pause ".concat(_this5.state.pauseshow, " ").concat(green),
+            className: "fas fa-pause song-pause show ".concat(green),
             onClick: _this5.pauseSong
           });
         } else {
