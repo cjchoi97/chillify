@@ -24,7 +24,9 @@ class Explore extends React.Component {
         <Link className="item" key={album.id} to={`/albums/${album.id}`}>
           <img src={album.photoUrl} />
           <div className="item-title">{album.title}</div>
-          <div className="item-creator">{album.artist_name}</div>
+          <div className="item-creator album">
+            <Link to={`/artists/${album.artist_id}`} className="item-creator">{album.artist_name}</Link>
+          </div>
         </Link>
       );
     });

@@ -1,0 +1,25 @@
+.artist-page-container {
+  padding-left: 32px;
+}
+
+.artist-song-item {
+  display: flex;
+  align-items: center;
+  height: 63;
+  justify-content: space-between;
+
+  .left-side {
+    display: flex;
+    align-items: center;
+
+    .img-container {
+      height: 50px;
+      width: 50px;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
