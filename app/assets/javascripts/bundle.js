@@ -1654,7 +1654,7 @@ var SongResults = /*#__PURE__*/function (_React$Component) {
       var playOrPause = function playOrPause(song) {
         if (currentSongId === song.id && _this3.props.playing) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            className: "play-item-button ".concat(_this3.state.pauseshow),
+            className: "play-item-button show",
             onClick: _this3.handlePause
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-pause"

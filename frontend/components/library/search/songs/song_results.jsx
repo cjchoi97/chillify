@@ -83,7 +83,7 @@ class SongResults extends React.Component {
     const playOrPause = (song) => {
       if (currentSongId === song.id && this.props.playing) {
         return (
-          <button className={`play-item-button ${this.state.pauseshow}`} onClick={this.handlePause}>
+          <button className={`play-item-button show`} onClick={this.handlePause}>
             <i className="fas fa-pause"></i>
           </button>
         )
