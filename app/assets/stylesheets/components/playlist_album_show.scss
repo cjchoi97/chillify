@@ -192,7 +192,7 @@ i.fa-music.listening {
   display: flex;
 }
 
-.song-creator-info span {
+.song-creator-info a {
   font-size: 14px;
 }
 
@@ -248,17 +248,19 @@ i.fa-music.listening {
   align-self: center;
   font-size: 15px;
   font-weight: 900;
+
+  a {
+    cursor: pointer;
+  }
 }
 
 .total-duration {
   color: #9C9B9A;
 }
 
-.creator span:hover {
+.creator a:hover {
   // transition-duration: 0.4s;
-  color: #A0A0A0;
   text-decoration: underline;
-  cursor: pointer;
 }
 
 .play-item-button {

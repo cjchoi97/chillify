@@ -98,7 +98,7 @@ class SongResults extends React.Component {
 
     if (!songs) return null;
   
-    const items = Object.values(songs).map(song => {
+    let items = Object.values(songs).map(song => {
       return (
         <div className={`search-song-item ${song.id === currentSongId && playing ? "playing": ""}`} key={song.id}>
           <div className="left-side">
@@ -112,9 +112,9 @@ class SongResults extends React.Component {
               <Link to={`/albums/${song.album_id}`} className="search-song-title"> 
                 {song.title}
               </Link>
-              <div className="search-song-artist">
+              <Link to={`/artists/${song.artist_id}`} className="search-song-artist">
                 {song.artist_name}
-              </div>
+              </Link>
             </div>
           </div>
   

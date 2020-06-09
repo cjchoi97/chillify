@@ -11,5 +11,8 @@ const receiveSearchTerm = term => {
 
 export const search = term => dispatch => {
   return SearchApiUtil.search(term).then(value => 
-    dispatch(receiveSearchTerm(value)));
+    dispatch(receiveSearchTerm(value)), err => {
+      console.log(err);
+      return null;
+    });
 }

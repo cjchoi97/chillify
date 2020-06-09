@@ -9,13 +9,17 @@ import {
   updateCurrentSong } from '../../actions/music_actions';
 
 const msp = (state, ownProps) => {
-  const artist = state.entities.playlists[ownProps.match.params.id];
+  const artist = state.entities.artists[ownProps.match.params.id] || {};
   const { songs, albums } = state.entities;
+  const artistSongs = artist.songIds ? artist.songIds.map(id => songs[id]) : []; 
 
   return {
-    artist: artist,
-    songs: songs,
-    albums: albums
+    playing: state.ui.music.playing,
+    currentSongId: state.ui.music.songId,
+    artist,
+    songs,
+    albums,
+    artistSongs: artistSongs.filter(song => song !== undefined)
   }
 }
 
