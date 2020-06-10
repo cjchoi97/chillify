@@ -220,7 +220,7 @@ var closeModal = function closeModal() {
 /*!*******************************************!*\
   !*** ./frontend/actions/music_actions.js ***!
   \*******************************************/
-/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, UPDATE_HISTORY, updateCurrentSong, togglePlay, togglePause, updateSongHistory */
+/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, UPDATE_HISTORY, UPDATE_QUEUE, ADD_TO_QUEUE, updateCurrentSong, togglePlay, togglePause, updateSongHistory, updateQueue, addSongsToQueue */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -229,14 +229,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PLAY", function() { return TOGGLE_PLAY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PAUSE", function() { return TOGGLE_PAUSE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_HISTORY", function() { return UPDATE_HISTORY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_QUEUE", function() { return UPDATE_QUEUE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_TO_QUEUE", function() { return ADD_TO_QUEUE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentSong", function() { return updateCurrentSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePlay", function() { return togglePlay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePause", function() { return togglePause; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSongHistory", function() { return updateSongHistory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateQueue", function() { return updateQueue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSongsToQueue", function() { return addSongsToQueue; });
 var UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
 var TOGGLE_PLAY = "TOGGLE_PLAY";
 var TOGGLE_PAUSE = "TOGGLE_PAUSE";
 var UPDATE_HISTORY = "UPDATE_HISTORY";
+var UPDATE_QUEUE = "UPDATE_QUEUE";
+var ADD_TO_QUEUE = "ADD_TO_QUEUE";
 var updateCurrentSong = function updateCurrentSong(song) {
   return {
     type: UPDATE_CURRENT_SONG,
@@ -257,6 +263,18 @@ var updateSongHistory = function updateSongHistory(history) {
   return {
     type: UPDATE_HISTORY,
     history: history
+  };
+};
+var updateQueue = function updateQueue(queue) {
+  return {
+    type: UPDATE_QUEUE,
+    queue: queue
+  };
+};
+var addSongsToQueue = function addSongsToQueue(songs) {
+  return {
+    type: ADD_TO_QUEUE,
+    songs: songs
   };
 };
 
@@ -4802,7 +4820,8 @@ __webpack_require__.r(__webpack_exports__);
 var _defaultState = {
   songId: 1,
   playing: false,
-  songHistory: []
+  songHistory: [],
+  queue: []
 };
 
 var musicReducer = function musicReducer() {
@@ -4827,6 +4846,15 @@ var musicReducer = function musicReducer() {
 
     case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["UPDATE_HISTORY"]:
       musicState.songHistory = action.history;
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["UPDATE_QUEUE"]:
+      musicState.queue = action.queue;
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["ADD_TO_QUEUE"]:
+      musicState.queue = musicState.queue.concat(action.songs);
+      return musicState;
 
     default:
       return state;
