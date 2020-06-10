@@ -251,3 +251,14 @@
     
   }
 }
+
+.artist-results {
+  display: flex;
+  flex-wrap: wrap;
+  .search-item {
+    img {
+      border-radius: 100px;
+      object-fit: cover;
+    }
+  }
+}

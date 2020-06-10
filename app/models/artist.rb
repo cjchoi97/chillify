@@ -15,4 +15,12 @@ class Artist < ApplicationRecord
     through: :albums,
     source: :songs
 
+  has_one_attached :photo
+
+  before_destroy :delete_artist_photo
+
+  def delete_artist_photo
+    self.photo.purge
+  end
+
 end

@@ -18,6 +18,14 @@ class ArtistShow extends React.Component {
   componentDidMount() {
     this.props.fetchArtists();
     this.props.fetchAlbums();
+
+    // const artist = document.getElementById("artist-info");
+      
+    // if (artist) {
+    //   console.log("here");
+    //   artist.style.backgroundImage = this.props.artist.photoUrl;
+
+    // }
   }
 
   playSong(song) {
@@ -59,7 +67,7 @@ class ArtistShow extends React.Component {
       }
     }
 
-    console.log(artistSongs);
+    // console.log(artistSongs);
     // debugger
 
     const filteredSongs = artistSongs.slice(0,5).map(song => {
@@ -131,7 +139,9 @@ class ArtistShow extends React.Component {
 
     return (
       <div className="artist-page-container">
-        <div className="artist-info">
+        <div className="artist-info" style={{
+          backgroundImage: `url(${artist.photoUrl})`
+        }}>
           <div className="verified">
             <svg width="24" height="24" viewBox="0 0 24 24" 
             fill="none" xmlns="http://www.w3.org/2000/svg">

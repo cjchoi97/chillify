@@ -21,12 +21,17 @@ class SearchResults extends React.Component {
   
   render() {
     const { albums, songs, artists } = this.props;
+
+    // console.log(albums);
+    // console.log(songs);
+    // console.log(artists);
     return(
       <div className="search-results-container" onClick={this.closeDropdown}>
         <SongResults songs={ songs } closeDrop={ this.state.closeDrop }/>
         <AlbumResults albums={ albums }/>
+        <ArtistResults artists={ artists }/>
       </div>
-    )
+    );
   }
 }
 
