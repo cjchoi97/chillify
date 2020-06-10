@@ -3,7 +3,7 @@ import MusicPlayer from './music_player';
 // import { withRouter } from 'react-router-dom';
 import { fetchSongs } from '../../actions/song_actions';
 import { fetchUsers } from '../../actions/user_actions';
-import { togglePlay, togglePause } from '../../actions/music_actions';
+import { togglePlay, togglePause, updateSongHistory } from '../../actions/music_actions';
 
 
 const msp = ({ui, entities }) => {
