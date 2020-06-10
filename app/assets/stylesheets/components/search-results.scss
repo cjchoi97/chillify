@@ -1,5 +1,6 @@
 .search-results-container {
   padding-left: 32px;
+  margin-top: 80px;
 
   h1 {
     margin: 10px 0;
@@ -112,7 +113,7 @@
 
 .search-song-item.playing {
   background: #282828;
-  
+
   .search-song-dropdown i {
     display: block;
     position: relative;
@@ -225,17 +226,39 @@
 
     .search-song-info {
       margin-left: 15px;
+      display: flex;
+      flex-direction: column;
 
       .search-song-title {
         font-size: 14px;
         font-weight: bold;
       }
 
+      .search-song-title:hover {
+        text-decoration: underline;
+      }
+
       .search-song-artist {
         color: #B3B3B3;
         font-size: 14px;
+        cursor: pointer;
+      }
+
+      .search-song-artist:hover {
+        text-decoration: underline;
       }
     }
     
+  }
+}
+
+.artist-results {
+  display: flex;
+  flex-wrap: wrap;
+  .search-item {
+    img {
+      border-radius: 100px;
+      object-fit: cover;
+    }
   }
 }

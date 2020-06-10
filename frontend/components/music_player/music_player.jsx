@@ -205,7 +205,10 @@ class MusicPlayer extends React.Component {
           </div>
           <div className="song-title-artist">
             <Link to={`/albums/${song.album_id}`} className="song-title">{song.title}</Link>
-            <p className="artist-name">{song.artist_name}</p>
+            
+            <p className="artist-name">
+              <Link to={`/artists/${song.artist_id}`}>{song.artist_name}</Link>
+            </p>
           </div>
           {/* song name */}
           {/* artist name */}

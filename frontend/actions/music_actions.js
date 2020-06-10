@@ -1,6 +1,7 @@
 export const UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
 export const TOGGLE_PLAY = "TOGGLE_PLAY";
 export const TOGGLE_PAUSE = "TOGGLE_PAUSE";
+export const UPDATE_HISTORY = "UPDATE_HISTORY"
 
 export const updateCurrentSong = song => {
   return {
@@ -18,5 +19,12 @@ export const togglePlay = () => {
 export const togglePause = () => {
   return {
     type: TOGGLE_PAUSE,
+  }
+}
+
+export const updateSongHistory = history => {
+  return {
+    type: UPDATE_HISTORY,
+    history
   }
 }

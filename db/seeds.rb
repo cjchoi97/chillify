@@ -30,12 +30,32 @@ demo = User.create!(email: 'demo@gmail.com',
                   gender: 'male')
 
 artist1 = Artist.create!(name: "Maverick City")
+artist1_photo = open('https://chillify-aa-dev.s3.amazonaws.com/artist+photos/mavcitycover.jpg');
+artist1.photo.attach(io: artist1_photo, filename: "mavcitycover.jpg")
+
 artist2 = Artist.create!(name: "Elevation Worship")
+artist2_photo = open('https://chillify-aa-dev.s3.amazonaws.com/artist+photos/elevationcover.jpeg');
+artist2.photo.attach(io: artist2_photo, filename: "elevationcover.jpeg")
+
 artist3 = Artist.create!(name: "pH-1")
+artist3_photo = open('https://chillify-aa-dev.s3.amazonaws.com/artist+photos/ph-1cover.jpg');
+artist3.photo.attach(io: artist3_photo, filename: "ph-1cover.jpg")
+
 artist4 = Artist.create!(name: "Code Kunst")
+artist4_photo = open('https://chillify-aa-dev.s3.amazonaws.com/artist+photos/codekunstcover.jpeg');
+artist4.photo.attach(io: artist4_photo, filename: "codekunstcover.jpeg")
+
 artist5 = Artist.create!(name: "Isla Vista Worship")
+artist5_photo = open('https://chillify-aa-dev.s3.amazonaws.com/artist+photos/islavistacover.jpeg');
+artist5.photo.attach(io: artist5_photo, filename: "islavistacover.jpeg")
+
 artist6 = Artist.create!(name: "Sam Ock")
+artist6_photo = open('https://chillify-aa-dev.s3.amazonaws.com/artist+photos/samockcover.jpeg');
+artist6.photo.attach(io: artist6_photo, filename: "samockcover.jpeg")
+
 artist7 = Artist.create!(name: "Jinsang")
+artist7_photo = open('https://chillify-aa-dev.s3.amazonaws.com/artist+photos/Jinsangcover.jpeg');
+artist7.photo.attach(io: artist7_photo, filename: "Jinsangcover.jpeg")
 
 
 album1 = Album.create!(title: "Mav City 3", year: "2020", artist_id: artist1.id)

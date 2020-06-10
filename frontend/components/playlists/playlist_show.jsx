@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class PlaylistShow extends React.Component {
   constructor(props) {
@@ -78,7 +79,6 @@ class PlaylistShow extends React.Component {
   } 
 
   playSong(song) {
-    console.log(song.title);
     this.props.updateCurrentSong(song);
     this.props.togglePlay();
     this.setState({
@@ -149,20 +149,33 @@ class PlaylistShow extends React.Component {
     // debugger
 
     const addPlayOrPauseButton = (song, green) => {
-      if (currentSongId === song.id && this.state.playshow === "show") {
+      if (currentSongId === song.id && !this.props.playing) {
         return(
           <i className={`fas fa-play song-play show ${green}`}
             onClick={() => this.playSong(song)}></i>
         )
       } else if (currentSongId === song.id && this.props.playing) {
         return(
-          <i className={`fas fa-pause song-pause ${this.state.pauseshow} ${green}`}
+          <i className={`fas fa-pause song-pause show ${green}`}
             onClick={this.pauseSong}></i>
         )
       } else {
         return (
           <i className={`fas fa-play song-play show ${green}`}
             onClick={() => this.playSong(song)}></i>
+        )
+      }
+    }
+
+    const displayAlbumName = (song) => {
+      if (type === "playlist") {
+        return (
+          <>
+            <span className="dot">•</span>
+            <Link to={`/albums/${song.album_id}`} className="song-album">
+              {song.album_title}
+            </Link>
+          </>
         )
       }
     }
@@ -188,13 +201,10 @@ class PlaylistShow extends React.Component {
               <div className="song-info">
                 <div className={`song-title ${green}`}>{song.title}</div>
                 <div className="song-creator-info">
-                  <span className="song-artist">
+                  <Link to={`/artists/${song.artist_id}`} className="song-artist">
                     { song.artist_name }
-                  </span>
-                  <span className="dot">•</span>
-                  <span className="song-album">
-                    { song.album_title }
-                  </span>
+                  </Link>
+                  {displayAlbumName(song)}
                 </div>
               </div>
             </div>
@@ -226,7 +236,7 @@ class PlaylistShow extends React.Component {
               <span className="item-type">{type}</span>
               <span className="item-name">{item.title}</span>
               <div className="creator-year-time">
-                <div className="creator"><span>{creator.username}</span></div>
+                <div className="creator"><Link to={`/artists/${creator.id}`}>{creator.username}</Link></div>
                 <span className="dot">•</span>
                 <span className="total-duration">0m 0s</span>
               </div>

@@ -83,7 +83,7 @@ class SongResults extends React.Component {
     const playOrPause = (song) => {
       if (currentSongId === song.id && this.props.playing) {
         return (
-          <button className={`play-item-button ${this.state.pauseshow}`} onClick={this.handlePause}>
+          <button className={`play-item-button show`} onClick={this.handlePause}>
             <i className="fas fa-pause"></i>
           </button>
         )
@@ -98,7 +98,7 @@ class SongResults extends React.Component {
 
     if (!songs) return null;
   
-    const items = Object.values(songs).map(song => {
+    let items = Object.values(songs).map(song => {
       return (
         <div className={`search-song-item ${song.id === currentSongId && playing ? "playing": ""}`} key={song.id}>
           <div className="left-side">
@@ -109,12 +109,12 @@ class SongResults extends React.Component {
               <img src={song.album_photo_url} />
             </div>
             <div className="search-song-info">
-              <div className="search-song-title">
+              <Link to={`/albums/${song.album_id}`} className="search-song-title"> 
                 {song.title}
-              </div>
-              <div className="search-song-artist">
+              </Link>
+              <Link to={`/artists/${song.artist_id}`} className="search-song-artist">
                 {song.artist_name}
-              </div>
+              </Link>
             </div>
           </div>
   

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const AlbumResults = ({ albums }) => {
   if (!albums) return null;
-  
+
   const items = Object.values(albums).map(album => {
     return (
       <Link className="search-item" key={album.id} to={`/albums/${album.id}`}>

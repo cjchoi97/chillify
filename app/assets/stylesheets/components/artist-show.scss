@@ -1,0 +1,275 @@
+.artist-page-container {
+  margin-bottom: 50px;
+  background: linear-gradient(0deg, #121212 52%, #515151 100%);
+
+  .artist-info {
+    color: white;
+    width: 100%;
+    font-size: 50px;
+    padding-left: 32px;
+    padding-bottom: 24px;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    // background-image: url("https://vignette.wikia.nocookie.net/kpop/images/f/fc/PH-1_Nerdy_Love_promo_photo.png/revision/latest?cb=20200531005829");
+    background-position: 50%;
+    background-size: cover;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+
+    .verified {
+      display: flex;
+      align-items: center;
+      span {
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: .1em;
+        margin-left: 8px;
+      }
+    }
+
+    h1 {
+      font-weight: bold;
+      font-size: 96px;
+    }
+  }
+
+  .songs-albums {
+    padding-left: 32px;
+
+    h1 {
+      margin: 10px 0;
+      font-size: 28px;
+      line-height: 1.6;
+      font-weight: 600;
+      letter-spacing: -.36px;
+      color: white;
+    }
+
+    .artist-albums-container {
+      margin-top: 45px;
+
+      .artist-albums {
+        display: flex;
+        flex-wrap: wrap;
+        
+        .album-title {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+.middle-buttons {
+  display: flex;
+  align-items: center;
+  padding-left: 32px;
+  padding-top: 24px;
+
+  .play-item-button {
+    margin-right: 32px;
+  }
+
+  .follow-button {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    background-color: transparent;
+    padding: 7px 15px;
+    border: 1px solid hsla(0,0%,100%,.3);
+    border-radius: 4px;
+  }
+
+  .follow-button:hover {
+    border: 1px solid white;
+  }
+}
+
+.artist-songs-container {
+  padding-right: 40px;
+}
+
+.artist-song-item {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  justify-content: space-between;
+  color: white;
+  transition-duration: 0.3s;
+
+  padding: 0 15px;
+
+
+  .left-side {
+    display: flex;
+    align-items: center;
+
+    .song-title {
+      margin-left: 14px;
+    }
+
+    .img-container {
+      height: 50px;
+      width: 50px;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+
+  .right-side {
+    display: flex;
+    justify-content: space-between;
+    width: 110px;
+    align-items: center;
+
+    .artist-song-item-dropdown {
+      i {
+        display: none;
+      }
+
+      ul {
+        display: none;
+      }
+    }
+  }
+}
+
+.artist-song-item:hover {
+  background: #2a2a2a;
+  transition-duration: 0.3s;
+
+  .left-side {
+    .play-pause-button {
+      i.show {
+        display: block;
+      }
+
+      .fa-music {
+        display: none;
+      }
+
+      #listening {
+        display: none;
+      }
+       
+    }
+  }
+
+  .right-side {
+    .artist-song-item-dropdown {
+      i {
+        display: block;
+      }
+    }
+  }
+}
+
+.artist-album-item {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  width: 183px;
+  height: 215px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 15px;
+
+  a {
+    cursor: pointer;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+  
+
+  .img-container {
+    height: 183px;
+    width: 183px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .modal{
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 0px;
+      height: 100%;
+      width: 100%;
+      i {
+        display: none;
+      }
+
+      i:hover {
+        color: white;
+        transition-duration: 0.2s;
+      }
+    }
+  }
+
+  span {
+    cursor: pointer;
+  }
+
+  span:hover {
+    text-decoration: underline;
+  }
+}
+
+.img-container {
+  position: relative;
+}
+
+.artist-album-item:hover {
+  .modal {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition-duration: 0.1s;
+
+    i {
+      display: block;
+      font-size: 60px;
+      color: #b3b3b3;
+      transition-duration: 0.2s;
+    }
+  }
+}
+
+.play-pause-button {
+  padding-right: 14px;
+}
+
+@media only screen and (max-width: 1022px) and (min-width: 846px) {
+  .artist-page-container {
+    .artist-info {
+      h1 {
+        font-size: 72px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 845px) {
+  .artist-page-container {
+    .artist-info {
+      h1 {
+        font-size: 48px;
+      }
+    }
+  }
+}

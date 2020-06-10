@@ -13,6 +13,7 @@ import Modal from '../ui/modal_container';
 import MusicPlayer from '../music_player/music_player_container';
 import PlaylistShow from '../playlists/playlist_show_container';
 import AlbumShow from '../albums/album_show_container';
+import ArtistShow from '../artists/artist_show_container';
 
 const Main = (props) => {
   // const { logout } = props;
@@ -39,6 +40,7 @@ const Main = (props) => {
           <Route path="/collection/playlists" component={PlaylistIndex} />
           <Route path="/collection/albums" component={AlbumIndex} />
           <Route path="/playlists/:id" component={PlaylistShow} />
+          <Route path="/artists/:id" component={ArtistShow} />
           <Route path="/albums/:id" component={AlbumShow} />
           {/* <Route path="/collection/artists" component={ArtistIndex} /> */}
         </Switch>
