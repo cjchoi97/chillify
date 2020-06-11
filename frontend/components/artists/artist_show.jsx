@@ -15,6 +15,7 @@ class ArtistShow extends React.Component {
     this.pauseSong = this.pauseSong.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
   }
 
   componentDidMount() {
