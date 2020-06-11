@@ -236,7 +236,9 @@ class PlaylistShow extends React.Component {
               <span className="item-type">{type}</span>
               <span className="item-name">{item.title}</span>
               <div className="creator-year-time">
-                <div className="creator"><Link to={`/artists/${creator.id}`}>{creator.username}</Link></div>
+                <div className="creator">
+                  <Link to={`/artists/${creator.id}`}>{creator.username}</Link>
+                </div>
                 <span className="dot">•</span>
                 <span className="total-duration">0m 0s</span>
               </div>

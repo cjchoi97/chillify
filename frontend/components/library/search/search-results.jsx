@@ -8,14 +8,14 @@ class SearchResults extends React.Component {
     super(props);
 
     this.state = {
-      closeDrop: ""
+      dropdownId: -1
     }
     this.closeDropdown = this.closeDropdown.bind(this);
   }
 
   closeDropdown() {
     this.setState({
-      closeDrop: "close"
+      dropdownId: -1
     })
   }
   
@@ -27,7 +27,7 @@ class SearchResults extends React.Component {
     // console.log(artists);
     return(
       <div className="search-results-container" onClick={this.closeDropdown}>
-        <SongResults songs={ songs } closeDrop={ this.state.closeDrop }/>
+        <SongResults songs={ songs } dropdownId={ this.state.dropdownId }/>
         <AlbumResults albums={ albums }/>
         <ArtistResults artists={ artists }/>
       </div>

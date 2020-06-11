@@ -3,7 +3,7 @@ import PlaylistShow from './playlist_show';
 import { deletePlaylist, fetchPlaylists } from '../../actions/playlist_actions';
 import { fetchSongs } from '../../actions/song_actions';
 import { fetchUsers } from '../../actions/user_actions';
-import { togglePlay, togglePause, updateCurrentSong } from '../../actions/music_actions';
+import { togglePlay, togglePause, updateCurrentSong, addSongsToQueue, updateQueue } from '../../actions/music_actions';
 import { openModal } from '../../actions/modal_actions';
 import { removeSongFromPlaylist } from '../../actions/playlist_song_actions';
 
@@ -40,7 +40,9 @@ const mdp = dispatch => {
     togglePause: () => dispatch(togglePause()),
     updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
     openModal: (modal, song) => dispatch(openModal(modal, song)),
-    removeSongFromPlaylist: (songId, playlistId) => dispatch(removeSongFromPlaylist(songId, playlistId))
+    removeSongFromPlaylist: (songId, playlistId) => dispatch(removeSongFromPlaylist(songId, playlistId)),
+    addSongsToQueue: songs => dispatch(addSongsToQueue(songs)),
+    updateQueue: queue => dispatch(updateQueue(queue))
   })
 }
 

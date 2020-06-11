@@ -140,6 +140,31 @@
       ul {
         display: none;
       }
+
+      ul.show {
+        display: block;
+        position: absolute;
+        background: #282828;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: .25rem;
+        width: 210px;
+
+        li {
+          cursor: pointer;
+          padding: 3px 20px;
+          width: 100%;
+          font-size: 14px;
+          line-height: 32px;
+          color: #A5A5A5;
+          border-radius: 4px;
+        }
+
+        li:hover {
+          color: white;
+          background: #333333;
+        }
+        
+      }
     }
   }
 }

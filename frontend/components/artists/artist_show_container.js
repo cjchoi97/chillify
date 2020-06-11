@@ -3,6 +3,7 @@ import ArtistShow from './artist_show';
 import { fetchArtists } from '../../actions/artist_actions';
 import { fetchAlbums } from '../../actions/album_actions';
 import { openModal } from '../../actions/modal_actions';
+import { addSongToPlaylist } from '../../actions/playlist_song_actions';
 import { 
   togglePause, 
   togglePlay,
@@ -30,7 +31,8 @@ const mdp = dispatch => {
     openModal: (modal, song) => dispatch(openModal(modal, song)),
     togglePause: () => dispatch(togglePause()),
     togglePlay: () => dispatch(togglePlay()),
-    updateCurrentSong: (song) => dispatch(updateCurrentSong(song))
+    updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
+    addSongToPlaylist: (playlistSong) => dispatch(addSongToPlaylist(playlistSong))
   }
 }
 
