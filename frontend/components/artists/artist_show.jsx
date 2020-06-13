@@ -13,19 +13,40 @@ class ArtistShow extends React.Component {
 
     this.playSong = this.playSong.bind(this);
     this.pauseSong = this.pauseSong.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchArtists();
     this.props.fetchAlbums();
+  }
 
-    // const artist = document.getElementById("artist-info");
-      
-    // if (artist) {
-    //   console.log("here");
-    //   artist.style.backgroundImage = this.props.artist.photoUrl;
+  handleModalOpen(song) {
+    this.props.openModal("addSongToPlaylist", song.id)
+    this.setState({
+      dropdownId: -1
+    })
+  }
 
-    // }
+  toggleDropdown(songId) {
+    return(e) => {
+      e.preventDefault();
+      if (this.state.dropdownId === -1) {
+        this.setState({
+          dropdownId: songId,
+          x: e.screenX - 210,
+          y: e.clientY + 5
+        })
+      } else {
+        this.setState({
+          dropdownId: -1,
+          x: e.screenX - 210,
+          y: e.clientY + 5
+        })
+      }
+    }
   }
 
   playSong(song) {
@@ -102,13 +123,13 @@ class ArtistShow extends React.Component {
           <div className="right-side">
             <div className="artist-song-item-dropdown">
               <i className="fas fa-ellipsis-h"
-                ></i>
-              <ul className={`search-song-dropdown-menu ${song.id === this.state.dropdownId ? "show" : "dontshow"}`}
+                  onClick={this.toggleDropdown(song.id)}></i>
+              <ul className={`artist-song-dropdown-menu ${song.id === this.state.dropdownId ? "show" : "dontshow"}`}
                 style={{
                   top: this.state.y,
                   left: this.state.x
                 }}>
-                <li className="search-dropdown-item" onClick={() => this.handleModalOpen(song)}>
+                <li className="artist-dropdown-item" onClick={() => this.handleModalOpen(song)}>
                   Add to Playlist
                 </li>
               </ul>

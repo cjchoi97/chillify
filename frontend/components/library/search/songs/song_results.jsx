@@ -159,7 +159,7 @@ const mdp = dispatch => {
     togglePause: () => dispatch(togglePause()),
     togglePlay: () => dispatch(togglePlay()),
     updateCurrentSong: song => dispatch(updateCurrentSong(song)),
-    addSongToPlaylist: playlist_song => dispatch(addSongToPlaylist(playlist_song)),
+    addSongToPlaylist: playlistSong => dispatch(addSongToPlaylist(playlistSong)),
     openModal: (modal, song) => dispatch(openModal(modal, song))
   }
 }

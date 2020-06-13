@@ -2,13 +2,16 @@ import {
   UPDATE_CURRENT_SONG,
   TOGGLE_PLAY,
   TOGGLE_PAUSE,
-  UPDATE_HISTORY
+  UPDATE_HISTORY,
+  UPDATE_QUEUE,
+  ADD_TO_QUEUE
 } from '../actions/music_actions';
 
 const _defaultState = {
   songId: 1,
   playing: false,
-  songHistory: []
+  songHistory: [],
+  queue: []
 }
 
 const musicReducer = (state = _defaultState, action) => {
@@ -27,6 +30,13 @@ const musicReducer = (state = _defaultState, action) => {
       return musicState;
     case UPDATE_HISTORY:
       musicState.songHistory = action.history;
+      return musicState;
+    case UPDATE_QUEUE:
+      musicState.queue = action.queue;
+      return musicState
+    case ADD_TO_QUEUE:
+      musicState.queue = musicState.queue.concat(action.songs);
+      return musicState;
     default:
       return state;
   }
