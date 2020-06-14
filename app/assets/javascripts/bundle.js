@@ -928,8 +928,8 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
     _this.playSong = _this.playSong.bind(_assertThisInitialized(_this));
     _this.pauseSong = _this.pauseSong.bind(_assertThisInitialized(_this));
     _this.handleModalOpen = _this.handleModalOpen.bind(_assertThisInitialized(_this));
-    _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
-    _this.closeDropdown = _this.closeDropdown.bind(_assertThisInitialized(_this));
+    _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this)); // this.closeDropdown = this.closeDropdown.bind(this);
+
     return _this;
   }
 
