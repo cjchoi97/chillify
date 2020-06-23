@@ -23,6 +23,7 @@ class PlaylistShow extends React.Component {
     this.toggleSongDropdown = this.toggleSongDropdown.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.listOptions = this.listOptions.bind(this);
+    this.playCollection = this.playCollection.bind(this);
   }
 
   closeDropdown() {
@@ -77,6 +78,20 @@ class PlaylistShow extends React.Component {
       }
     }
   } 
+
+  playCollection(filteredSongs) {
+    console.log(filteredSongs);
+    if (!filteredSongs.length) return;
+    if (filteredSongs.includes(this.props.currentSongId)) {
+      this.props.togglePlay();
+      return
+    }
+
+    this.props.updateCurrentSong(filteredSongs[0]);
+    this.props.updateQueue([...filteredSongs.slice(1)]);
+    this.props.togglePlay();
+
+  }
 
   playSong(song) {
     this.props.updateCurrentSong(song);
@@ -191,6 +206,7 @@ class PlaylistShow extends React.Component {
       if (currentSongId === song.id && playing) {
         listening = "listening"
       }
+
       return (
         <li className="songs" key={i} tabIndex="1">
           <div className="song-content">
@@ -249,7 +265,7 @@ class PlaylistShow extends React.Component {
           </div>
         </div>
         <div className="play-or-delete">
-          <button className="play-item-button">
+          <button className="play-item-button" onClick={() => this.playCollection(filteredSongs)}>
             <i className="fas fa-play"></i>
           </button>
           <i className="far fa-heart"></i>

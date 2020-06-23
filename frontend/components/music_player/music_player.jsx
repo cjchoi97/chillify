@@ -26,6 +26,8 @@ class MusicPlayer extends React.Component {
     this.changeTime = this.changeTime.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.convertTime = this.convertTime.bind(this);
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
   }
 
   
@@ -45,6 +47,7 @@ class MusicPlayer extends React.Component {
     if (audio) {
       audio.addEventListener("timeupdate", this.updateTime)
       if (prevProps.currentSongId !== this.props.song.id) {
+        audio.loop = false;
         audio.src = this.props.song.song_url;
       }
       if (this.props.playing) {
@@ -53,6 +56,32 @@ class MusicPlayer extends React.Component {
         audio.pause();
       }
     } 
+  }
+
+  previous() {
+    const { songHistory, songs, queue, currentSongId } = this.props;
+    if (!songHistory.length) return;
+
+    queue.unshift(songs[currentSongId]);
+
+    this.props.updateQueue(queue);
+    this.props.updateCurrentSong(songHistory[0]);
+    this.props.updateSongHistory(songHistory.slice(1));
+    this.props.togglePlay();
+  }
+
+  next() {
+    const { queue, songHistory,currentSongId, songs } = this.props;
+    if (!queue.length) return;
+
+    songHistory.unshift(songs[currentSongId]);
+
+    // console.log(songHistory);
+
+    this.props.updateSongHistory(songHistory)
+    this.props.updateCurrentSong(queue[0]);
+    this.props.updateQueue(queue.slice(1));
+    this.props.togglePlay();
   }
   
   play(e) {
@@ -210,19 +239,14 @@ class MusicPlayer extends React.Component {
               <Link to={`/artists/${song.artist_id}`}>{song.artist_name}</Link>
             </p>
           </div>
-          {/* song name */}
-          {/* artist name */}
-          {/* album cover */}
-          {/* links to show pages */}
-          {/* favorite button */}
         </div>
 
         <div className="mp-main">
           <div className="control-buttons">
             <i className="fas fa-random"></i>
-            <i className="fas fa-step-backward"></i>
+            <i className="fas fa-step-backward" onClick={this.previous}></i>
             {this.renderButtons(playshow, pauseshow)}
-            <i className="fas fa-step-forward"></i>
+            <i className="fas fa-step-forward" onClick={this.next}></i>
             <i className="fas fa-retweet"></i>
           </div>
           <div className="song-slider">
@@ -237,7 +261,7 @@ class MusicPlayer extends React.Component {
             />
             <p className="song-duration">{this.convertTime(this.state.duration)}</p>
           </div>  
-          <audio id="player">
+          <audio id="player" onEnded={this.next}>
             <source type="audio/mp3"/>
           </audio>
         </div>
