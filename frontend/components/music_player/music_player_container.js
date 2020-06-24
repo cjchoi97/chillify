@@ -8,6 +8,8 @@ import {
   togglePause, 
   updateSongHistory, 
   updateCurrentSong, 
+  toggleRepeat,
+  toggleShuffle,
   updateQueue 
 } from '../../actions/music_actions';
 
@@ -21,7 +23,9 @@ const msp = ({ui, entities }) => {
     playing: ui.music.playing,
     currentSongId: ui.music.songId,
     queue: ui.music.queue,
-    songHistory: ui.music.songHistory
+    songHistory: ui.music.songHistory,
+    repeat: ui.music.repeat,
+    shuffle: ui.music.shuffle
   }
 };
 
@@ -33,7 +37,9 @@ const mdp = dispatch => {
     togglePlay: () => dispatch(togglePlay()),
     updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
     updateQueue: (queue) => dispatch(updateQueue(queue)),
-    updateSongHistory: (history) => dispatch(updateSongHistory(history))
+    updateSongHistory: (history) => dispatch(updateSongHistory(history)),
+    toggleRepeat: (value) => dispatch(toggleRepeat(value)),
+    toggleShuffle: (value) => dispatch(toggleShuffle(value))
   };
 };
 

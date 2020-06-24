@@ -220,7 +220,7 @@ var closeModal = function closeModal() {
 /*!*******************************************!*\
   !*** ./frontend/actions/music_actions.js ***!
   \*******************************************/
-/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, UPDATE_HISTORY, UPDATE_QUEUE, ADD_TO_QUEUE, updateCurrentSong, togglePlay, togglePause, updateSongHistory, updateQueue, addSongsToQueue */
+/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, TOGGLE_SHUFFLE, TOGGLE_REPEAT, UPDATE_HISTORY, UPDATE_QUEUE, ADD_TO_QUEUE, updateCurrentSong, togglePlay, togglePause, toggleShuffle, toggleRepeat, updateSongHistory, updateQueue, addSongsToQueue */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -228,18 +228,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CURRENT_SONG", function() { return UPDATE_CURRENT_SONG; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PLAY", function() { return TOGGLE_PLAY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PAUSE", function() { return TOGGLE_PAUSE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_SHUFFLE", function() { return TOGGLE_SHUFFLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_REPEAT", function() { return TOGGLE_REPEAT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_HISTORY", function() { return UPDATE_HISTORY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_QUEUE", function() { return UPDATE_QUEUE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_TO_QUEUE", function() { return ADD_TO_QUEUE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentSong", function() { return updateCurrentSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePlay", function() { return togglePlay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePause", function() { return togglePause; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleShuffle", function() { return toggleShuffle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleRepeat", function() { return toggleRepeat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSongHistory", function() { return updateSongHistory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateQueue", function() { return updateQueue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSongsToQueue", function() { return addSongsToQueue; });
 var UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
 var TOGGLE_PLAY = "TOGGLE_PLAY";
 var TOGGLE_PAUSE = "TOGGLE_PAUSE";
+var TOGGLE_SHUFFLE = "TOGGLE_SHUFFLE";
+var TOGGLE_REPEAT = "TOGGLE_REPEAT";
 var UPDATE_HISTORY = "UPDATE_HISTORY";
 var UPDATE_QUEUE = "UPDATE_QUEUE";
 var ADD_TO_QUEUE = "ADD_TO_QUEUE";
@@ -257,6 +263,18 @@ var togglePlay = function togglePlay() {
 var togglePause = function togglePause() {
   return {
     type: TOGGLE_PAUSE
+  };
+};
+var toggleShuffle = function toggleShuffle(value) {
+  return {
+    type: TOGGLE_SHUFFLE,
+    value: value
+  };
+};
+var toggleRepeat = function toggleRepeat(value) {
+  return {
+    type: TOGGLE_REPEAT,
+    value: value
   };
 };
 var updateSongHistory = function updateSongHistory(history) {
@@ -2454,6 +2472,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     _this.convertTime = _this.convertTime.bind(_assertThisInitialized(_this));
     _this.next = _this.next.bind(_assertThisInitialized(_this));
     _this.previous = _this.previous.bind(_assertThisInitialized(_this));
+    _this.handleShuffle = _this.handleShuffle.bind(_assertThisInitialized(_this));
+    _this.handleRepeat = _this.handleRepeat.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2485,6 +2505,24 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
         } else {
           audio.pause();
         }
+      }
+    }
+  }, {
+    key: "handleShuffle",
+    value: function handleShuffle() {
+      if (this.props.shuffle) {
+        this.props.toggleShuffle(false);
+      } else {
+        this.props.toggleShuffle(true);
+      }
+    }
+  }, {
+    key: "handleRepeat",
+    value: function handleRepeat() {
+      if (this.props.repeat) {
+        this.props.toggleRepeat(false);
+      } else {
+        this.props.toggleRepeat(true);
       }
     }
   }, {
@@ -2699,7 +2737,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "control-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-random"
+        className: "fas fa-random ".concat(this.props.shuffle === true ? "green" : "notgreen"),
+        onClick: this.handleShuffle
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-step-backward",
         onClick: this.previous
@@ -2707,7 +2746,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-step-forward",
         onClick: this.next
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-retweet"
+        className: "fas fa-retweet ".concat(this.props.repeat === true ? "green" : "notgreen"),
+        onClick: this.handleRepeat
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-slider"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -2795,7 +2835,9 @@ var msp = function msp(_ref) {
     playing: ui.music.playing,
     currentSongId: ui.music.songId,
     queue: ui.music.queue,
-    songHistory: ui.music.songHistory
+    songHistory: ui.music.songHistory,
+    repeat: ui.music.repeat,
+    shuffle: ui.music.shuffle
   };
 };
 
@@ -2821,6 +2863,12 @@ var mdp = function mdp(dispatch) {
     },
     updateSongHistory: function updateSongHistory(history) {
       return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_4__["updateSongHistory"])(history));
+    },
+    toggleRepeat: function toggleRepeat(value) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_4__["toggleRepeat"])(value));
+    },
+    toggleShuffle: function toggleShuffle(value) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_4__["toggleShuffle"])(value));
     }
   };
 };
@@ -3395,7 +3443,6 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "playCollection",
     value: function playCollection(filteredSongs) {
-      console.log(filteredSongs);
       if (!filteredSongs.length) return;
 
       if (filteredSongs.includes(this.props.currentSongId)) {
@@ -4945,7 +4992,9 @@ var _defaultState = {
   songId: 1,
   playing: false,
   songHistory: [],
-  queue: []
+  queue: [],
+  repeat: false,
+  shuffle: false
 };
 
 var musicReducer = function musicReducer() {
@@ -4966,6 +5015,14 @@ var musicReducer = function musicReducer() {
 
     case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_PAUSE"]:
       musicState.playing = false;
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_SHUFFLE"]:
+      musicState.shuffle = action.value;
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_REPEAT"]:
+      musicState.repeat = action.value;
       return musicState;
 
     case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["UPDATE_HISTORY"]:

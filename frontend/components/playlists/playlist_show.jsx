@@ -80,7 +80,7 @@ class PlaylistShow extends React.Component {
   } 
 
   playCollection(filteredSongs) {
-    console.log(filteredSongs);
+    
     if (!filteredSongs.length) return;
     if (filteredSongs.includes(this.props.currentSongId)) {
       this.props.togglePlay();

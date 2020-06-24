@@ -28,6 +28,8 @@ class MusicPlayer extends React.Component {
     this.convertTime = this.convertTime.bind(this);
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
+    this.handleShuffle = this.handleShuffle.bind(this);
+    this.handleRepeat = this.handleRepeat.bind(this);
   }
 
   
@@ -58,6 +60,22 @@ class MusicPlayer extends React.Component {
     } 
   }
 
+  handleShuffle() {
+    if (this.props.shuffle) {
+      this.props.toggleShuffle(false);
+    } else {
+      this.props.toggleShuffle(true);
+    }
+  }
+
+  handleRepeat() {
+    if (this.props.repeat) {
+      this.props.toggleRepeat(false);
+    } else {
+      this.props.toggleRepeat(true);
+    }
+  }
+
   previous() {
     const { songHistory, songs, queue, currentSongId } = this.props;
     if (!songHistory.length) return;
@@ -71,7 +89,7 @@ class MusicPlayer extends React.Component {
   }
 
   next() {
-    const { queue, songHistory,currentSongId, songs } = this.props;
+    const { queue, songHistory, currentSongId, songs } = this.props;
     if (!queue.length) return;
 
     songHistory.unshift(songs[currentSongId]);
@@ -243,11 +261,11 @@ class MusicPlayer extends React.Component {
 
         <div className="mp-main">
           <div className="control-buttons">
-            <i className="fas fa-random"></i>
+            <i className={`fas fa-random ${this.props.shuffle === true ? "green" : "notgreen"}`} onClick={this.handleShuffle} ></i>
             <i className="fas fa-step-backward" onClick={this.previous}></i>
             {this.renderButtons(playshow, pauseshow)}
             <i className="fas fa-step-forward" onClick={this.next}></i>
-            <i className="fas fa-retweet"></i>
+            <i className={`fas fa-retweet ${this.props.repeat === true ? "green" : "notgreen"}`} onClick={this.handleRepeat} ></i>
           </div>
           <div className="song-slider">
             <p className="time-progressed">{this.convertTime(this.state.currentTime)}</p>

@@ -1,6 +1,8 @@
 export const UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
 export const TOGGLE_PLAY = "TOGGLE_PLAY";
 export const TOGGLE_PAUSE = "TOGGLE_PAUSE";
+export const TOGGLE_SHUFFLE = "TOGGLE_SHUFFLE";
+export const TOGGLE_REPEAT = "TOGGLE_REPEAT";
 export const UPDATE_HISTORY = "UPDATE_HISTORY";
 export const UPDATE_QUEUE = "UPDATE_QUEUE";
 export const ADD_TO_QUEUE = "ADD_TO_QUEUE";
@@ -23,6 +25,20 @@ export const togglePause = () => {
     type: TOGGLE_PAUSE,
   }
 };
+
+export const toggleShuffle = (value) => {
+  return {
+    type: TOGGLE_SHUFFLE,
+    value
+  }
+}
+
+export const toggleRepeat = (value) => {
+  return {
+    type: TOGGLE_REPEAT,
+    value
+  }
+}
 
 export const updateSongHistory = history => {
   return {
