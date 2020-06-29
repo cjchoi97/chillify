@@ -6,7 +6,8 @@ import {
   UPDATE_QUEUE,
   ADD_TO_QUEUE,
   TOGGLE_REPEAT,
-  TOGGLE_SHUFFLE
+  TOGGLE_SHUFFLE,
+  UPDATE_CURRENT_PLAYLIST_ALBUM
 } from '../actions/music_actions';
 
 const _defaultState = {
@@ -15,7 +16,8 @@ const _defaultState = {
   songHistory: [],
   queue: [],
   repeat: false,
-  shuffle: false
+  shuffle: false,
+  currentItem: []
 }
 
 const musicReducer = (state = _defaultState, action) => {
@@ -46,6 +48,9 @@ const musicReducer = (state = _defaultState, action) => {
       return musicState
     case ADD_TO_QUEUE:
       musicState.queue = musicState.queue.concat(action.songs);
+      return musicState;
+    case UPDATE_CURRENT_PLAYLIST_ALBUM:
+      musicState.currentItem = action.item;
       return musicState;
     default:
       return state;

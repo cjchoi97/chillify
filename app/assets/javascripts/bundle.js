@@ -220,7 +220,7 @@ var closeModal = function closeModal() {
 /*!*******************************************!*\
   !*** ./frontend/actions/music_actions.js ***!
   \*******************************************/
-/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, TOGGLE_SHUFFLE, TOGGLE_REPEAT, UPDATE_HISTORY, UPDATE_QUEUE, ADD_TO_QUEUE, updateCurrentSong, togglePlay, togglePause, toggleShuffle, toggleRepeat, updateSongHistory, updateQueue, addSongsToQueue */
+/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, TOGGLE_SHUFFLE, TOGGLE_REPEAT, UPDATE_HISTORY, UPDATE_QUEUE, ADD_TO_QUEUE, UPDATE_CURRENT_PLAYLIST_ALBUM, updateCurrentSong, togglePlay, togglePause, toggleShuffle, toggleRepeat, updateSongHistory, updateQueue, addSongsToQueue, updateCurrentPlayAlbum */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -233,6 +233,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_HISTORY", function() { return UPDATE_HISTORY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_QUEUE", function() { return UPDATE_QUEUE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_TO_QUEUE", function() { return ADD_TO_QUEUE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CURRENT_PLAYLIST_ALBUM", function() { return UPDATE_CURRENT_PLAYLIST_ALBUM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentSong", function() { return updateCurrentSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePlay", function() { return togglePlay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePause", function() { return togglePause; });
@@ -241,6 +242,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSongHistory", function() { return updateSongHistory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateQueue", function() { return updateQueue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSongsToQueue", function() { return addSongsToQueue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentPlayAlbum", function() { return updateCurrentPlayAlbum; });
 var UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
 var TOGGLE_PLAY = "TOGGLE_PLAY";
 var TOGGLE_PAUSE = "TOGGLE_PAUSE";
@@ -249,6 +251,7 @@ var TOGGLE_REPEAT = "TOGGLE_REPEAT";
 var UPDATE_HISTORY = "UPDATE_HISTORY";
 var UPDATE_QUEUE = "UPDATE_QUEUE";
 var ADD_TO_QUEUE = "ADD_TO_QUEUE";
+var UPDATE_CURRENT_PLAYLIST_ALBUM = "UPDATE_CURRENT_PLAYLIST_ALBUM";
 var updateCurrentSong = function updateCurrentSong(song) {
   return {
     type: UPDATE_CURRENT_SONG,
@@ -293,6 +296,12 @@ var addSongsToQueue = function addSongsToQueue(songs) {
   return {
     type: ADD_TO_QUEUE,
     songs: songs
+  };
+};
+var updateCurrentPlayAlbum = function updateCurrentPlayAlbum(item) {
+  return {
+    type: UPDATE_CURRENT_PLAYLIST_ALBUM,
+    item: item
   };
 };
 
@@ -2508,12 +2517,26 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "shuffle",
+    value: function shuffle(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var _ref = [array[j], array[i]];
+        array[i] = _ref[0];
+        array[j] = _ref[1];
+      }
+
+      return array;
+    }
+  }, {
     key: "handleShuffle",
     value: function handleShuffle() {
       if (this.props.shuffle) {
         this.props.toggleShuffle(false);
       } else {
         this.props.toggleShuffle(true);
+        var shuffledQueue = this.shuffle(this.props.queue);
+        this.props.updateQueue(shuffledQueue);
       }
     }
   }, {
@@ -2547,13 +2570,22 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
           queue = _this$props2.queue,
           songHistory = _this$props2.songHistory,
           currentSongId = _this$props2.currentSongId,
-          songs = _this$props2.songs;
+          songs = _this$props2.songs,
+          repeat = _this$props2.repeat,
+          currentItem = _this$props2.currentItem;
       if (!queue.length) return;
-      songHistory.unshift(songs[currentSongId]); // console.log(songHistory);
+      songHistory.unshift(songs[currentSongId]);
+      var tempQueue = queue; // console.log(songHistory);
+
+      if (queue.length === 1 && repeat) {
+        // console.log("HEREHRERHERH");
+        tempQueue = queue.concat(currentItem);
+        console.log(tempQueue);
+      }
 
       this.props.updateSongHistory(songHistory);
-      this.props.updateCurrentSong(queue[0]);
-      this.props.updateQueue(queue.slice(1));
+      this.props.updateCurrentSong(tempQueue[0]);
+      this.props.updateQueue(tempQueue.slice(1));
       this.props.togglePlay();
     }
   }, {
@@ -2837,7 +2869,8 @@ var msp = function msp(_ref) {
     queue: ui.music.queue,
     songHistory: ui.music.songHistory,
     repeat: ui.music.repeat,
-    shuffle: ui.music.shuffle
+    shuffle: ui.music.shuffle,
+    currentItem: ui.music.currentItem
   };
 };
 
@@ -2869,7 +2902,8 @@ var mdp = function mdp(dispatch) {
     },
     toggleShuffle: function toggleShuffle(value) {
       return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_4__["toggleShuffle"])(value));
-    }
+    } // updateCurrentPlayAlbum: (item) => dispatch(updateCurrentPlayAlbum(item))
+
   };
 };
 
@@ -3443,6 +3477,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "playCollection",
     value: function playCollection(filteredSongs) {
+      this.props.updateCurrentPlayAlbum(_toConsumableArray(filteredSongs));
       if (!filteredSongs.length) return;
 
       if (filteredSongs.includes(this.props.currentSongId)) {
@@ -3720,7 +3755,9 @@ var msp = function msp(state, ownProps) {
     songs: songs,
     creators: users,
     type: "playlist",
-    history: ownProps.history // creator: creator,
+    history: ownProps.history,
+    repeat: state.ui.music.repeat,
+    shuffle: state.ui.music.shuffle // creator: creator,
 
   };
 };
@@ -3759,6 +3796,9 @@ var mdp = function mdp(dispatch) {
     },
     updateQueue: function updateQueue(queue) {
       return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateQueue"])(queue));
+    },
+    updateCurrentPlayAlbum: function updateCurrentPlayAlbum(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateCurrentPlayAlbum"])(item));
     }
   };
 };
@@ -4994,7 +5034,8 @@ var _defaultState = {
   songHistory: [],
   queue: [],
   repeat: false,
-  shuffle: false
+  shuffle: false,
+  currentItem: []
 };
 
 var musicReducer = function musicReducer() {
@@ -5035,6 +5076,10 @@ var musicReducer = function musicReducer() {
 
     case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["ADD_TO_QUEUE"]:
       musicState.queue = musicState.queue.concat(action.songs);
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["UPDATE_CURRENT_PLAYLIST_ALBUM"]:
+      musicState.currentItem = action.item;
       return musicState;
 
     default:

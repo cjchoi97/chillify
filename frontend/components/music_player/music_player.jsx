@@ -59,12 +59,22 @@ class MusicPlayer extends React.Component {
       }
     } 
   }
+  
+  shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
   handleShuffle() {
     if (this.props.shuffle) {
       this.props.toggleShuffle(false);
     } else {
       this.props.toggleShuffle(true);
+      const shuffledQueue = this.shuffle(this.props.queue);
+      this.props.updateQueue(shuffledQueue);
     }
   }
 
@@ -89,16 +99,30 @@ class MusicPlayer extends React.Component {
   }
 
   next() {
-    const { queue, songHistory, currentSongId, songs } = this.props;
+    const { 
+      queue, 
+      songHistory, 
+      currentSongId, 
+      songs, 
+      repeat,
+      currentItem
+     } = this.props;
     if (!queue.length) return;
 
     songHistory.unshift(songs[currentSongId]);
 
+    let tempQueue = queue;
+    
     // console.log(songHistory);
+    if (queue.length === 1 && repeat) {
+      // console.log("HEREHRERHERH");
+      tempQueue = queue.concat(currentItem);
+      console.log(tempQueue);
+    }
 
     this.props.updateSongHistory(songHistory)
-    this.props.updateCurrentSong(queue[0]);
-    this.props.updateQueue(queue.slice(1));
+    this.props.updateCurrentSong(tempQueue[0]);
+    this.props.updateQueue(tempQueue.slice(1));
     this.props.togglePlay();
   }
   
