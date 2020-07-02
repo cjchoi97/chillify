@@ -940,6 +940,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1025,8 +1037,61 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "playCollection",
+    value: function playCollection() {
+      var _this$props = this.props,
+          artist = _this$props.artist,
+          artistSongs = _this$props.artistSongs;
+      var fiveSongs = artistSongs.slice(0, 5);
+      this.props.updateCurrentPlayAlbumId({
+        id: artist.id,
+        type: "artist"
+      });
+      this.props.updateCurrentPlayAlbum(_toConsumableArray(fiveSongs));
+      if (!fiveSongs.length) return;
+
+      if (fiveSongs.includes(this.props.currentSongId)) {
+        this.props.togglePlay();
+        return;
+      }
+
+      if (this.props.shuffle) {
+        var shuffledSongs = this.shuffle(_toConsumableArray(fiveSongs));
+        this.props.updateCurrentSong(shuffledSongs[0]);
+        this.props.updateQueue(shuffledSongs.slice(1));
+      } else {
+        this.props.updateCurrentSong(fiveSongs[0]);
+        this.props.updateQueue(_toConsumableArray(fiveSongs.slice(1)));
+      }
+
+      this.props.togglePlay();
+    }
+  }, {
     key: "playSong",
     value: function playSong(song) {
+      var _this$props2 = this.props,
+          songHistory = _this$props2.songHistory,
+          shuffle = _this$props2.shuffle,
+          artist = _this$props2.artist,
+          artistSongs = _this$props2.artistSongs;
+      var songIndex = artistSongs.indexOf(song);
+      console.log(artistSongs);
+      var fiveSongs = artistSongs.slice(0, 5);
+      var songs = [];
+
+      if (shuffle) {
+        songs = this.shuffle(fiveSongs);
+      } else {
+        songs = fiveSongs;
+      }
+
+      songHistory.unshift.apply(songHistory, _toConsumableArray(songs.slice(0, songIndex).reverse()));
+      this.props.updateCurrentPlayAlbumId({
+        id: artist.id,
+        type: "artist"
+      });
+      this.props.updateQueue(_toConsumableArray(songs.slice(songIndex + 1)));
+      this.props.updateSongHistory(songHistory);
       this.props.updateCurrentSong(song);
       this.props.togglePlay();
     }
@@ -1040,13 +1105,16 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var _this$props = this.props,
-          artist = _this$props.artist,
-          songs = _this$props.songs,
-          albums = _this$props.albums,
-          currentSongId = _this$props.currentSongId,
-          playing = _this$props.playing,
-          artistSongs = _this$props.artistSongs;
+      var _this$props3 = this.props,
+          artist = _this$props3.artist,
+          songs = _this$props3.songs,
+          albums = _this$props3.albums,
+          currentSongId = _this$props3.currentSongId,
+          playing = _this$props3.playing,
+          artistSongs = _this$props3.artistSongs,
+          currentItemType = _this$props3.currentItemType,
+          currentItemId = _this$props3.currentItemId,
+          path = _this$props3.path;
       if (!songs || !artist || !albums || artistSongs.length === 0) return null;
 
       var addPlayOrPauseButton = function addPlayOrPauseButton(song, green) {
@@ -1146,6 +1214,29 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
           }, album.title));
         }
       });
+
+      var greenPlayOrPause = function greenPlayOrPause() {
+        path[1] = path[1].substring(0, path[1].length - 1);
+
+        if (path[1] === currentItemType && artist.id === currentItemId && playing) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "play-item-button",
+            onClick: _this3.pauseSong
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-pause"
+          })));
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "play-item-button",
+            onClick: function onClick() {
+              return _this3.playCollection();
+            }
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-play"
+          })));
+        }
+      };
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "artist-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1169,11 +1260,7 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
         fill: "#fff"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "VERIFIED ARTIST")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, artist.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-buttons"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "play-item-button"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-play"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, greenPlayOrPause(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "follow-button"
       }, "Follow")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "songs-albums"
@@ -1236,7 +1323,14 @@ var msp = function msp(state, ownProps) {
     albums: albums,
     artistSongs: artistSongs.filter(function (song) {
       return song !== undefined;
-    })
+    }),
+    repeat: state.ui.music.repeat,
+    shuffle: state.ui.music.shuffle,
+    songHistory: state.ui.music.songHistory,
+    currentUserId: state.session.id,
+    currentItemId: state.ui.music.currentItemId,
+    currentItemType: state.ui.music.currentItemType,
+    path: ownProps.location.pathname.split('/')
   };
 };
 
@@ -1262,6 +1356,18 @@ var mdp = function mdp(dispatch) {
     },
     addSongToPlaylist: function addSongToPlaylist(playlistSong) {
       return dispatch(Object(_actions_playlist_song_actions__WEBPACK_IMPORTED_MODULE_5__["addSongToPlaylist"])(playlistSong));
+    },
+    updateQueue: function updateQueue(queue) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateQueue"])(queue));
+    },
+    updateCurrentPlayAlbum: function updateCurrentPlayAlbum(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentPlayAlbum"])(item));
+    },
+    updateSongHistory: function updateSongHistory(history) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateSongHistory"])(history));
+    },
+    updateCurrentPlayAlbumId: function updateCurrentPlayAlbumId(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentPlayAlbumId"])(item));
     }
   };
 };
