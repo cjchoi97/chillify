@@ -6,7 +6,9 @@ export const TOGGLE_REPEAT = "TOGGLE_REPEAT";
 export const UPDATE_HISTORY = "UPDATE_HISTORY";
 export const UPDATE_QUEUE = "UPDATE_QUEUE";
 export const ADD_TO_QUEUE = "ADD_TO_QUEUE";
-export const UPDATE_CURRENT_PLAYLIST_ALBUM = "UPDATE_CURRENT_PLAYLIST_ALBUM"
+export const UPDATE_CURRENT_PLAYLIST_ALBUM = "UPDATE_CURRENT_PLAYLIST_ALBUM";
+export const UPDATE_CURRENT_PLAYLIST_ALBUM_ID = "UPDATE_CURRENT_PLAYLIST_ALBUM_ID";
+
 
 export const updateCurrentSong = song => {
   return {
@@ -65,6 +67,13 @@ export const addSongsToQueue = songs => {
 export const updateCurrentPlayAlbum = item => {
   return {
     type: UPDATE_CURRENT_PLAYLIST_ALBUM,
+    item
+  }
+}
+
+export const updateCurrentPlayAlbumId = item => {
+  return {
+    type: UPDATE_CURRENT_PLAYLIST_ALBUM_ID,
     item
   }
 }

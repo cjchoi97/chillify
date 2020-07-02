@@ -9,7 +9,9 @@ import {
   updateCurrentSong, 
   addSongsToQueue, 
   updateQueue,
-  updateCurrentPlayAlbum
+  updateCurrentPlayAlbum,
+  updateSongHistory,
+  updateCurrentPlayAlbumId
 } from '../../actions/music_actions';
 import { openModal } from '../../actions/modal_actions';
 import { removeSongFromPlaylist } from '../../actions/playlist_song_actions';
@@ -26,7 +28,6 @@ const msp = (state, ownProps) => {
 
   return ({
     item: playlist,
-    // filteredSongs: playlistSongs,
     currentSongId: state.ui.music.songId,
     playing: state.ui.music.playing,
     songs: songs,
@@ -34,8 +35,12 @@ const msp = (state, ownProps) => {
     type: "playlist",
     history: ownProps.history,
     repeat: state.ui.music.repeat,
-    shuffle: state.ui.music.shuffle
-    // creator: creator,
+    shuffle: state.ui.music.shuffle,
+    songHistory: state.ui.music.songHistory,
+    currentUserId: state.session.id,
+    currentItemId: state.ui.music.currentItemId,
+    currentItemType: state.ui.music.currentItemType,
+    path: ownProps.location.pathname.split('/')
   });
 }
 
@@ -52,7 +57,9 @@ const mdp = dispatch => {
     removeSongFromPlaylist: (songId, playlistId) => dispatch(removeSongFromPlaylist(songId, playlistId)),
     addSongsToQueue: songs => dispatch(addSongsToQueue(songs)),
     updateQueue: queue => dispatch(updateQueue(queue)),
-    updateCurrentPlayAlbum: item => dispatch(updateCurrentPlayAlbum(item))
+    updateCurrentPlayAlbum: item => dispatch(updateCurrentPlayAlbum(item)),
+    updateSongHistory: history => dispatch(updateSongHistory(history)),
+    updateCurrentPlayAlbumId: item => dispatch(updateCurrentPlayAlbumId(item))
   })
 }
 

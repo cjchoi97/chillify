@@ -79,10 +79,19 @@ class MusicPlayer extends React.Component {
   }
 
   handleRepeat() {
+    const {
+      currentItem,
+      currentSongId,
+      queue
+    } = this.props;
     if (this.props.repeat) {
       this.props.toggleRepeat(false);
+      this.props.updateQueue(queue.slice(0, queue.length));
     } else {
       this.props.toggleRepeat(true);
+      if (currentItem[currentItem.length - 1].id === currentSongId) {
+        this.props.updateQueue(queue.concat(currentItem));
+      }
     }
   }
 
@@ -107,17 +116,18 @@ class MusicPlayer extends React.Component {
       repeat,
       currentItem
      } = this.props;
-    if (!queue.length) return;
+    if (!queue.length) {
+      this.props.togglePause();
+      document.getElementById("player").currentTime = 0;
+      return;
+    }
 
     songHistory.unshift(songs[currentSongId]);
 
     let tempQueue = queue;
     
-    // console.log(songHistory);
     if (queue.length === 1 && repeat) {
-      // console.log("HEREHRERHERH");
       tempQueue = queue.concat(currentItem);
-      console.log(tempQueue);
     }
 
     this.props.updateSongHistory(songHistory)

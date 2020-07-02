@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import MusicPlayer from './music_player';
-// import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { fetchSongs } from '../../actions/song_actions';
 import { fetchUsers } from '../../actions/user_actions';
 import { 
@@ -14,10 +14,15 @@ import {
   // updateCurrentPlayAlbum
 } from '../../actions/music_actions';
 
-const msp = ({ui, entities }) => {
+const msp = ({ ui, entities }, ownProps) => {
   // debugger
+  const [notneeded, defaultQueueType, defaultQueueId] = ownProps.location.pathname.split('/');
+  // console.log(defaultQueueType, defaultQueueId);
+  // const defaultQueue = (defaultQueueType && defaultQueueId) ? entities[defaultQueueType][defaultQueueId].songIds : [];
+  // console.log(defaultQueue);
   const { songs } = entities;
   const song = songs[ui.music.songId];
+  
   return {
     songs: songs,
     song: song,
@@ -42,12 +47,11 @@ const mdp = dispatch => {
     updateSongHistory: (history) => dispatch(updateSongHistory(history)),
     toggleRepeat: (value) => dispatch(toggleRepeat(value)),
     toggleShuffle: (value) => dispatch(toggleShuffle(value)),
-    // updateCurrentPlayAlbum: (item) => dispatch(updateCurrentPlayAlbum(item))
   };
 };
 
 
-export default connect(
+export default withRouter(connect(
   msp,
   mdp
-)(MusicPlayer);
+)(MusicPlayer));
