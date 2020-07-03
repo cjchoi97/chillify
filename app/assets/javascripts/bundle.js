@@ -1090,6 +1090,7 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
         id: artist.id,
         type: "artist"
       });
+      this.props.updateCurrentPlayAlbum(songs);
       this.props.updateQueue(_toConsumableArray(songs.slice(songIndex + 1)));
       this.props.updateSongHistory(songHistory);
       this.props.updateCurrentSong(song);
@@ -3703,6 +3704,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         id: item.id,
         type: type
       });
+      this.props.updateCurrentPlayAlbum(songs);
       this.props.updateQueue(_toConsumableArray(songs.slice(songIndex + 1)));
       this.props.updateSongHistory(songHistory);
       this.props.updateCurrentSong(song);

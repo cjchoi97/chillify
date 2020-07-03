@@ -123,6 +123,7 @@ class PlaylistShow extends React.Component {
     songHistory.unshift(...songs.slice(0, songIndex).reverse());
 
     this.props.updateCurrentPlayAlbumId({id: item.id, type: type});
+    this.props.updateCurrentPlayAlbum(songs);
     this.props.updateQueue([...songs.slice(songIndex+1)]);
     this.props.updateSongHistory(songHistory);
     this.props.updateCurrentSong(song);
