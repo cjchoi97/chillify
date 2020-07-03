@@ -4,14 +4,23 @@ import {
   TOGGLE_PAUSE,
   UPDATE_HISTORY,
   UPDATE_QUEUE,
-  ADD_TO_QUEUE
+  ADD_TO_QUEUE,
+  TOGGLE_REPEAT,
+  TOGGLE_SHUFFLE,
+  UPDATE_CURRENT_PLAYLIST_ALBUM,
+  UPDATE_CURRENT_PLAYLIST_ALBUM_ID
 } from '../actions/music_actions';
 
 const _defaultState = {
   songId: 1,
   playing: false,
   songHistory: [],
-  queue: []
+  queue: [],
+  repeat: false,
+  shuffle: false,
+  currentItem: [],
+  currentItemId: null,
+  currentItemType: null
 }
 
 const musicReducer = (state = _defaultState, action) => {
@@ -28,6 +37,12 @@ const musicReducer = (state = _defaultState, action) => {
     case TOGGLE_PAUSE:
       musicState.playing = false;
       return musicState;
+    case TOGGLE_SHUFFLE:
+      musicState.shuffle = action.value;
+      return musicState;
+    case TOGGLE_REPEAT:
+      musicState.repeat = action.value;
+      return musicState; 
     case UPDATE_HISTORY:
       musicState.songHistory = action.history;
       return musicState;
@@ -36,6 +51,13 @@ const musicReducer = (state = _defaultState, action) => {
       return musicState
     case ADD_TO_QUEUE:
       musicState.queue = musicState.queue.concat(action.songs);
+      return musicState;
+    case UPDATE_CURRENT_PLAYLIST_ALBUM:
+      musicState.currentItem = action.item;
+      return musicState;
+    case UPDATE_CURRENT_PLAYLIST_ALBUM_ID:
+      musicState.currentItemId = action.item.id;
+      musicState.currentItemType = action.item.type;
       return musicState;
     default:
       return state;

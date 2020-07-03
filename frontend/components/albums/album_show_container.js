@@ -5,7 +5,15 @@ import { fetchAlbums } from '../../actions/album_actions';
 import { fetchSongs } from '../../actions/song_actions';
 // import { fetchUsers } from '../../actions/user_actions';
 import { fetchArtists } from '../../actions/artist_actions';
-import { togglePlay, togglePause, updateCurrentSong } from '../../actions/music_actions'
+import { 
+  togglePlay, 
+  togglePause, 
+  updateCurrentSong, 
+  updateQueue,
+  updateCurrentPlayAlbum,
+  updateSongHistory,
+  updateCurrentPlayAlbumId
+} from '../../actions/music_actions'
 import { openModal } from '../../actions/modal_actions'
 
 const msp = (state, ownProps) => {
@@ -18,8 +26,14 @@ const msp = (state, ownProps) => {
     creators: artists,
     type: "album",
     playing: state.ui.music.playing,
-    // history: ownProps.history,
-    currentSongId: state.ui.music.songId
+    currentSongId: state.ui.music.songId,
+    repeat: state.ui.music.repeat,
+    shuffle: state.ui.music.shuffle,
+    songHistory: state.ui.music.songHistory,
+    currentUserId: state.session.id,
+    currentItemId: state.ui.music.currentItemId,
+    currentItemType: state.ui.music.currentItemType,
+    path: ownProps.location.pathname.split('/')
   });
 }
 
@@ -32,7 +46,11 @@ const mdp = dispatch => {
     togglePlay: () => dispatch(togglePlay()),
     togglePause: () => dispatch(togglePause()),
     updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
-    openModal: (modal, song) => dispatch(openModal(modal, song))
+    openModal: (modal, song) => dispatch(openModal(modal, song)),
+    updateQueue: (queue) => dispatch(updateQueue(queue)),
+    updateCurrentPlayAlbum: item => dispatch(updateCurrentPlayAlbum(item)),
+    updateSongHistory: history => dispatch(updateSongHistory(history)),
+    updateCurrentPlayAlbumId: item => dispatch(updateCurrentPlayAlbumId(item))
   })
 }
 

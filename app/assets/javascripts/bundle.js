@@ -220,7 +220,7 @@ var closeModal = function closeModal() {
 /*!*******************************************!*\
   !*** ./frontend/actions/music_actions.js ***!
   \*******************************************/
-/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, UPDATE_HISTORY, UPDATE_QUEUE, ADD_TO_QUEUE, updateCurrentSong, togglePlay, togglePause, updateSongHistory, updateQueue, addSongsToQueue */
+/*! exports provided: UPDATE_CURRENT_SONG, TOGGLE_PLAY, TOGGLE_PAUSE, TOGGLE_SHUFFLE, TOGGLE_REPEAT, UPDATE_HISTORY, UPDATE_QUEUE, ADD_TO_QUEUE, UPDATE_CURRENT_PLAYLIST_ALBUM, UPDATE_CURRENT_PLAYLIST_ALBUM_ID, updateCurrentSong, togglePlay, togglePause, toggleShuffle, toggleRepeat, updateSongHistory, updateQueue, addSongsToQueue, updateCurrentPlayAlbum, updateCurrentPlayAlbumId */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -228,21 +228,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CURRENT_SONG", function() { return UPDATE_CURRENT_SONG; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PLAY", function() { return TOGGLE_PLAY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_PAUSE", function() { return TOGGLE_PAUSE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_SHUFFLE", function() { return TOGGLE_SHUFFLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_REPEAT", function() { return TOGGLE_REPEAT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_HISTORY", function() { return UPDATE_HISTORY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_QUEUE", function() { return UPDATE_QUEUE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_TO_QUEUE", function() { return ADD_TO_QUEUE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CURRENT_PLAYLIST_ALBUM", function() { return UPDATE_CURRENT_PLAYLIST_ALBUM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CURRENT_PLAYLIST_ALBUM_ID", function() { return UPDATE_CURRENT_PLAYLIST_ALBUM_ID; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentSong", function() { return updateCurrentSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePlay", function() { return togglePlay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "togglePause", function() { return togglePause; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleShuffle", function() { return toggleShuffle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleRepeat", function() { return toggleRepeat; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSongHistory", function() { return updateSongHistory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateQueue", function() { return updateQueue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSongsToQueue", function() { return addSongsToQueue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentPlayAlbum", function() { return updateCurrentPlayAlbum; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurrentPlayAlbumId", function() { return updateCurrentPlayAlbumId; });
 var UPDATE_CURRENT_SONG = "UPDATE_CURRENT_SONG";
 var TOGGLE_PLAY = "TOGGLE_PLAY";
 var TOGGLE_PAUSE = "TOGGLE_PAUSE";
+var TOGGLE_SHUFFLE = "TOGGLE_SHUFFLE";
+var TOGGLE_REPEAT = "TOGGLE_REPEAT";
 var UPDATE_HISTORY = "UPDATE_HISTORY";
 var UPDATE_QUEUE = "UPDATE_QUEUE";
 var ADD_TO_QUEUE = "ADD_TO_QUEUE";
+var UPDATE_CURRENT_PLAYLIST_ALBUM = "UPDATE_CURRENT_PLAYLIST_ALBUM";
+var UPDATE_CURRENT_PLAYLIST_ALBUM_ID = "UPDATE_CURRENT_PLAYLIST_ALBUM_ID";
 var updateCurrentSong = function updateCurrentSong(song) {
   return {
     type: UPDATE_CURRENT_SONG,
@@ -257,6 +269,18 @@ var togglePlay = function togglePlay() {
 var togglePause = function togglePause() {
   return {
     type: TOGGLE_PAUSE
+  };
+};
+var toggleShuffle = function toggleShuffle(value) {
+  return {
+    type: TOGGLE_SHUFFLE,
+    value: value
+  };
+};
+var toggleRepeat = function toggleRepeat(value) {
+  return {
+    type: TOGGLE_REPEAT,
+    value: value
   };
 };
 var updateSongHistory = function updateSongHistory(history) {
@@ -275,6 +299,18 @@ var addSongsToQueue = function addSongsToQueue(songs) {
   return {
     type: ADD_TO_QUEUE,
     songs: songs
+  };
+};
+var updateCurrentPlayAlbum = function updateCurrentPlayAlbum(item) {
+  return {
+    type: UPDATE_CURRENT_PLAYLIST_ALBUM,
+    item: item
+  };
+};
+var updateCurrentPlayAlbumId = function updateCurrentPlayAlbumId(item) {
+  return {
+    type: UPDATE_CURRENT_PLAYLIST_ALBUM_ID,
+    item: item
   };
 };
 
@@ -810,8 +846,14 @@ var msp = function msp(state, ownProps) {
     creators: artists,
     type: "album",
     playing: state.ui.music.playing,
-    // history: ownProps.history,
-    currentSongId: state.ui.music.songId
+    currentSongId: state.ui.music.songId,
+    repeat: state.ui.music.repeat,
+    shuffle: state.ui.music.shuffle,
+    songHistory: state.ui.music.songHistory,
+    currentUserId: state.session.id,
+    currentItemId: state.ui.music.currentItemId,
+    currentItemType: state.ui.music.currentItemType,
+    path: ownProps.location.pathname.split('/')
   };
 };
 
@@ -840,6 +882,18 @@ var mdp = function mdp(dispatch) {
     },
     openModal: function openModal(modal, song) {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_7__["openModal"])(modal, song));
+    },
+    updateQueue: function updateQueue(queue) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateQueue"])(queue));
+    },
+    updateCurrentPlayAlbum: function updateCurrentPlayAlbum(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentPlayAlbum"])(item));
+    },
+    updateSongHistory: function updateSongHistory(history) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateSongHistory"])(history));
+    },
+    updateCurrentPlayAlbumId: function updateCurrentPlayAlbumId(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentPlayAlbumId"])(item));
     }
   };
 };
@@ -885,6 +939,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -971,8 +1037,61 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "playCollection",
+    value: function playCollection() {
+      var _this$props = this.props,
+          artist = _this$props.artist,
+          artistSongs = _this$props.artistSongs;
+      var fiveSongs = artistSongs.slice(0, 5);
+      this.props.updateCurrentPlayAlbumId({
+        id: artist.id,
+        type: "artist"
+      });
+      this.props.updateCurrentPlayAlbum(_toConsumableArray(fiveSongs));
+      if (!fiveSongs.length) return;
+
+      if (fiveSongs.includes(this.props.currentSongId)) {
+        this.props.togglePlay();
+        return;
+      }
+
+      if (this.props.shuffle) {
+        var shuffledSongs = this.shuffle(_toConsumableArray(fiveSongs));
+        this.props.updateCurrentSong(shuffledSongs[0]);
+        this.props.updateQueue(shuffledSongs.slice(1));
+      } else {
+        this.props.updateCurrentSong(fiveSongs[0]);
+        this.props.updateQueue(_toConsumableArray(fiveSongs.slice(1)));
+      }
+
+      this.props.togglePlay();
+    }
+  }, {
     key: "playSong",
     value: function playSong(song) {
+      var _this$props2 = this.props,
+          songHistory = _this$props2.songHistory,
+          shuffle = _this$props2.shuffle,
+          artist = _this$props2.artist,
+          artistSongs = _this$props2.artistSongs;
+      var songIndex = artistSongs.indexOf(song);
+      console.log(artistSongs);
+      var fiveSongs = artistSongs.slice(0, 5);
+      var songs = [];
+
+      if (shuffle) {
+        songs = this.shuffle(fiveSongs);
+      } else {
+        songs = fiveSongs;
+      }
+
+      songHistory.unshift.apply(songHistory, _toConsumableArray(songs.slice(0, songIndex).reverse()));
+      this.props.updateCurrentPlayAlbumId({
+        id: artist.id,
+        type: "artist"
+      });
+      this.props.updateQueue(_toConsumableArray(songs.slice(songIndex + 1)));
+      this.props.updateSongHistory(songHistory);
       this.props.updateCurrentSong(song);
       this.props.togglePlay();
     }
@@ -986,13 +1105,16 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var _this$props = this.props,
-          artist = _this$props.artist,
-          songs = _this$props.songs,
-          albums = _this$props.albums,
-          currentSongId = _this$props.currentSongId,
-          playing = _this$props.playing,
-          artistSongs = _this$props.artistSongs;
+      var _this$props3 = this.props,
+          artist = _this$props3.artist,
+          songs = _this$props3.songs,
+          albums = _this$props3.albums,
+          currentSongId = _this$props3.currentSongId,
+          playing = _this$props3.playing,
+          artistSongs = _this$props3.artistSongs,
+          currentItemType = _this$props3.currentItemType,
+          currentItemId = _this$props3.currentItemId,
+          path = _this$props3.path;
       if (!songs || !artist || !albums || artistSongs.length === 0) return null;
 
       var addPlayOrPauseButton = function addPlayOrPauseButton(song, green) {
@@ -1092,6 +1214,29 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
           }, album.title));
         }
       });
+
+      var greenPlayOrPause = function greenPlayOrPause() {
+        path[1] = path[1].substring(0, path[1].length - 1);
+
+        if (path[1] === currentItemType && artist.id === currentItemId && playing) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "play-item-button",
+            onClick: _this3.pauseSong
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-pause"
+          })));
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "play-item-button",
+            onClick: function onClick() {
+              return _this3.playCollection();
+            }
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-play"
+          })));
+        }
+      };
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "artist-page-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1115,11 +1260,7 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
         fill: "#fff"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "VERIFIED ARTIST")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, artist.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-buttons"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "play-item-button"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-play"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, greenPlayOrPause(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "follow-button"
       }, "Follow")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "songs-albums"
@@ -1182,7 +1323,14 @@ var msp = function msp(state, ownProps) {
     albums: albums,
     artistSongs: artistSongs.filter(function (song) {
       return song !== undefined;
-    })
+    }),
+    repeat: state.ui.music.repeat,
+    shuffle: state.ui.music.shuffle,
+    songHistory: state.ui.music.songHistory,
+    currentUserId: state.session.id,
+    currentItemId: state.ui.music.currentItemId,
+    currentItemType: state.ui.music.currentItemType,
+    path: ownProps.location.pathname.split('/')
   };
 };
 
@@ -1208,6 +1356,18 @@ var mdp = function mdp(dispatch) {
     },
     addSongToPlaylist: function addSongToPlaylist(playlistSong) {
       return dispatch(Object(_actions_playlist_song_actions__WEBPACK_IMPORTED_MODULE_5__["addSongToPlaylist"])(playlistSong));
+    },
+    updateQueue: function updateQueue(queue) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateQueue"])(queue));
+    },
+    updateCurrentPlayAlbum: function updateCurrentPlayAlbum(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentPlayAlbum"])(item));
+    },
+    updateSongHistory: function updateSongHistory(history) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateSongHistory"])(history));
+    },
+    updateCurrentPlayAlbumId: function updateCurrentPlayAlbumId(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentPlayAlbumId"])(item));
     }
   };
 };
@@ -2449,6 +2609,10 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     _this.changeTime = _this.changeTime.bind(_assertThisInitialized(_this));
     _this.updateTime = _this.updateTime.bind(_assertThisInitialized(_this));
     _this.convertTime = _this.convertTime.bind(_assertThisInitialized(_this));
+    _this.next = _this.next.bind(_assertThisInitialized(_this));
+    _this.previous = _this.previous.bind(_assertThisInitialized(_this));
+    _this.handleShuffle = _this.handleShuffle.bind(_assertThisInitialized(_this));
+    _this.handleRepeat = _this.handleRepeat.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2471,6 +2635,7 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
         audio.addEventListener("timeupdate", this.updateTime);
 
         if (prevProps.currentSongId !== this.props.song.id) {
+          audio.loop = false;
           audio.src = this.props.song.song_url;
         }
 
@@ -2480,6 +2645,92 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
           audio.pause();
         }
       }
+    }
+  }, {
+    key: "shuffle",
+    value: function shuffle(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var _ref = [array[j], array[i]];
+        array[i] = _ref[0];
+        array[j] = _ref[1];
+      }
+
+      return array;
+    }
+  }, {
+    key: "handleShuffle",
+    value: function handleShuffle() {
+      if (this.props.shuffle) {
+        this.props.toggleShuffle(false);
+      } else {
+        this.props.toggleShuffle(true);
+        var shuffledQueue = this.shuffle(this.props.queue);
+        this.props.updateQueue(shuffledQueue);
+      }
+    }
+  }, {
+    key: "handleRepeat",
+    value: function handleRepeat() {
+      var _this$props = this.props,
+          currentItem = _this$props.currentItem,
+          currentSongId = _this$props.currentSongId,
+          queue = _this$props.queue;
+
+      if (this.props.repeat) {
+        this.props.toggleRepeat(false);
+        this.props.updateQueue(queue.slice(0, queue.length));
+      } else {
+        this.props.toggleRepeat(true);
+
+        if (currentItem[currentItem.length - 1].id === currentSongId) {
+          this.props.updateQueue(queue.concat(currentItem));
+        }
+      }
+    }
+  }, {
+    key: "previous",
+    value: function previous() {
+      var _this$props2 = this.props,
+          songHistory = _this$props2.songHistory,
+          songs = _this$props2.songs,
+          queue = _this$props2.queue,
+          currentSongId = _this$props2.currentSongId;
+      if (!songHistory.length) return;
+      queue.unshift(songs[currentSongId]);
+      this.props.updateQueue(queue);
+      this.props.updateCurrentSong(songHistory[0]);
+      this.props.updateSongHistory(songHistory.slice(1));
+      this.props.togglePlay();
+    }
+  }, {
+    key: "next",
+    value: function next() {
+      var _this$props3 = this.props,
+          queue = _this$props3.queue,
+          songHistory = _this$props3.songHistory,
+          currentSongId = _this$props3.currentSongId,
+          songs = _this$props3.songs,
+          repeat = _this$props3.repeat,
+          currentItem = _this$props3.currentItem;
+
+      if (!queue.length) {
+        this.props.togglePause();
+        document.getElementById("player").currentTime = 0;
+        return;
+      }
+
+      songHistory.unshift(songs[currentSongId]);
+      var tempQueue = queue;
+
+      if (queue.length === 1 && repeat) {
+        tempQueue = queue.concat(currentItem);
+      }
+
+      this.props.updateSongHistory(songHistory);
+      this.props.updateCurrentSong(tempQueue[0]);
+      this.props.updateQueue(tempQueue.slice(1));
+      this.props.togglePlay();
     }
   }, {
     key: "play",
@@ -2624,9 +2875,9 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       // console.log(this.props);
-      var _this$props = this.props,
-          song = _this$props.song,
-          playing = _this$props.playing; // console.log(song);
+      var _this$props4 = this.props,
+          song = _this$props4.song,
+          playing = _this$props4.playing; // console.log(song);
 
       if (!song) return null;
       var playshow;
@@ -2662,13 +2913,17 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "control-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-random"
+        className: "fas fa-random ".concat(this.props.shuffle === true ? "green" : "notgreen"),
+        onClick: this.handleShuffle
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-step-backward"
+        className: "fas fa-step-backward",
+        onClick: this.previous
       }), this.renderButtons(playshow, pauseshow), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-step-forward"
+        className: "fas fa-step-forward",
+        onClick: this.next
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-retweet"
+        className: "fas fa-retweet ".concat(this.props.repeat === true ? "green" : "notgreen"),
+        onClick: this.handleRepeat
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-slider"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -2683,7 +2938,8 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "song-duration"
       }, this.convertTime(this.state.duration))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("audio", {
-        id: "player"
+        id: "player",
+        onEnded: this.next
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         type: "audio/mp3"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2733,48 +2989,91 @@ var MusicPlayer = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _music_player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./music_player */ "./frontend/components/music_player/music_player.jsx");
-/* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
-/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
-/* harmony import */ var _actions_music_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/music_actions */ "./frontend/actions/music_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _actions_music_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/music_actions */ "./frontend/actions/music_actions.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
- // import { withRouter } from 'react-router-dom';
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
 
-var msp = function msp(_ref) {
+
+
+
+var msp = function msp(_ref, ownProps) {
   var ui = _ref.ui,
       entities = _ref.entities;
+
   // debugger
+  var _ownProps$location$pa = ownProps.location.pathname.split('/'),
+      _ownProps$location$pa2 = _slicedToArray(_ownProps$location$pa, 3),
+      notneeded = _ownProps$location$pa2[0],
+      defaultQueueType = _ownProps$location$pa2[1],
+      defaultQueueId = _ownProps$location$pa2[2]; // console.log(defaultQueueType, defaultQueueId);
+  // const defaultQueue = (defaultQueueType && defaultQueueId) ? entities[defaultQueueType][defaultQueueId].songIds : [];
+  // console.log(defaultQueue);
+
+
   var songs = entities.songs;
   var song = songs[ui.music.songId];
   return {
     songs: songs,
     song: song,
     playing: ui.music.playing,
-    currentSongId: ui.music.songId
+    currentSongId: ui.music.songId,
+    queue: ui.music.queue,
+    songHistory: ui.music.songHistory,
+    repeat: ui.music.repeat,
+    shuffle: ui.music.shuffle,
+    currentItem: ui.music.currentItem
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
     fetchSongs: function fetchSongs() {
-      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["fetchSongs"])());
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_3__["fetchSongs"])());
     },
     fetchUsers: function fetchUsers() {
-      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUsers"])());
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUsers"])());
     },
     togglePause: function togglePause() {
-      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_4__["togglePause"])());
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["togglePause"])());
     },
     togglePlay: function togglePlay() {
-      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_4__["togglePlay"])());
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["togglePlay"])());
+    },
+    updateCurrentSong: function updateCurrentSong(song) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateCurrentSong"])(song));
+    },
+    updateQueue: function updateQueue(queue) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateQueue"])(queue));
+    },
+    updateSongHistory: function updateSongHistory(history) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateSongHistory"])(history));
+    },
+    toggleRepeat: function toggleRepeat(value) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["toggleRepeat"])(value));
+    },
+    toggleShuffle: function toggleShuffle(value) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["toggleShuffle"])(value));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_music_player__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_music_player__WEBPACK_IMPORTED_MODULE_1__["default"])));
 
 /***/ }),
 
@@ -3209,6 +3508,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -3260,6 +3571,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
     _this.toggleSongDropdown = _this.toggleSongDropdown.bind(_assertThisInitialized(_this));
     _this.handleModalOpen = _this.handleModalOpen.bind(_assertThisInitialized(_this));
     _this.listOptions = _this.listOptions.bind(_assertThisInitialized(_this));
+    _this.playCollection = _this.playCollection.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3329,8 +3641,70 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "shuffle",
+    value: function shuffle(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var _ref = [array[j], array[i]];
+        array[i] = _ref[0];
+        array[j] = _ref[1];
+      }
+
+      return array;
+    }
+  }, {
+    key: "playCollection",
+    value: function playCollection(filteredSongs) {
+      var _this$props2 = this.props,
+          item = _this$props2.item,
+          type = _this$props2.type;
+      this.props.updateCurrentPlayAlbumId({
+        id: item.id,
+        type: type
+      });
+      this.props.updateCurrentPlayAlbum(_toConsumableArray(filteredSongs));
+      if (!filteredSongs.length) return;
+
+      if (filteredSongs.includes(this.props.currentSongId)) {
+        this.props.togglePlay();
+        return;
+      }
+
+      if (this.props.shuffle) {
+        var shuffledSongs = this.shuffle(_toConsumableArray(filteredSongs));
+        this.props.updateCurrentSong(shuffledSongs[0]);
+        this.props.updateQueue(shuffledSongs.slice(1));
+      } else {
+        this.props.updateCurrentSong(filteredSongs[0]);
+        this.props.updateQueue(_toConsumableArray(filteredSongs.slice(1)));
+      }
+
+      this.props.togglePlay();
+    }
+  }, {
     key: "playSong",
-    value: function playSong(song) {
+    value: function playSong(song, filteredSongs) {
+      var _this$props3 = this.props,
+          songHistory = _this$props3.songHistory,
+          shuffle = _this$props3.shuffle,
+          item = _this$props3.item,
+          type = _this$props3.type;
+      var songIndex = filteredSongs.indexOf(song);
+      var songs = [];
+
+      if (shuffle) {
+        songs = this.shuffle(filteredSongs);
+      } else {
+        songs = filteredSongs;
+      }
+
+      songHistory.unshift.apply(songHistory, _toConsumableArray(songs.slice(0, songIndex).reverse()));
+      this.props.updateCurrentPlayAlbumId({
+        id: item.id,
+        type: type
+      });
+      this.props.updateQueue(_toConsumableArray(songs.slice(songIndex + 1)));
+      this.props.updateSongHistory(songHistory);
       this.props.updateCurrentSong(song);
       this.props.togglePlay();
       this.setState({
@@ -3393,13 +3767,16 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      var _this$props2 = this.props,
-          item = _this$props2.item,
-          creators = _this$props2.creators,
-          songs = _this$props2.songs,
-          type = _this$props2.type,
-          currentSongId = _this$props2.currentSongId,
-          playing = _this$props2.playing;
+      var _this$props4 = this.props,
+          item = _this$props4.item,
+          creators = _this$props4.creators,
+          songs = _this$props4.songs,
+          type = _this$props4.type,
+          currentSongId = _this$props4.currentSongId,
+          playing = _this$props4.playing,
+          path = _this$props4.path,
+          currentItemType = _this$props4.currentItemType,
+          currentItemId = _this$props4.currentItemId;
       if (!item) return null;
       var filteredSongs = Object.values(songs).length > 0 ? item.songIds.map(function (id) {
         return songs[id];
@@ -3412,7 +3789,7 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-play song-play show ".concat(green),
             onClick: function onClick() {
-              return _this5.playSong(song);
+              return _this5.playSong(song, filteredSongs);
             }
           });
         } else if (currentSongId === song.id && _this5.props.playing) {
@@ -3424,9 +3801,31 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-play song-play show ".concat(green),
             onClick: function onClick() {
-              return _this5.playSong(song);
+              return _this5.playSong(song, filteredSongs);
             }
           });
+        }
+      };
+
+      var greenPlayOrPause = function greenPlayOrPause() {
+        path[1] = path[1].substring(0, path[1].length - 1);
+
+        if (path[1] === currentItemType && item.id === currentItemId && playing) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "play-item-button",
+            onClick: _this5.pauseSong
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-pause"
+          })));
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "play-item-button",
+            onClick: function onClick() {
+              return _this5.playCollection(filteredSongs);
+            }
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-play"
+          })));
         }
       };
 
@@ -3510,17 +3909,9 @@ var PlaylistShow = /*#__PURE__*/function (_React$Component) {
         className: "creator"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/artists/".concat(creator.id)
-      }, creator.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "dot"
-      }, "\u2022"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "total-duration"
-      }, "0m 0s")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, creator.username))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "play-or-delete"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "play-item-button"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-play"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }, greenPlayOrPause(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-heart"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-h delete-button",
@@ -3585,14 +3976,19 @@ var msp = function msp(state, ownProps) {
 
   return {
     item: playlist,
-    // filteredSongs: playlistSongs,
     currentSongId: state.ui.music.songId,
     playing: state.ui.music.playing,
     songs: songs,
     creators: users,
     type: "playlist",
-    history: ownProps.history // creator: creator,
-
+    history: ownProps.history,
+    repeat: state.ui.music.repeat,
+    shuffle: state.ui.music.shuffle,
+    songHistory: state.ui.music.songHistory,
+    currentUserId: state.session.id,
+    currentItemId: state.ui.music.currentItemId,
+    currentItemType: state.ui.music.currentItemType,
+    path: ownProps.location.pathname.split('/')
   };
 };
 
@@ -3630,6 +4026,15 @@ var mdp = function mdp(dispatch) {
     },
     updateQueue: function updateQueue(queue) {
       return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateQueue"])(queue));
+    },
+    updateCurrentPlayAlbum: function updateCurrentPlayAlbum(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateCurrentPlayAlbum"])(item));
+    },
+    updateSongHistory: function updateSongHistory(history) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateSongHistory"])(history));
+    },
+    updateCurrentPlayAlbumId: function updateCurrentPlayAlbumId(item) {
+      return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_5__["updateCurrentPlayAlbumId"])(item));
     }
   };
 };
@@ -4863,7 +5268,12 @@ var _defaultState = {
   songId: 1,
   playing: false,
   songHistory: [],
-  queue: []
+  queue: [],
+  repeat: false,
+  shuffle: false,
+  currentItem: [],
+  currentItemId: null,
+  currentItemType: null
 };
 
 var musicReducer = function musicReducer() {
@@ -4886,6 +5296,14 @@ var musicReducer = function musicReducer() {
       musicState.playing = false;
       return musicState;
 
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_SHUFFLE"]:
+      musicState.shuffle = action.value;
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_REPEAT"]:
+      musicState.repeat = action.value;
+      return musicState;
+
     case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["UPDATE_HISTORY"]:
       musicState.songHistory = action.history;
       return musicState;
@@ -4896,6 +5314,15 @@ var musicReducer = function musicReducer() {
 
     case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["ADD_TO_QUEUE"]:
       musicState.queue = musicState.queue.concat(action.songs);
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["UPDATE_CURRENT_PLAYLIST_ALBUM"]:
+      musicState.currentItem = action.item;
+      return musicState;
+
+    case _actions_music_actions__WEBPACK_IMPORTED_MODULE_0__["UPDATE_CURRENT_PLAYLIST_ALBUM_ID"]:
+      musicState.currentItemId = action.item.id;
+      musicState.currentItemType = action.item.type;
       return musicState;
 
     default:

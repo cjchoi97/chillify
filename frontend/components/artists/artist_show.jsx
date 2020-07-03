@@ -49,7 +49,47 @@ class ArtistShow extends React.Component {
     }
   }
 
+  playCollection() {
+    const { artist, artistSongs } = this.props;
+    const fiveSongs = artistSongs.slice(0, 5);
+    this.props.updateCurrentPlayAlbumId({ id: artist.id, type: "artist" })
+    this.props.updateCurrentPlayAlbum([...fiveSongs]);
+    if (!fiveSongs.length) return;
+    if (fiveSongs.includes(this.props.currentSongId)) {
+      this.props.togglePlay();
+      return
+    }
+
+    if (this.props.shuffle) {
+      const shuffledSongs = this.shuffle([...fiveSongs]);
+      this.props.updateCurrentSong(shuffledSongs[0]);
+      this.props.updateQueue(shuffledSongs.slice(1));
+    } else {
+      this.props.updateCurrentSong(fiveSongs[0]);
+      this.props.updateQueue([...fiveSongs.slice(1)]);
+    }
+    this.props.togglePlay();
+
+  }
+
   playSong(song) {
+    const { songHistory, shuffle, artist, artistSongs } = this.props;
+    const songIndex = artistSongs.indexOf(song);
+
+    console.log(artistSongs);
+    const fiveSongs = artistSongs.slice(0, 5);
+    let songs = [];
+    if (shuffle) {
+      songs = this.shuffle(fiveSongs);
+    } else {
+      songs = fiveSongs;
+    }
+
+    songHistory.unshift(...songs.slice(0, songIndex).reverse());
+
+    this.props.updateCurrentPlayAlbumId({ id: artist.id, type: "artist" });
+    this.props.updateQueue([...songs.slice(songIndex + 1)]);
+    this.props.updateSongHistory(songHistory);
     this.props.updateCurrentSong(song);
     this.props.togglePlay();
   }
@@ -65,7 +105,10 @@ class ArtistShow extends React.Component {
       albums, 
       currentSongId,       
       playing,
-      artistSongs
+      artistSongs,
+      currentItemType,
+      currentItemId,
+      path
     } = this.props;
     if (!songs || !artist || !albums || artistSongs.length === 0) return null;
 
@@ -158,6 +201,28 @@ class ArtistShow extends React.Component {
       }
     })
 
+    const greenPlayOrPause = () => {
+      path[1] = path[1].substring(0, path[1].length - 1);
+
+      if (path[1] === currentItemType && artist.id === currentItemId && playing) {
+        return (
+          <>
+            <button className="play-item-button" onClick={this.pauseSong}>
+              <i className="fas fa-pause"></i>
+            </button>
+          </>
+        )
+      } else {
+        return (
+          <>
+            <button className="play-item-button" onClick={() => this.playCollection()}>
+              <i className="fas fa-play"></i>
+            </button>
+          </>
+        )
+      }
+    }
+
     return (
       <div className="artist-page-container">
         <div className="artist-info" style={{
@@ -178,9 +243,7 @@ class ArtistShow extends React.Component {
           <h1>{artist.name}</h1>
         </div>
         <div className="middle-buttons">
-          <button className="play-item-button">
-            <i className="fas fa-play"></i>
-          </button>
+          {greenPlayOrPause()}
           <button className="follow-button">
             Follow
           </button>

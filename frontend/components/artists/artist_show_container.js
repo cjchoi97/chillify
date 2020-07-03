@@ -7,7 +7,12 @@ import { addSongToPlaylist } from '../../actions/playlist_song_actions';
 import { 
   togglePause, 
   togglePlay,
-  updateCurrentSong } from '../../actions/music_actions';
+  updateCurrentSong,
+  updateCurrentPlayAlbumId,
+  updateCurrentPlayAlbum,
+  updateSongHistory,
+  updateQueue
+ } from '../../actions/music_actions';
 
 const msp = (state, ownProps) => {
   const artist = state.entities.artists[ownProps.match.params.id] || {};
@@ -20,7 +25,14 @@ const msp = (state, ownProps) => {
     artist,
     songs,
     albums,
-    artistSongs: artistSongs.filter(song => song !== undefined)
+    artistSongs: artistSongs.filter(song => song !== undefined),
+    repeat: state.ui.music.repeat,
+    shuffle: state.ui.music.shuffle,
+    songHistory: state.ui.music.songHistory,
+    currentUserId: state.session.id,
+    currentItemId: state.ui.music.currentItemId,
+    currentItemType: state.ui.music.currentItemType,
+    path: ownProps.location.pathname.split('/')
   }
 }
 
@@ -32,7 +44,11 @@ const mdp = dispatch => {
     togglePause: () => dispatch(togglePause()),
     togglePlay: () => dispatch(togglePlay()),
     updateCurrentSong: (song) => dispatch(updateCurrentSong(song)),
-    addSongToPlaylist: (playlistSong) => dispatch(addSongToPlaylist(playlistSong))
+    addSongToPlaylist: (playlistSong) => dispatch(addSongToPlaylist(playlistSong)),
+    updateQueue: queue => dispatch(updateQueue(queue)),
+    updateCurrentPlayAlbum: item => dispatch(updateCurrentPlayAlbum(item)),
+    updateSongHistory: history => dispatch(updateSongHistory(history)),
+    updateCurrentPlayAlbumId: item => dispatch(updateCurrentPlayAlbumId(item))
   }
 }
 

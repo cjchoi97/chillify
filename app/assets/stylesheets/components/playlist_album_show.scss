@@ -271,11 +271,19 @@ i.fa-music.listening {
   padding: 13px 0;
   transition-duration: 0s;
   font-size: 20px;
+
+  .fa-play {
+    margin-left: 5px;
+  }
+
+  .fa-pause {
+    margin-left: 2px;
+  }
 }
 
-.play-item-button i {
-  margin-left: 5px;
-}
+// .play-item-button.fa-play {
+//   margin-left: 5px;
+// }
 
 .play-item-button:hover {
   background-color:  #1ed760;

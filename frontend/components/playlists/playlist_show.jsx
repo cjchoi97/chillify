@@ -23,6 +23,7 @@ class PlaylistShow extends React.Component {
     this.toggleSongDropdown = this.toggleSongDropdown.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.listOptions = this.listOptions.bind(this);
+    this.playCollection = this.playCollection.bind(this);
   }
 
   closeDropdown() {
@@ -78,7 +79,52 @@ class PlaylistShow extends React.Component {
     }
   } 
 
-  playSong(song) {
+  shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  playCollection(filteredSongs) {
+    const { item, type } = this.props;
+    this.props.updateCurrentPlayAlbumId({ id: item.id, type: type })
+    this.props.updateCurrentPlayAlbum([...filteredSongs]);
+    if (!filteredSongs.length) return;
+    if (filteredSongs.includes(this.props.currentSongId)) {
+      this.props.togglePlay();
+      return
+    }
+
+    if (this.props.shuffle) {
+      const shuffledSongs = this.shuffle([...filteredSongs]);
+      this.props.updateCurrentSong(shuffledSongs[0]);
+      this.props.updateQueue(shuffledSongs.slice(1));
+    } else {
+      this.props.updateCurrentSong(filteredSongs[0]);
+      this.props.updateQueue([...filteredSongs.slice(1)]);
+    }
+    this.props.togglePlay();
+    
+  }
+
+  playSong(song, filteredSongs) {
+    const { songHistory, shuffle, item, type } = this.props;
+    const songIndex = filteredSongs.indexOf(song);
+
+    let songs = [];
+    if (shuffle) {
+      songs = this.shuffle(filteredSongs);
+    } else {
+      songs = filteredSongs;
+    }
+
+    songHistory.unshift(...songs.slice(0, songIndex).reverse());
+
+    this.props.updateCurrentPlayAlbumId({id: item.id, type: type});
+    this.props.updateQueue([...songs.slice(songIndex+1)]);
+    this.props.updateSongHistory(songHistory);
     this.props.updateCurrentSong(song);
     this.props.togglePlay();
     this.setState({
@@ -136,6 +182,9 @@ class PlaylistShow extends React.Component {
       type,
       currentSongId,
       playing,
+      path,
+      currentItemType,
+      currentItemId
     } = this.props
     if (!item) return null;
     
@@ -152,7 +201,7 @@ class PlaylistShow extends React.Component {
       if (currentSongId === song.id && !this.props.playing) {
         return(
           <i className={`fas fa-play song-play show ${green}`}
-            onClick={() => this.playSong(song)}></i>
+            onClick={() => this.playSong(song, filteredSongs)}></i>
         )
       } else if (currentSongId === song.id && this.props.playing) {
         return(
@@ -162,7 +211,29 @@ class PlaylistShow extends React.Component {
       } else {
         return (
           <i className={`fas fa-play song-play show ${green}`}
-            onClick={() => this.playSong(song)}></i>
+            onClick={() => this.playSong(song, filteredSongs)}></i>
+        )
+      }
+    }
+
+    const greenPlayOrPause = () => {
+      path[1] = path[1].substring(0, path[1].length - 1);
+
+      if (path[1] === currentItemType && item.id === currentItemId && playing) {
+        return (
+          <>
+            <button className="play-item-button" onClick={this.pauseSong}>
+              <i className="fas fa-pause"></i>
+            </button>
+          </>
+        )
+      } else {
+        return (
+          <>
+            <button className="play-item-button" onClick={() => this.playCollection(filteredSongs)}>
+              <i className="fas fa-play"></i>
+            </button>
+          </>
         )
       }
     }
@@ -191,6 +262,7 @@ class PlaylistShow extends React.Component {
       if (currentSongId === song.id && playing) {
         listening = "listening"
       }
+
       return (
         <li className="songs" key={i} tabIndex="1">
           <div className="song-content">
@@ -239,8 +311,8 @@ class PlaylistShow extends React.Component {
                 <div className="creator">
                   <Link to={`/artists/${creator.id}`}>{creator.username}</Link>
                 </div>
-                <span className="dot">•</span>
-                <span className="total-duration">0m 0s</span>
+                {/* <span className="dot">•</span> */}
+                {/* <span className="total-duration">0m 0s</span> */}
               </div>
               
             {/* <div className="item-size">
@@ -249,9 +321,7 @@ class PlaylistShow extends React.Component {
           </div>
         </div>
         <div className="play-or-delete">
-          <button className="play-item-button">
-            <i className="fas fa-play"></i>
-          </button>
+          {greenPlayOrPause()}
           <i className="far fa-heart"></i>
           <i className={`fas fa-ellipsis-h delete-button`} onClick={this.toggleDropdown}>
           </i>

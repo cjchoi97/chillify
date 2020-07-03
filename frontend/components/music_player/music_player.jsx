@@ -26,6 +26,10 @@ class MusicPlayer extends React.Component {
     this.changeTime = this.changeTime.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.convertTime = this.convertTime.bind(this);
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
+    this.handleShuffle = this.handleShuffle.bind(this);
+    this.handleRepeat = this.handleRepeat.bind(this);
   }
 
   
@@ -45,6 +49,7 @@ class MusicPlayer extends React.Component {
     if (audio) {
       audio.addEventListener("timeupdate", this.updateTime)
       if (prevProps.currentSongId !== this.props.song.id) {
+        audio.loop = false;
         audio.src = this.props.song.song_url;
       }
       if (this.props.playing) {
@@ -53,6 +58,82 @@ class MusicPlayer extends React.Component {
         audio.pause();
       }
     } 
+  }
+  
+  shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  handleShuffle() {
+    if (this.props.shuffle) {
+      this.props.toggleShuffle(false);
+    } else {
+      this.props.toggleShuffle(true);
+      const shuffledQueue = this.shuffle(this.props.queue);
+      this.props.updateQueue(shuffledQueue);
+    }
+  }
+
+  handleRepeat() {
+    const {
+      currentItem,
+      currentSongId,
+      queue
+    } = this.props;
+    if (this.props.repeat) {
+      this.props.toggleRepeat(false);
+      this.props.updateQueue(queue.slice(0, queue.length));
+    } else {
+      this.props.toggleRepeat(true);
+      if (currentItem[currentItem.length - 1].id === currentSongId) {
+        this.props.updateQueue(queue.concat(currentItem));
+      }
+    }
+  }
+
+  previous() {
+    const { songHistory, songs, queue, currentSongId } = this.props;
+    if (!songHistory.length) return;
+
+    queue.unshift(songs[currentSongId]);
+
+    this.props.updateQueue(queue);
+    this.props.updateCurrentSong(songHistory[0]);
+    this.props.updateSongHistory(songHistory.slice(1));
+    this.props.togglePlay();
+  }
+
+  next() {
+    const { 
+      queue, 
+      songHistory, 
+      currentSongId, 
+      songs, 
+      repeat,
+      currentItem
+     } = this.props;
+    if (!queue.length) {
+      this.props.togglePause();
+      document.getElementById("player").currentTime = 0;
+      return;
+    }
+
+    songHistory.unshift(songs[currentSongId]);
+
+    let tempQueue = queue;
+    
+    if (queue.length === 1 && repeat) {
+      tempQueue = queue.concat(currentItem);
+    }
+
+    this.props.updateSongHistory(songHistory)
+    this.props.updateCurrentSong(tempQueue[0]);
+    this.props.updateQueue(tempQueue.slice(1));
+    this.props.togglePlay();
   }
   
   play(e) {
@@ -210,20 +291,15 @@ class MusicPlayer extends React.Component {
               <Link to={`/artists/${song.artist_id}`}>{song.artist_name}</Link>
             </p>
           </div>
-          {/* song name */}
-          {/* artist name */}
-          {/* album cover */}
-          {/* links to show pages */}
-          {/* favorite button */}
         </div>
 
         <div className="mp-main">
           <div className="control-buttons">
-            <i className="fas fa-random"></i>
-            <i className="fas fa-step-backward"></i>
+            <i className={`fas fa-random ${this.props.shuffle === true ? "green" : "notgreen"}`} onClick={this.handleShuffle} ></i>
+            <i className="fas fa-step-backward" onClick={this.previous}></i>
             {this.renderButtons(playshow, pauseshow)}
-            <i className="fas fa-step-forward"></i>
-            <i className="fas fa-retweet"></i>
+            <i className="fas fa-step-forward" onClick={this.next}></i>
+            <i className={`fas fa-retweet ${this.props.repeat === true ? "green" : "notgreen"}`} onClick={this.handleRepeat} ></i>
           </div>
           <div className="song-slider">
             <p className="time-progressed">{this.convertTime(this.state.currentTime)}</p>
@@ -237,7 +313,7 @@ class MusicPlayer extends React.Component {
             />
             <p className="song-duration">{this.convertTime(this.state.duration)}</p>
           </div>  
-          <audio id="player">
+          <audio id="player" onEnded={this.next}>
             <source type="audio/mp3"/>
           </audio>
         </div>
