@@ -68,3 +68,7 @@ button {
 button, input[type="submit"] {
   cursor: pointer;
 }
+
+*::-webkit-scrollbar {
+  display: none;
+}
