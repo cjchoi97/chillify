@@ -18,6 +18,49 @@ Users can search for songs, albums, and artists. The results will be displayed n
 
 This customized audio player plays music while other components of the application are loaded on the screen.
 
+Because I couldn't use the default audio player given, I had to create my own custom audio player. This brought it's own set of challenges. However, figuring out the specific audio levels and creating a bar for that audio change was one of the biggest challenges. On top of just getting the functionality, I had to style the volume icon to change at specific audio levels.
+
+```javascript
+setNewVolume(e) {
+    const volumeMeter = document.getElementById("volume-meter");
+    const meterWidth = volumeMeter.offsetWidth;
+    const evt = window.event ? event : e;
+    const clickLoc = evt.layerX - volumeMeter.offsetLeft;
+
+    const percentage = (clickLoc/meterWidth);
+
+    if (percentage <= .5 && percentage != 0) {
+      this.setState({
+        mute:"dontshow",
+        quiet: "show",
+        loud: "dontshow",
+        percentage: percentage
+      })
+    } else if (percentage > .5 && percentage <= 1) {
+      this.setState({
+        mute:"dontshow",
+        quiet: "dontshow",
+        loud: "show",
+        percentage: percentage
+      })
+    } else {
+      this.setState({
+        mute: "show",
+        quiet: "dontshow",
+        loud: "dontshow",
+        percentage: percentage
+      })
+    }
+
+    const song = document.getElementById("player");
+    song.volume = percentage;
+
+    const percentVolume = song.volume / 1;
+    const volumeSlider = meterWidth * percentVolume;
+    document.getElementById("volume-status").style.width = Math.round(volumeSlider) + "px";
+}
+```
+What I ended up doing was calculating the offset of a click within the container of the volume bar. After setting the volume to a certain percentage, I then had to reflect that change in the styling of the volume bar. I converted volume percentage to the specific width that the volume progress had to be.
 
 ## Create Playlists
 ![alt text](https://github.com/cjchoi97/chillify/blob/master/app/assets/images/readme/createplaylist.png "Create Playlist")
