@@ -7,6 +7,18 @@
 Chillify is a clone of Spotify that houses music that is listened to when laying back or "chilling" in any setting!
 
 # Feature Highlights
+## Search
+![alt text](https://github.com/cjchoi97/chillify/blob/master/app/assets/images/readme/Animated%20GIF-downsized.gif "Search")
+
+Users can search for songs, albums, and artists. The results will be displayed neatly in the search component.
+
+## Continuous Play
+
+![alt text](https://github.com/cjchoi97/chillify/blob/master/app/assets/images/readme/continous-gif.gif "continuous play")
+
+This customized audio player plays music while other components of the application are loaded on the screen.
+
+
 ## Create Playlists
 ![alt text](https://github.com/cjchoi97/chillify/blob/master/app/assets/images/readme/createplaylist.png "Create Playlist")
 
@@ -35,15 +47,3 @@ You can always sign up for the website! When you try to log in without the corre
 * AWS S3
 
 * Heroku
-
-# Future Developments
-
-* Playing Music
-
-* Add songs to playlists
-
-* Show pages for artists
-
-* Liking playlists, songs, and albums
-
-* Following Arists
