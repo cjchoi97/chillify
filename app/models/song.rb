@@ -5,6 +5,7 @@
 #  id       :bigint           not null, primary key
 #  album_id :integer          not null
 #  title    :string           not null
+#  duration :string
 #
 class Song < ApplicationRecord
   validates :title, presence: true
