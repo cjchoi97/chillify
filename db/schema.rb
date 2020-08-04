@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_201206) do
+ActiveRecord::Schema.define(version: 2020_08_04_211736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(version: 2020_05_20_201206) do
     t.string "name", null: false
     t.text "bio"
     t.index ["name"], name: "index_artists_on_name"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "followable_id", null: false
+    t.string "followable_type", null: false
+    t.index ["followable_id"], name: "index_follows_on_followable_id"
+    t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
   create_table "playlist_songs", force: :cascade do |t|
