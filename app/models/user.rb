@@ -23,6 +23,19 @@ class User < ApplicationRecord
 
   has_many :playlists, dependent: :destroy
 
+  has_many :follows, as: :followable, dependent: :destroy
+
+  has_many :followed_accounts,
+    foreign_key: :user_id,
+    class_name: :Follow,
+    dependent: :destroy
+
+  has_many :followed_artists,
+    through: :followed_accounts,
+    source: :followable,
+    source_type: :Artist
+
+
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
     return nil unless user && user.is_password?(password)
