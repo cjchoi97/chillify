@@ -20,7 +20,13 @@ Rails.application.routes.draw do
 
     resources :searches, only: [:index]
 
-    resources :artists, only: [:index, :show]
+    resources :artists, only: [:index, :show] do
+      member do
+        post :follow
+        delete :unfollow
+      end
+
+    end
 
     resources :songs, only: [:index]
 
