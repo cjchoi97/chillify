@@ -17,6 +17,18 @@ const receiveArtist = artist => {
   });
 }
 
+export const followArtist = artistId => {
+  return (
+    ArtistAPIUtil.followArtist(artistId)
+  )
+}
+
+export const unfollowArtist = artistId => {
+  return (
+    ArtistAPIUtil.unfollowArtist(artistId)
+  )
+}
+
 export const fetchArtists = () => dispatch => {
   return(
     ArtistAPIUtil.fetchArtists().then(artists => (
