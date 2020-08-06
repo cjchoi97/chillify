@@ -26,7 +26,6 @@ class Api::ArtistsController < ApplicationController
 
     follow.destroy
     render :show
-    
   end
 end
 
