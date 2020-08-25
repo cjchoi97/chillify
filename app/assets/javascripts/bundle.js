@@ -139,13 +139,15 @@ var fetchAlbum = function fetchAlbum(id) {
 /*!********************************************!*\
   !*** ./frontend/actions/artist_actions.js ***!
   \********************************************/
-/*! exports provided: RECEIVE_ARTISTS, RECEIVE_ARTIST, fetchArtists, fetchArtist */
+/*! exports provided: RECEIVE_ARTISTS, RECEIVE_ARTIST, followArtist, unfollowArtist, fetchArtists, fetchArtist */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ARTISTS", function() { return RECEIVE_ARTISTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ARTIST", function() { return RECEIVE_ARTIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "followArtist", function() { return followArtist; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unfollowArtist", function() { return unfollowArtist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArtists", function() { return fetchArtists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArtist", function() { return fetchArtist; });
 /* harmony import */ var _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/artist_api_util */ "./frontend/util/artist_api_util.js");
@@ -167,6 +169,12 @@ var receiveArtist = function receiveArtist(artist) {
   };
 };
 
+var followArtist = function followArtist(artistId) {
+  return _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["followArtist"](artistId);
+};
+var unfollowArtist = function unfollowArtist(artistId) {
+  return _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["unfollowArtist"](artistId);
+};
 var fetchArtists = function fetchArtists() {
   return function (dispatch) {
     return _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchArtists"]().then(function (artists) {
@@ -1262,7 +1270,10 @@ var ArtistShow = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "VERIFIED ARTIST")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, artist.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "middle-buttons"
       }, greenPlayOrPause(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "follow-button"
+        className: "follow-button",
+        onClick: function onClick() {
+          return _this3.props.followArtist(artist.id);
+        }
       }, "Follow")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "songs-albums"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1369,6 +1380,12 @@ var mdp = function mdp(dispatch) {
     },
     updateCurrentPlayAlbumId: function updateCurrentPlayAlbumId(item) {
       return dispatch(Object(_actions_music_actions__WEBPACK_IMPORTED_MODULE_6__["updateCurrentPlayAlbumId"])(item));
+    },
+    followArtist: function followArtist(artist) {
+      return dispatch(Object(_actions_artist_actions__WEBPACK_IMPORTED_MODULE_2__["followArtist"])(artist));
+    },
+    unfollowArtist: function unfollowArtist(artist) {
+      return dispatch(Object(_actions_artist_actions__WEBPACK_IMPORTED_MODULE_2__["unfollowArtist"])(artist));
     }
   };
 };
@@ -5671,13 +5688,15 @@ var fetchAlbum = function fetchAlbum(id) {
 /*!******************************************!*\
   !*** ./frontend/util/artist_api_util.js ***!
   \******************************************/
-/*! exports provided: fetchArtists, fetchArtist */
+/*! exports provided: fetchArtists, fetchArtist, followArtist, unfollowArtist */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArtists", function() { return fetchArtists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArtist", function() { return fetchArtist; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "followArtist", function() { return followArtist; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unfollowArtist", function() { return unfollowArtist; });
 var fetchArtists = function fetchArtists() {
   return $.ajax({
     method: 'GET',
@@ -5688,6 +5707,18 @@ var fetchArtist = function fetchArtist(id) {
   return $.ajax({
     method: 'GET',
     url: "/api/artists/".concat(id)
+  });
+};
+var followArtist = function followArtist(artistId) {
+  return $.ajax({
+    method: 'POST',
+    url: "/api/artists/".concat(artistId, "/follow")
+  });
+};
+var unfollowArtist = function unfollowArtist(artistId) {
+  return $.ajax({
+    method: 'DELETE',
+    url: "/api/artists/".concat(artistId, "/unfollow")
   });
 };
 

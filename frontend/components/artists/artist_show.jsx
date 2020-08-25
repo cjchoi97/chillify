@@ -245,7 +245,7 @@ class ArtistShow extends React.Component {
         </div>
         <div className="middle-buttons">
           {greenPlayOrPause()}
-          <button className="follow-button">
+          <button className="follow-button" onClick={() => this.props.followArtist(artist.id)}>
             Follow
           </button>
         </div>

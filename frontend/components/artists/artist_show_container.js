@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ArtistShow from './artist_show';
-import { fetchArtists } from '../../actions/artist_actions';
+import { fetchArtists, followArtist, unfollowArtist } from '../../actions/artist_actions';
 import { fetchAlbums } from '../../actions/album_actions';
 import { openModal } from '../../actions/modal_actions';
 import { addSongToPlaylist } from '../../actions/playlist_song_actions';
@@ -48,7 +48,9 @@ const mdp = dispatch => {
     updateQueue: queue => dispatch(updateQueue(queue)),
     updateCurrentPlayAlbum: item => dispatch(updateCurrentPlayAlbum(item)),
     updateSongHistory: history => dispatch(updateSongHistory(history)),
-    updateCurrentPlayAlbumId: item => dispatch(updateCurrentPlayAlbumId(item))
+    updateCurrentPlayAlbumId: item => dispatch(updateCurrentPlayAlbumId(item)),
+    followArtist: artist => dispatch(followArtist(artist)),
+    unfollowArtist: artist => dispatch(unfollowArtist(artist))
   }
 }
 
