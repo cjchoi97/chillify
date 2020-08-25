@@ -2,6 +2,7 @@ import * as ArtistAPIUtil from '../util/artist_api_util';
 
 export const RECEIVE_ARTISTS = "RECEIVE_ARTISTS";
 export const RECEIVE_ARTIST = "RECEIVE_ARTIST";
+export const TOGGLE_FOLLOW = "TOGGLE_FOLLOW";
 
 const receiveArtists = artists => {
   return({
@@ -17,16 +18,27 @@ const receiveArtist = artist => {
   });
 }
 
-export const followArtist = artistId => {
-  return (
-    ArtistAPIUtil.followArtist(artistId)
-  )
+const toggleFollow = value => {
+  return({
+    type: TOGGLE_FOLLOW,
+    value
+  })
 }
 
-export const unfollowArtist = artistId => {
+export const followArtist = artistId => dispatch => {
   return (
-    ArtistAPIUtil.unfollowArtist(artistId)
-  )
+    ArtistAPIUtil.followArtist(artistId).then(artist => (
+      dispatch(toggleFollow(artist))
+    ))
+  );
+}
+
+export const unfollowArtist = artistId => dispatch => {
+  return (
+    ArtistAPIUtil.unfollowArtist(artistId).then(artist => (
+      dispatch(toggleFollow(artist))
+    ))
+  );
 }
 
 export const fetchArtists = () => dispatch => {

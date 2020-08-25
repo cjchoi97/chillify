@@ -139,13 +139,14 @@ var fetchAlbum = function fetchAlbum(id) {
 /*!********************************************!*\
   !*** ./frontend/actions/artist_actions.js ***!
   \********************************************/
-/*! exports provided: RECEIVE_ARTISTS, RECEIVE_ARTIST, followArtist, unfollowArtist, fetchArtists, fetchArtist */
+/*! exports provided: RECEIVE_ARTISTS, RECEIVE_ARTIST, TOGGLE_FOLLOW, followArtist, unfollowArtist, fetchArtists, fetchArtist */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ARTISTS", function() { return RECEIVE_ARTISTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ARTIST", function() { return RECEIVE_ARTIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_FOLLOW", function() { return TOGGLE_FOLLOW; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "followArtist", function() { return followArtist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unfollowArtist", function() { return unfollowArtist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArtists", function() { return fetchArtists; });
@@ -154,6 +155,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_ARTISTS = "RECEIVE_ARTISTS";
 var RECEIVE_ARTIST = "RECEIVE_ARTIST";
+var TOGGLE_FOLLOW = "TOGGLE_FOLLOW";
 
 var receiveArtists = function receiveArtists(artists) {
   return {
@@ -169,11 +171,26 @@ var receiveArtist = function receiveArtist(artist) {
   };
 };
 
+var toggleFollow = function toggleFollow(value) {
+  return {
+    type: TOGGLE_FOLLOW,
+    value: value
+  };
+};
+
 var followArtist = function followArtist(artistId) {
-  return _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["followArtist"](artistId);
+  return function (dispatch) {
+    return _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["followArtist"](artistId).then(function (artist) {
+      return dispatch(toggleFollow(artist));
+    });
+  };
 };
 var unfollowArtist = function unfollowArtist(artistId) {
-  return _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["unfollowArtist"](artistId);
+  return function (dispatch) {
+    return _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["unfollowArtist"](artistId).then(function (artist) {
+      return dispatch(toggleFollow(artist));
+    });
+  };
 };
 var fetchArtists = function fetchArtists() {
   return function (dispatch) {
@@ -5166,6 +5183,9 @@ var artistReducer = function artistReducer() {
 
     case _actions_artist_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ARTIST"]:
       return Object.assign({}, state, _defineProperty({}, action.artist.id, action.artist));
+
+    case _actions_artist_actions__WEBPACK_IMPORTED_MODULE_0__["TOGGLE_FOLLOW"]:
+      return Object.assign({}, state, _defineProperty({}, action.value.id, action.value));
 
     default:
       return state;
