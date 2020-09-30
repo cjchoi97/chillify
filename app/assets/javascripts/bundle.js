@@ -1580,16 +1580,47 @@ var Collection = /*#__PURE__*/function (_React$Component) {
   _createClass(Collection, [{
     key: "render",
     value: function render() {
-      console.log(this.state.collection);
+      var _this2 = this;
+
+      var playlists = function playlists() {
+        if (_this2.state.collection === "playlists") {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "collection-item selected"
+          }, "Playlists");
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "collection-item"
+          }, "Playlists");
+        }
+      };
+
+      var artists = function artists() {
+        if (_this2.state.collection === "artists") {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "collection-item selected"
+          }, "Artists");
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "collection-item"
+          }, "Artists");
+        }
+      };
+
+      var albums = function albums() {
+        if (_this2.state.collection === "albums") {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "collection-item selected"
+          }, "Albums");
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "collection-item"
+          }, "Albums");
+        }
+      };
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collection-options"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "collection-playlists "
-      }, "playlists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "collection-artists"
-      }, "Artists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "collection-albums"
-      }, "Albums"));
+      }, playlists(), artists(), albums());
     }
   }]);
 

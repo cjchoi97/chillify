@@ -80,3 +80,18 @@
   color: white;
   font-weight: bold;
 }
+
+.collection-item {
+  width: 85px;
+  height: 35px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.collection-item.selected {
+  background: #333;
+  border-radius: 4px;
+}
