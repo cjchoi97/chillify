@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchAlbums } from '../../actions/album_actions';
 import { fetchPlaylists } from '../../actions/playlist_actions';
-// import { fetchArtists } from '../../actions/artist_actions';
+import { fetchArtists } from '../../actions/artist_actions';
 // import { fetchUsers } from '../../actions/user_actions';
 import { Link } from 'react-router-dom'
 
@@ -15,6 +15,7 @@ class Explore extends React.Component {
   componentDidMount() {
     this.props.fetchAlbums();
     this.props.fetchPlaylists();
+    this.props.fetchArtists();
   }
 
   render() {
@@ -71,7 +72,7 @@ const mdp = dispatch => {
   return ({
     fetchAlbums: () => dispatch(fetchAlbums()),
     fetchPlaylists: () => dispatch(fetchPlaylists()),
-    // fetchArtists: () => dispatch(fetchArtists()),
+    fetchArtists: () => dispatch(fetchArtists()),
     // fetchUsers: () => dispatch(fetchUsers())
   });
 }

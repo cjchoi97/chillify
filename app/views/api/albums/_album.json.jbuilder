@@ -4,3 +4,4 @@ json.songIds album.song_ids
 json.artist_id album.artist.id
 json.user_id album.artist.id
 json.artist_name album.artist.name
+json.creator_id album.artist.id

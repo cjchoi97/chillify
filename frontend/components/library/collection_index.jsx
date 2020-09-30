@@ -10,6 +10,7 @@ class CollectionIndex extends React.Component {
     // debugger
     this.props.fetchItems();
     this.props.fetchUser(this.props.currentUser.id);
+    this.props.fetchCreators();
   }
 
   componentDidUpdate(prevProps) {
@@ -23,7 +24,10 @@ class CollectionIndex extends React.Component {
     const filteredItems = Object.values(items).length > 0 ? currentUser.playlistIds.map(id => {
       return items[id]
     }) : [];
-    // debugger
+
+    console.log(itemType);
+    console.log(filteredItems);
+    console.log(creators);
 
     const indexItems = filteredItems.map(item => {
       if (!item) return null;
@@ -31,12 +35,11 @@ class CollectionIndex extends React.Component {
         <Link className="item" key={item.id} to={`/${itemType}/${item.id}`}>
           <img src={item.photoUrl} />
           <div className="item-title">{item.title}</div>
-          <div className="item-creator">By {creators[item.user_id].username}</div>
+          <div className="item-creator">By {creators[item.creator_id].username}</div>
         </Link>
       );
     });
 
-    // debugger
 
     return (
       <div className="collections">

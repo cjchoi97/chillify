@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 class Collection extends React.Component {
   constructor(props) {
@@ -20,9 +22,9 @@ class Collection extends React.Component {
         )
       } else {
         return (
-          <div className="collection-item">
+          <Link className="collection-item" to='/collection/playlists'>
             Playlists
-          </div>
+          </Link>
         )
       }
     }
@@ -36,9 +38,9 @@ class Collection extends React.Component {
         )
       } else {
         return (
-          <div className="collection-item">
+          <Link className="collection-item" to='/collection/artists'>
             Artists
-          </div>
+          </Link>
         )
       }
     }
@@ -52,9 +54,9 @@ class Collection extends React.Component {
         )
       } else {
         return (
-          <div className="collection-item">
+          <Link className="collection-item" to='/collection/albums'>
             Albums
-          </div>
+          </Link>
         )
       }
     }

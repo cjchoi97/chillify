@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import CollectionIndex from '../library/collection_index';
 import { fetchPlaylists, fetchAuthoredPlaylists } from '../../actions/playlist_actions';
-import { fetchUser } from '../../actions/user_actions';
+import { fetchUser, fetchUsers } from '../../actions/user_actions';
 
 const msp = state => {
   const currentUserId = state.session.id;
@@ -23,7 +23,8 @@ const mdp = dispatch => {
   return ({
     fetchItems: () => dispatch(fetchPlaylists()),
     fetchOwnedItems: id => dispatch(fetchAuthoredPlaylists(id)),
-    fetchUser: id => dispatch(fetchUser(id))
+    fetchUser: id => dispatch(fetchUser(id)),
+    fetchCreators: () => dispatch(fetchUsers()),
 
   });
 }
