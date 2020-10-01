@@ -38,11 +38,11 @@ const Main = (props) => {
           <Route path="/explore" component={Explore} />
           <Route path="/search" component={SearchResults} />
           <Route path="/collection/playlists" component={PlaylistIndex} />
+          {/* <Route path="/collection/artists" component={ArtistIndex} /> */}
           <Route path="/collection/albums" component={AlbumIndex} />
           <Route path="/playlists/:id" component={PlaylistShow} />
           <Route path="/artists/:id" component={ArtistShow} />
           <Route path="/albums/:id" component={AlbumShow} />
-          {/* <Route path="/collection/artists" component={ArtistIndex} /> */}
         </Switch>
       </div>
       <MusicPlayer />

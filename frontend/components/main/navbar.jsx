@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'; 
 import { logout } from '../../actions/session_actions';
 import SearchBar from '../library/search/search-bar-container';
+import Collection from '../library/collection';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -33,6 +34,12 @@ class Navbar extends React.Component {
       return(
         <div className="search-bar-container">
           <SearchBar />
+        </div>
+      )
+    } else if (this.props.url[1] === "collection") {
+      return (
+        <div className="collection-container">
+          <Collection collection={this.props.url[2]}/>
         </div>
       )
     }
